@@ -1,0 +1,11 @@
+name = "horizontech-contact"
+main = "src/index.ts"
+compatibility_date = "2024-10-01"
+
+[vars]
+# Comma-separated list of allowed origins for CORS. Example:
+# "https://www.horizontechmba.com,https://horizontechmba.github.io"
+ALLOWED_ORIGINS = "https://www.horizontechmba.com,http://localhost:4321"
+
+[observability]
+enabled = true

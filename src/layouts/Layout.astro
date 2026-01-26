@@ -24,7 +24,8 @@ const {
 
 const lang = getLangFromUrl(Astro.url);
 const currentPath = Astro.url.pathname;
-const baseUrl = 'https://horizontechmba.com';
+const baseUrl = 'https://www.horizontechmba.com';
+const contactApiUrl = import.meta.env.PUBLIC_CONTACT_API_URL || '';
 
 // Determine canonical URL
 const canonical = canonicalPath ? `${baseUrl}${canonicalPath}` : `${baseUrl}${currentPath}`;
@@ -96,7 +97,7 @@ const localBusinessSchema = {
   "name": "HORIZONTECH MBA inc.",
   "image": `${baseUrl}/logo.png`,
   "url": baseUrl,
-  "telephone": "",
+  "telephone": "+1 581-578-3505",
   "email": "contact@horizontechmba.com",
   "address": {
     "@type": "PostalAddress",
@@ -246,6 +247,8 @@ const professionalServiceSchema = {
     <script is:inline>
       // GTM Configuration - HORIZONTECH MBA
       window.GTM_ID = 'GTM-MB2PFGKF';
+      // Contact API URL exposed for client-side form submission
+      window.CONTACT_API_URL = {JSON.stringify(contactApiUrl)};
       
       // Function to load GTM (called after consent)
       window.loadGTM = function() {
