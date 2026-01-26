@@ -1,0 +1,37 @@
+---
+import { getLangFromUrl, useTranslations } from '../i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<section class="py-16 bg-white">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+      <div class="text-center">
+        <div class="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-primary-600 to-primary-700">
+          50+
+        </div>
+        <p class="mt-2 text-gray-600">{t('stats.projects')}</p>
+      </div>
+      <div class="text-center">
+        <div class="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-primary-600 to-secondary-500">
+          30+
+        </div>
+        <p class="mt-2 text-gray-600">{t('stats.clients')}</p>
+      </div>
+      <div class="text-center">
+        <div class="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-secondary-500 to-secondary-600">
+          10+
+        </div>
+        <p class="mt-2 text-gray-600">{t('stats.experience')}</p>
+      </div>
+      <div class="text-center">
+        <div class="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-primary-500 to-secondary-500">
+          5
+        </div>
+        <p class="mt-2 text-gray-600">{t('stats.expertise')}</p>
+      </div>
+    </div>
+  </div>
+</section>

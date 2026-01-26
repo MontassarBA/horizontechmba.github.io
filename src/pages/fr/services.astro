@@ -1,0 +1,159 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getLangFromUrl, useTranslations, useTranslatedPath } from '../../i18n/utils';
+import CTASection from '../../components/CTASection.astro';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const translatePath = useTranslatedPath(lang);
+
+const services = [
+  {
+    icon: `<svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>`,
+    titleKey: 'services.consulting.title',
+    descKey: 'services.consulting.description',
+    features: lang === 'fr' 
+      ? ['Stratégie technologique', 'Architecture système', 'Audit technique', 'Accompagnement projet']
+      : ['Technology strategy', 'System architecture', 'Technical audit', 'Project support'],
+    color: 'primary'
+  },
+  {
+    icon: `<svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"></path></svg>`,
+    titleKey: 'services.embedded.title',
+    descKey: 'services.embedded.description',
+    features: lang === 'fr'
+      ? ['Microcontrôleurs & FPGA', 'Protocoles de communication', 'Firmware développement', 'Certification & conformité']
+      : ['Microcontrollers & FPGA', 'Communication protocols', 'Firmware development', 'Certification & compliance'],
+    color: 'secondary'
+  },
+  {
+    icon: `<svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>`,
+    titleKey: 'services.ai.title',
+    descKey: 'services.ai.description',
+    features: lang === 'fr'
+      ? ['Machine Learning', 'Vision par ordinateur', 'Traitement du langage', 'Automatisation intelligente']
+      : ['Machine Learning', 'Computer vision', 'Natural language processing', 'Smart automation'],
+    color: 'primary'
+  },
+  {
+    icon: `<svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>`,
+    titleKey: 'services.energy.title',
+    descKey: 'services.energy.description',
+    features: lang === 'fr'
+      ? ['Monitoring énergétique', 'Optimisation consommation', 'Smart grid integration', 'Analyse prédictive']
+      : ['Energy monitoring', 'Consumption optimization', 'Smart grid integration', 'Predictive analysis'],
+    color: 'secondary'
+  },
+  {
+    icon: `<svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>`,
+    titleKey: 'services.rd.title',
+    descKey: 'services.rd.description',
+    features: lang === 'fr'
+      ? ['Dispositifs médicaux', 'Santé connectée', 'Nanosatellites', 'Innovation technologique']
+      : ['Medical devices', 'Connected health', 'Nanosatellites', 'Technological innovation'],
+    color: 'primary'
+  }
+];
+---
+
+<Layout title={t('nav.services')}>
+  <!-- Hero Section -->
+  <section class="pt-32 pb-20 bg-gradient-to-br from-primary-50 via-white to-secondary-50">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h1 class="text-4xl md:text-5xl font-bold text-gray-900">
+        {t('services.title')}
+      </h1>
+      <p class="mt-6 text-xl text-gray-600 max-w-3xl mx-auto">
+        {t('services.subtitle')}
+      </p>
+    </div>
+  </section>
+  
+  <!-- Services List -->
+  <section class="py-20 bg-white">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="space-y-16">
+        {services.map((service, index) => (
+          <div class={`flex flex-col ${index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'} gap-12 items-center`}>
+            <!-- Icon/Visual -->
+            <div class="flex-shrink-0 w-full lg:w-1/3">
+              <div class={`aspect-square max-w-sm mx-auto rounded-3xl bg-gradient-to-br ${
+                service.color === 'primary' 
+                  ? 'from-primary-100 to-primary-200' 
+                  : 'from-secondary-100 to-secondary-200'
+              } flex items-center justify-center p-12`}>
+                <div class={`w-32 h-32 rounded-2xl ${
+                  service.color === 'primary' 
+                    ? 'bg-primary-600 text-white' 
+                    : 'bg-secondary-600 text-white'
+                } flex items-center justify-center`}>
+                  <Fragment set:html={service.icon} />
+                </div>
+              </div>
+            </div>
+            
+            <!-- Content -->
+            <div class="flex-1">
+              <h2 class="text-3xl font-bold text-gray-900 mb-4">
+                {t(service.titleKey)}
+              </h2>
+              <p class="text-lg text-gray-600 mb-6">
+                {t(service.descKey)}
+              </p>
+              <ul class="grid sm:grid-cols-2 gap-3">
+                {service.features.map((feature) => (
+                  <li class="flex items-center gap-2">
+                    <svg class={`w-5 h-5 ${service.color === 'primary' ? 'text-primary-600' : 'text-secondary-600'}`} fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                    </svg>
+                    <span class="text-gray-700">{feature}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+  
+  <!-- Process Section -->
+  <section class="py-20 bg-gray-50">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-900">
+          {lang === 'fr' ? 'Notre Approche' : 'Our Approach'}
+        </h2>
+        <p class="mt-4 text-xl text-gray-600">
+          {lang === 'fr' ? 'Un processus éprouvé pour des résultats exceptionnels' : 'A proven process for exceptional results'}
+        </p>
+      </div>
+      
+      <div class="grid md:grid-cols-4 gap-8">
+        {[
+          { step: '01', title: lang === 'fr' ? 'Découverte' : 'Discovery', desc: lang === 'fr' ? 'Analyse approfondie de vos besoins et objectifs' : 'In-depth analysis of your needs and goals' },
+          { step: '02', title: lang === 'fr' ? 'Conception' : 'Design', desc: lang === 'fr' ? 'Élaboration de solutions sur mesure' : 'Development of tailored solutions' },
+          { step: '03', title: lang === 'fr' ? 'Développement' : 'Development', desc: lang === 'fr' ? 'Réalisation avec méthodologie agile' : 'Implementation with agile methodology' },
+          { step: '04', title: lang === 'fr' ? 'Livraison' : 'Delivery', desc: lang === 'fr' ? 'Déploiement et accompagnement continu' : 'Deployment and ongoing support' }
+        ].map((item, index) => (
+          <div class="text-center">
+            <div class="w-16 h-16 mx-auto bg-gradient-to-br from-primary-600 to-secondary-500 rounded-full flex items-center justify-center text-white font-bold text-xl mb-4">
+              {item.step}
+            </div>
+            <h3 class="text-xl font-semibold text-gray-900 mb-2">{item.title}</h3>
+            <p class="text-gray-600">{item.desc}</p>
+            {index < 3 && (
+              <div class="hidden md:block absolute transform translate-x-full -translate-y-12">
+                <svg class="w-8 h-8 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                </svg>
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+  
+  <CTASection />
+</Layout>

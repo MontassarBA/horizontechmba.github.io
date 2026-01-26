@@ -1,0 +1,170 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getLangFromUrl, useTranslations, useTranslatedPath } from '../../i18n/utils';
+import CTASection from '../../components/CTASection.astro';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const translatePath = useTranslatedPath(lang);
+
+const values = [
+  {
+    icon: `<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>`,
+    title: lang === 'fr' ? 'Innovation' : 'Innovation',
+    desc: lang === 'fr' ? 'Nous repoussons les limites de la technologie pour créer des solutions avant-gardistes.' : 'We push technology boundaries to create cutting-edge solutions.'
+  },
+  {
+    icon: `<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>`,
+    title: lang === 'fr' ? 'Excellence' : 'Excellence',
+    desc: lang === 'fr' ? 'Nous nous engageons à livrer un travail de la plus haute qualité.' : 'We are committed to delivering work of the highest quality.'
+  },
+  {
+    icon: `<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>`,
+    title: lang === 'fr' ? 'Collaboration' : 'Collaboration',
+    desc: lang === 'fr' ? 'Nous travaillons en étroite collaboration avec nos clients comme de véritables partenaires.' : 'We work closely with our clients as true partners.'
+  },
+  {
+    icon: `<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>`,
+    title: lang === 'fr' ? 'Impact' : 'Impact',
+    desc: lang === 'fr' ? 'Nous créons des solutions qui génèrent une valeur mesurable et durable.' : 'We create solutions that generate measurable and lasting value.'
+  }
+];
+---
+
+<Layout title={t('nav.about')}>
+  <!-- Hero Section -->
+  <section class="pt-32 pb-20 bg-gradient-to-br from-primary-50 via-white to-secondary-50">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-4xl mx-auto text-center">
+        <h1 class="text-4xl md:text-5xl font-bold text-gray-900">
+          {t('about.title')}
+        </h1>
+        <p class="mt-6 text-xl text-gray-600">
+          {t('about.subtitle')}
+        </p>
+      </div>
+    </div>
+  </section>
+  
+  <!-- About Content -->
+  <section class="py-20 bg-white">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid lg:grid-cols-2 gap-16 items-center">
+        <!-- Image/Visual -->
+        <div class="relative">
+          <div class="aspect-square bg-gradient-to-br from-primary-100 to-secondary-100 rounded-3xl overflow-hidden">
+            <div class="absolute inset-0 flex items-center justify-center">
+              <svg viewBox="0 0 200 200" class="w-3/4 h-3/4" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <!-- Abstract tech visual -->
+                <circle cx="100" cy="100" r="80" stroke="url(#aboutGrad1)" stroke-width="2" fill="none"/>
+                <circle cx="100" cy="100" r="60" stroke="url(#aboutGrad2)" stroke-width="1.5" fill="none"/>
+                <circle cx="100" cy="100" r="40" stroke="url(#aboutGrad1)" stroke-width="1" fill="none"/>
+                <circle cx="100" cy="100" r="25" fill="url(#aboutGrad3)"/>
+                
+                <!-- Nodes representing expertise areas -->
+                <circle cx="100" cy="20" r="6" fill="#3b82f6"/>
+                <circle cx="180" cy="100" r="6" fill="#22c55e"/>
+                <circle cx="100" cy="180" r="6" fill="#3b82f6"/>
+                <circle cx="20" cy="100" r="6" fill="#22c55e"/>
+                
+                <text x="100" y="105" text-anchor="middle" fill="white" font-size="24" font-weight="bold">H</text>
+                
+                <defs>
+                  <linearGradient id="aboutGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#3b82f6"/>
+                    <stop offset="100%" stop-color="#22c55e"/>
+                  </linearGradient>
+                  <linearGradient id="aboutGrad2" x1="100%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stop-color="#22c55e"/>
+                    <stop offset="100%" stop-color="#3b82f6"/>
+                  </linearGradient>
+                  <linearGradient id="aboutGrad3" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#2563eb"/>
+                    <stop offset="100%" stop-color="#16a34a"/>
+                  </linearGradient>
+                </defs>
+              </svg>
+            </div>
+          </div>
+          <!-- Floating accent -->
+          <div class="absolute -bottom-6 -right-6 w-32 h-32 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-2xl -z-10"></div>
+        </div>
+        
+        <!-- Content -->
+        <div>
+          <p class="text-lg text-gray-600 mb-6">
+            {t('about.description1')}
+          </p>
+          <p class="text-lg text-gray-600 mb-8">
+            {t('about.description2')}
+          </p>
+          
+          <div class="grid sm:grid-cols-2 gap-6">
+            <div class="bg-primary-50 rounded-xl p-6">
+              <h3 class="text-lg font-semibold text-primary-900 mb-2">{t('about.mission.title')}</h3>
+              <p class="text-primary-700 text-sm">{t('about.mission.description')}</p>
+            </div>
+            <div class="bg-secondary-50 rounded-xl p-6">
+              <h3 class="text-lg font-semibold text-secondary-900 mb-2">{t('about.vision.title')}</h3>
+              <p class="text-secondary-700 text-sm">{t('about.vision.description')}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Values Section -->
+  <section class="py-20 bg-gray-50">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-900">
+          {lang === 'fr' ? 'Nos Valeurs' : 'Our Values'}
+        </h2>
+        <p class="mt-4 text-xl text-gray-600">
+          {lang === 'fr' ? 'Les principes qui guident notre travail' : 'The principles that guide our work'}
+        </p>
+      </div>
+      
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+        {values.map((value, index) => (
+          <div class="bg-white rounded-2xl p-8 shadow-sm hover:shadow-lg transition-shadow text-center">
+            <div class="w-16 h-16 mx-auto bg-gradient-to-br from-primary-100 to-secondary-100 rounded-xl flex items-center justify-center text-primary-600 mb-6">
+              <Fragment set:html={value.icon} />
+            </div>
+            <h3 class="text-xl font-semibold text-gray-900 mb-3">{value.title}</h3>
+            <p class="text-gray-600">{value.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+  
+  <!-- Expertise Domains -->
+  <section class="py-20 bg-dark-900 text-white">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl md:text-4xl font-bold">
+          {lang === 'fr' ? 'Nos Domaines d\'Intervention' : 'Our Areas of Intervention'}
+        </h2>
+      </div>
+      
+      <div class="grid md:grid-cols-3 lg:grid-cols-5 gap-6">
+        {[
+          { icon: '🔧', name: lang === 'fr' ? 'Systèmes Embarqués' : 'Embedded Systems' },
+          { icon: '📡', name: 'IoT' },
+          { icon: '🤖', name: lang === 'fr' ? 'Intelligence Artificielle' : 'Artificial Intelligence' },
+          { icon: '⚡', name: lang === 'fr' ? 'Énergie' : 'Energy' },
+          { icon: '🛰️', name: lang === 'fr' ? 'Spatial' : 'Space' }
+        ].map((domain) => (
+          <div class="bg-dark-800 rounded-xl p-6 text-center hover:bg-gradient-to-br hover:from-primary-900/50 hover:to-secondary-900/50 transition-all">
+            <div class="text-4xl mb-4">{domain.icon}</div>
+            <h3 class="font-semibold">{domain.name}</h3>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+  
+  <CTASection />
+</Layout>

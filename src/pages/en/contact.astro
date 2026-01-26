@@ -1,0 +1,177 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getLangFromUrl, useTranslations } from '../../i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<Layout title={t('nav.contact')}>
+  <!-- Hero Section -->
+  <section class="pt-32 pb-20 bg-gradient-to-br from-primary-50 via-white to-secondary-50">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h1 class="text-4xl md:text-5xl font-bold text-gray-900">
+        {t('contact.title')}
+      </h1>
+      <p class="mt-6 text-xl text-gray-600 max-w-2xl mx-auto">
+        {t('contact.subtitle')}
+      </p>
+    </div>
+  </section>
+  
+  <!-- Contact Content -->
+  <section class="py-20 bg-white">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid lg:grid-cols-2 gap-16">
+        <!-- Contact Form -->
+        <div>
+          <form 
+            action="https://formspree.io/f/YOUR_FORM_ID" 
+            method="POST"
+            class="space-y-6"
+          >
+            <div>
+              <label for="name" class="block text-sm font-medium text-gray-700 mb-2">
+                {t('contact.name')}
+              </label>
+              <input 
+                type="text" 
+                id="name" 
+                name="name" 
+                required
+                class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all outline-none"
+                placeholder={lang === 'fr' ? 'Votre nom' : 'Your name'}
+              />
+            </div>
+            
+            <div>
+              <label for="email" class="block text-sm font-medium text-gray-700 mb-2">
+                {t('contact.email')}
+              </label>
+              <input 
+                type="email" 
+                id="email" 
+                name="email" 
+                required
+                class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all outline-none"
+                placeholder={lang === 'fr' ? 'votre@email.com' : 'your@email.com'}
+              />
+            </div>
+            
+            <div>
+              <label for="subject" class="block text-sm font-medium text-gray-700 mb-2">
+                {t('contact.subject')}
+              </label>
+              <select 
+                id="subject" 
+                name="subject"
+                class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all outline-none bg-white"
+              >
+                <option value="consulting">{lang === 'fr' ? 'Consultation en ingénierie' : 'Engineering Consulting'}</option>
+                <option value="embedded">{lang === 'fr' ? 'Systèmes embarqués & IoT' : 'Embedded Systems & IoT'}</option>
+                <option value="ai">{lang === 'fr' ? 'IA & Développement logiciel' : 'AI & Software Development'}</option>
+                <option value="energy">{lang === 'fr' ? 'Solutions énergétiques' : 'Energy Solutions'}</option>
+                <option value="rd">{lang === 'fr' ? 'Projets R&D' : 'R&D Projects'}</option>
+                <option value="other">{lang === 'fr' ? 'Autre' : 'Other'}</option>
+              </select>
+            </div>
+            
+            <div>
+              <label for="message" class="block text-sm font-medium text-gray-700 mb-2">
+                {t('contact.message')}
+              </label>
+              <textarea 
+                id="message" 
+                name="message" 
+                rows="6" 
+                required
+                class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all outline-none resize-none"
+                placeholder={lang === 'fr' ? 'Décrivez votre projet ou question...' : 'Describe your project or question...'}
+              ></textarea>
+            </div>
+            
+            <button 
+              type="submit"
+              class="w-full px-8 py-4 bg-gradient-to-r from-primary-600 to-primary-700 text-white font-semibold rounded-xl shadow-lg shadow-primary-500/30 hover:shadow-xl hover:shadow-primary-500/40 transform hover:-translate-y-1 transition-all duration-300"
+            >
+              {t('contact.send')}
+            </button>
+          </form>
+        </div>
+        
+        <!-- Contact Info -->
+        <div>
+          <div class="bg-gray-50 rounded-3xl p-8 lg:p-12">
+            <h2 class="text-2xl font-bold text-gray-900 mb-4">
+              {t('contact.info.title')}
+            </h2>
+            <p class="text-gray-600 mb-8">
+              {t('contact.info.description')}
+            </p>
+            
+            <div class="space-y-6">
+              <!-- Email -->
+              <div class="flex items-start gap-4">
+                <div class="w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                  <svg class="w-6 h-6 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                  </svg>
+                </div>
+                <div>
+                  <h3 class="font-semibold text-gray-900">Email</h3>
+                  <a href="mailto:contact@horizontechmba.com" class="text-primary-600 hover:text-primary-700 transition-colors">
+                    contact@horizontechmba.com
+                  </a>
+                </div>
+              </div>
+              
+              <!-- LinkedIn -->
+              <div class="flex items-start gap-4">
+                <div class="w-12 h-12 bg-secondary-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                  <svg class="w-6 h-6 text-secondary-600" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                  </svg>
+                </div>
+                <div>
+                  <h3 class="font-semibold text-gray-900">LinkedIn</h3>
+                  <a href="#" class="text-secondary-600 hover:text-secondary-700 transition-colors">
+                    HorizontechMBA
+                  </a>
+                </div>
+              </div>
+              
+              <!-- Response Time -->
+              <div class="flex items-start gap-4">
+                <div class="w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                  <svg class="w-6 h-6 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                  </svg>
+                </div>
+                <div>
+                  <h3 class="font-semibold text-gray-900">
+                    {lang === 'fr' ? 'Temps de réponse' : 'Response Time'}
+                  </h3>
+                  <p class="text-gray-600">
+                    {lang === 'fr' ? 'Sous 24-48 heures ouvrables' : 'Within 24-48 business hours'}
+                  </p>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Call to action -->
+            <div class="mt-10 p-6 bg-gradient-to-br from-primary-600 to-secondary-500 rounded-2xl text-white">
+              <h3 class="text-lg font-semibold mb-2">
+                {lang === 'fr' ? 'Projet urgent ?' : 'Urgent Project?'}
+              </h3>
+              <p class="text-white/90 text-sm">
+                {lang === 'fr' 
+                  ? 'Pour les demandes urgentes, n\'hésitez pas à nous contacter directement par email avec "URGENT" dans le sujet.'
+                  : 'For urgent requests, feel free to contact us directly via email with "URGENT" in the subject line.'}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>

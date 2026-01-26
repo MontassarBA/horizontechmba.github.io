@@ -1,0 +1,71 @@
+---
+import { getLangFromUrl, useTranslations } from '../i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const expertiseAreas = [
+  {
+    icon: `<svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>`,
+    titleKey: 'expertise.energy.title',
+    descKey: 'expertise.energy.description',
+    gradient: 'from-yellow-400 to-orange-500'
+  },
+  {
+    icon: `<svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>`,
+    titleKey: 'expertise.health.title',
+    descKey: 'expertise.health.description',
+    gradient: 'from-red-400 to-pink-500'
+  },
+  {
+    icon: `<svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>`,
+    titleKey: 'expertise.space.title',
+    descKey: 'expertise.space.description',
+    gradient: 'from-purple-400 to-indigo-500'
+  },
+  {
+    icon: `<svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.141 0M1.394 9.393c5.857-5.857 15.355-5.857 21.213 0"></path></svg>`,
+    titleKey: 'expertise.iot.title',
+    descKey: 'expertise.iot.description',
+    gradient: 'from-cyan-400 to-blue-500'
+  }
+];
+---
+
+<section class="py-20 bg-dark-900 text-white">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-16">
+      <h2 class="text-3xl md:text-4xl font-bold">
+        {t('expertise.title')}
+      </h2>
+      <p class="mt-4 text-xl text-gray-400 max-w-2xl mx-auto">
+        {t('expertise.subtitle')}
+      </p>
+    </div>
+    
+    <div class="grid md:grid-cols-2 gap-8">
+      {expertiseAreas.map((area, index) => (
+        <div 
+          class="group relative bg-dark-800 rounded-2xl p-8 overflow-hidden hover:bg-gradient-to-br hover:from-dark-800 hover:to-dark-900 transition-all duration-300"
+        >
+          <!-- Gradient border effect -->
+          <div class={`absolute inset-0 rounded-2xl bg-gradient-to-r ${area.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-300`} style="padding: 2px; -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite: xor; mask-composite: exclude;"></div>
+          
+          <div class="relative z-10 flex items-start gap-6">
+            <div class={`flex-shrink-0 w-16 h-16 rounded-xl bg-gradient-to-br ${area.gradient} flex items-center justify-center text-white`}>
+              <Fragment set:html={area.icon} />
+            </div>
+            <div>
+              <h3 class="text-xl font-semibold mb-3">
+                {t(area.titleKey)}
+              </h3>
+              <p class="text-gray-400 leading-relaxed">
+                {t(area.descKey)}
+              </p>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

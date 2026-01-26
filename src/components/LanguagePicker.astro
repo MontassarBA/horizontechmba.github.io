@@ -1,0 +1,52 @@
+---
+import { getLangFromUrl, languages, getRouteFromUrl } from '../i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const route = getRouteFromUrl(Astro.url);
+---
+
+<div class="relative">
+  <button 
+    id="lang-picker-btn"
+    class="flex items-center space-x-1 px-3 py-2 rounded-lg border border-gray-200 hover:border-primary-300 hover:bg-primary-50 transition-all"
+  >
+    <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path>
+    </svg>
+    <span class="text-sm font-medium text-gray-700 uppercase">{lang}</span>
+    <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+    </svg>
+  </button>
+  
+  <div 
+    id="lang-picker-dropdown"
+    class="hidden absolute right-0 mt-2 w-40 bg-white rounded-lg shadow-lg border border-gray-100 py-2 z-50"
+  >
+    {Object.entries(languages).map(([langCode, langName]) => (
+      <a 
+        href={`/${langCode}/${route || ''}`}
+        class:list={[
+          "block px-4 py-2 text-sm hover:bg-primary-50 transition-colors",
+          lang === langCode ? "text-primary-600 font-medium bg-primary-50" : "text-gray-700"
+        ]}
+      >
+        {langName}
+      </a>
+    ))}
+  </div>
+</div>
+
+<script>
+  const btn = document.getElementById('lang-picker-btn');
+  const dropdown = document.getElementById('lang-picker-dropdown');
+  
+  btn?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    dropdown?.classList.toggle('hidden');
+  });
+  
+  document.addEventListener('click', () => {
+    dropdown?.classList.add('hidden');
+  });
+</script>

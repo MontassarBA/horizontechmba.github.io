@@ -1,0 +1,29 @@
+---
+import { getLangFromUrl, useTranslations, useTranslatedPath } from '../i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const translatePath = useTranslatedPath(lang);
+---
+
+<section class="py-20 bg-gradient-to-r from-primary-600 to-secondary-500">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">
+      {lang === 'fr' ? 'Prêt à innover ensemble ?' : 'Ready to innovate together?'}
+    </h2>
+    <p class="text-xl text-white/90 max-w-2xl mx-auto mb-10">
+      {lang === 'fr' 
+        ? 'Discutons de votre prochain projet et découvrez comment nous pouvons vous aider à atteindre vos objectifs technologiques.'
+        : 'Let\'s discuss your next project and discover how we can help you achieve your technological goals.'}
+    </p>
+    <a 
+      href={translatePath('/contact')}
+      class="inline-flex items-center px-8 py-4 bg-white text-primary-600 font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300"
+    >
+      {t('hero.cta.secondary')}
+      <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+      </svg>
+    </a>
+  </div>
+</section>

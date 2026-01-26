@@ -1,0 +1,20 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getLangFromUrl, useTranslations } from '../../i18n/utils';
+import HeroSection from '../../components/HeroSection.astro';
+import ServicesPreview from '../../components/ServicesPreview.astro';
+import ExpertiseSection from '../../components/ExpertiseSection.astro';
+import StatsSection from '../../components/StatsSection.astro';
+import CTASection from '../../components/CTASection.astro';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<Layout title={t('nav.home')}>
+  <HeroSection />
+  <StatsSection />
+  <ServicesPreview />
+  <ExpertiseSection />
+  <CTASection />
+</Layout>
