@@ -11,25 +11,22 @@ const translatePath = useTranslatedPath(lang);
   <nav class="container mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex items-center justify-between h-20">
       <!-- Logo -->
-      <a href={translatePath('/')} class="flex items-center space-x-2">
-        <div class="w-10 h-10 bg-gradient-to-br from-primary-600 to-secondary-500 rounded-lg flex items-center justify-center">
-          <span class="text-white font-bold text-xl">H</span>
-        </div>
-        <span class="text-xl font-bold text-gray-900">Horizontech<span class="text-primary-600">MBA</span></span>
+      <a href={translatePath('/')} class="flex items-center space-x-3">
+        <img src="/logo.png" alt="HORIZONTECH MBA" class="h-12 w-auto" />
       </a>
       
       <!-- Desktop Navigation -->
       <div class="hidden md:flex items-center space-x-8">
-        <a href={translatePath('/')} class="text-gray-700 hover:text-primary-600 transition-colors font-medium">
+        <a href={translatePath('/')} class="text-secondary-900 hover:text-primary-500 transition-colors font-medium">
           {t('nav.home')}
         </a>
-        <a href={translatePath('/services')} class="text-gray-700 hover:text-primary-600 transition-colors font-medium">
+        <a href={translatePath('/services')} class="text-secondary-900 hover:text-primary-500 transition-colors font-medium">
           {t('nav.services')}
         </a>
-        <a href={translatePath('/about')} class="text-gray-700 hover:text-primary-600 transition-colors font-medium">
+        <a href={translatePath('/about')} class="text-secondary-900 hover:text-primary-500 transition-colors font-medium">
           {t('nav.about')}
         </a>
-        <a href={translatePath('/contact')} class="text-gray-700 hover:text-primary-600 transition-colors font-medium">
+        <a href={translatePath('/contact')} class="text-secondary-900 hover:text-primary-500 transition-colors font-medium">
           {t('nav.contact')}
         </a>
         <LanguagePicker />

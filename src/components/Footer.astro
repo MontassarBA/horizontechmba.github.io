@@ -12,11 +12,8 @@ const currentYear = new Date().getFullYear();
     <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
       <!-- Brand -->
       <div class="col-span-1 md:col-span-2">
-        <a href={translatePath('/')} class="flex items-center space-x-2 mb-4">
-          <div class="w-10 h-10 bg-gradient-to-br from-primary-500 to-secondary-400 rounded-lg flex items-center justify-center">
-            <span class="text-white font-bold text-xl">H</span>
-          </div>
-          <span class="text-xl font-bold">Horizontech<span class="text-primary-400">MBA</span></span>
+        <a href={translatePath('/')} class="flex items-center space-x-3 mb-4">
+          <img src="/logo-mono.png" alt="HORIZONTECH MBA" class="h-10 w-auto brightness-0 invert" />
         </a>
         <p class="text-gray-400 max-w-md">
           {t('footer.description')}

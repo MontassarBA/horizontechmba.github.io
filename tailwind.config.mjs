@@ -4,33 +4,40 @@ export default {
   theme: {
     extend: {
       colors: {
+        // Charte graphique HORIZONTECH MBA
         primary: {
-          50: '#eff6ff',
-          100: '#dbeafe',
-          200: '#bfdbfe',
-          300: '#93c5fd',
-          400: '#60a5fa',
-          500: '#3b82f6',
-          600: '#2563eb',
-          700: '#1d4ed8',
-          800: '#1e40af',
-          900: '#1e3a8a',
+          50: '#e6ffff',
+          100: '#ccffff',
+          200: '#99ffff',
+          300: '#66e6e6',
+          400: '#33cccc',
+          500: '#009999',  // Teal Institutionnel
+          600: '#008080',
+          700: '#006666',
+          800: '#004d4d',
+          900: '#003333',
         },
         secondary: {
-          50: '#f0fdf4',
-          100: '#dcfce7',
-          200: '#bbf7d0',
-          300: '#86efac',
-          400: '#4ade80',
-          500: '#22c55e',
-          600: '#16a34a',
-          700: '#15803d',
-          800: '#166534',
-          900: '#14532d',
+          50: '#f5f5f5',
+          100: '#e8e8e8',
+          200: '#d4d4d4',
+          300: '#b8b8b8',
+          400: '#9c9c9c',
+          500: '#6F6F6F',  // Gris MBA
+          600: '#5c5c5c',
+          700: '#474747',
+          800: '#333333',
+          900: '#1A1A1A',  // Noir Horizon
         },
         dark: {
-          800: '#1e293b',
-          900: '#0f172a',
+          800: '#2a2a2a',
+          900: '#1A1A1A',  // Noir Horizon
+        },
+        horizon: {
+          black: '#1A1A1A',
+          teal: '#009999',
+          gray: '#6F6F6F',
+          white: '#FFFFFF',
         }
       },
       fontFamily: {
