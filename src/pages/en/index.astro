@@ -7,6 +7,11 @@ import ValueProps from '../../components/ValueProps.astro';
 import ServicesPreview from '../../components/ServicesPreview.astro';
 import ExpertiseSection from '../../components/ExpertiseSection.astro';
 import StatsSection from '../../components/StatsSection.astro';
+import CaseStudies from '../../components/CaseStudies.astro';
+import Testimonials from '../../components/Testimonials.astro';
+import FAQ from '../../components/FAQ.astro';
+import Newsletter from '../../components/Newsletter.astro';
+import BookingCalendly from '../../components/BookingCalendly.astro';
 import CTASection from '../../components/CTASection.astro';
 
 const lang = getLangFromUrl(Astro.url);
@@ -23,6 +28,11 @@ const t = useTranslations(lang);
   <ValueProps />
   <StatsSection />
   <ServicesPreview />
+  <CaseStudies />
   <ExpertiseSection />
+  <Testimonials />
+  <FAQ />
+  <BookingCalendly />
+  <Newsletter />
   <CTASection />
 </Layout>

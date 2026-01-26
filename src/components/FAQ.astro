@@ -1,0 +1,198 @@
+---
+import { getLangFromUrl } from '../i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+
+const faqs = [
+  {
+    question: {
+      fr: 'Quels types de projets prenez-vous en charge?',
+      en: 'What types of projects do you handle?'
+    },
+    answer: {
+      fr: 'Nous intervenons sur des projets d\'ingénierie logicielle embarqués, systèmes IoT, développement firmware, intégration hardware-software, et solutions IA/ML. Nos domaines d\'expertise couvrent l\'aérospatiale, le médical, l\'énergie et les télécommunications.',
+      en: 'We handle embedded software engineering projects, IoT systems, firmware development, hardware-software integration, and AI/ML solutions. Our expertise covers aerospace, medical, energy, and telecommunications sectors.'
+    }
+  },
+  {
+    question: {
+      fr: 'Travaillez-vous avec des startups ou uniquement des grandes entreprises?',
+      en: 'Do you work with startups or only large enterprises?'
+    },
+    answer: {
+      fr: 'Nous collaborons avec tous types d\'organisations, des startups innovantes aux grandes entreprises établies. Notre approche flexible nous permet d\'adapter nos services à la taille et aux besoins spécifiques de chaque client.',
+      en: 'We collaborate with all types of organizations, from innovative startups to established enterprises. Our flexible approach allows us to adapt our services to the size and specific needs of each client.'
+    }
+  },
+  {
+    question: {
+      fr: 'Comment se déroule un projet typique avec HORIZONTECH MBA?',
+      en: 'What does a typical project with HORIZONTECH MBA look like?'
+    },
+    answer: {
+      fr: 'Chaque projet débute par une phase de découverte pour comprendre vos besoins. Nous définissons ensuite une architecture technique, développons par itérations avec des revues régulières, et assurons une documentation complète et un transfert de connaissances à la fin du projet.',
+      en: 'Each project begins with a discovery phase to understand your needs. We then define a technical architecture, develop iteratively with regular reviews, and ensure complete documentation and knowledge transfer at the project\'s end.'
+    }
+  },
+  {
+    question: {
+      fr: 'Proposez-vous des services de maintenance et support?',
+      en: 'Do you offer maintenance and support services?'
+    },
+    answer: {
+      fr: 'Oui, nous offrons des contrats de maintenance incluant corrections de bugs, mises à jour de sécurité, optimisations de performance et support technique. Nous proposons différents niveaux de SLA selon vos besoins critiques.',
+      en: 'Yes, we offer maintenance contracts including bug fixes, security updates, performance optimizations, and technical support. We provide different SLA levels based on your critical needs.'
+    }
+  },
+  {
+    question: {
+      fr: 'Quelle est votre approche en matière de confidentialité et sécurité?',
+      en: 'What is your approach to confidentiality and security?'
+    },
+    answer: {
+      fr: 'La confidentialité est primordiale. Nous signons des NDA dès le début, utilisons des environnements de développement sécurisés, appliquons les meilleures pratiques de sécurité (OWASP, ISO 27001) et pouvons travailler sur site si nécessaire.',
+      en: 'Confidentiality is paramount. We sign NDAs from the start, use secure development environments, apply security best practices (OWASP, ISO 27001), and can work on-site if needed.'
+    }
+  },
+  {
+    question: {
+      fr: 'Quels sont vos délais typiques pour démarrer un projet?',
+      en: 'What are your typical timelines to start a project?'
+    },
+    answer: {
+      fr: 'Pour des projets standards, nous pouvons démarrer sous 2 à 4 semaines après validation du contrat. Pour les besoins urgents, nous avons une équipe pouvant intervenir sous 48-72h sur des problématiques critiques.',
+      en: 'For standard projects, we can start within 2-4 weeks after contract validation. For urgent needs, we have a team that can intervene within 48-72 hours on critical issues.'
+    }
+  }
+];
+
+const content = {
+  fr: {
+    badge: 'FAQ',
+    title: 'Questions Fréquentes',
+    subtitle: 'Trouvez rapidement les réponses à vos questions',
+    contact: 'Vous avez une autre question?',
+    contactLink: 'Contactez-nous'
+  },
+  en: {
+    badge: 'FAQ',
+    title: 'Frequently Asked Questions',
+    subtitle: 'Quickly find answers to your questions',
+    contact: 'Have another question?',
+    contactLink: 'Contact us'
+  }
+};
+
+const t = content[lang] || content.en;
+
+// Generate FAQ Schema.org structured data
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": faqs.map(faq => ({
+    "@type": "Question",
+    "name": faq.question[lang] || faq.question.en,
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": faq.answer[lang] || faq.answer.en
+    }
+  }))
+};
+---
+
+<section class="py-24 bg-gray-50/50">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Header -->
+    <div class="text-center mb-16">
+      <span class="inline-block px-4 py-2 bg-primary-100 text-primary-700 rounded-full text-sm font-semibold mb-4">
+        {t.badge}
+      </span>
+      <h2 class="text-3xl md:text-5xl font-bold text-gray-900 mb-6">
+        {t.title}
+      </h2>
+      <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+        {t.subtitle}
+      </p>
+    </div>
+    
+    <!-- FAQ Items -->
+    <div class="max-w-3xl mx-auto space-y-4">
+      {faqs.map((faq, index) => (
+        <div 
+          class="faq-item bg-white/70 backdrop-blur-lg rounded-2xl border border-white/50 shadow-lg shadow-black/5 overflow-hidden"
+          data-index={index}
+        >
+          <button 
+            class="faq-toggle w-full px-6 py-5 flex items-center justify-between text-left hover:bg-gray-50/50 transition-colors"
+            aria-expanded="false"
+          >
+            <span class="font-semibold text-gray-900 pr-8">
+              {faq.question[lang] || faq.question.en}
+            </span>
+            <span class="faq-icon flex-shrink-0 w-10 h-10 rounded-full bg-primary-100 text-primary-600 flex items-center justify-center transition-transform duration-300">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+              </svg>
+            </span>
+          </button>
+          <div class="faq-content hidden px-6 pb-6">
+            <p class="text-gray-600 leading-relaxed">
+              {faq.answer[lang] || faq.answer.en}
+            </p>
+          </div>
+        </div>
+      ))}
+    </div>
+    
+    <!-- Contact CTA -->
+    <div class="text-center mt-12">
+      <p class="text-gray-600 mb-4">{t.contact}</p>
+      <a 
+        href={lang === 'fr' ? '/fr/contact' : '/en/contact'}
+        class="inline-flex items-center gap-2 px-6 py-3 bg-primary-500 hover:bg-primary-600 text-white font-semibold rounded-xl shadow-lg shadow-primary-500/25 hover:shadow-xl transition-all duration-300"
+      >
+        {t.contactLink}
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ Schema.org structured data -->
+<script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+
+<script>
+  document.querySelectorAll('.faq-toggle').forEach(button => {
+    button.addEventListener('click', () => {
+      const item = button.closest('.faq-item');
+      const content = item?.querySelector('.faq-content');
+      const icon = item?.querySelector('.faq-icon');
+      const isExpanded = button.getAttribute('aria-expanded') === 'true';
+      
+      // Close all other items
+      document.querySelectorAll('.faq-item').forEach(otherItem => {
+        if (otherItem !== item) {
+          otherItem.querySelector('.faq-content')?.classList.add('hidden');
+          otherItem.querySelector('.faq-toggle')?.setAttribute('aria-expanded', 'false');
+          otherItem.querySelector('.faq-icon')?.classList.remove('rotate-180');
+        }
+      });
+      
+      // Toggle current item
+      content?.classList.toggle('hidden');
+      button.setAttribute('aria-expanded', (!isExpanded).toString());
+      icon?.classList.toggle('rotate-180');
+    });
+  });
+</script>
+
+<style>
+  .faq-icon {
+    transition: transform 0.3s ease;
+  }
+  .faq-icon.rotate-180 {
+    transform: rotate(180deg);
+  }
+</style>

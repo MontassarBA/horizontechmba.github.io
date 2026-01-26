@@ -56,11 +56,11 @@ const t = content[lang] || content.en;
 <!-- Cookie Consent Popup - Siemens Style (Centered Modal) -->
 <div id="cookie-banner" class="fixed inset-0 z-50 hidden">
   <!-- Dark Overlay -->
-  <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" id="cookie-overlay"></div>
+  <div class="absolute inset-0 bg-black/40 backdrop-blur-md" id="cookie-overlay"></div>
   
   <!-- Centered Modal -->
   <div class="absolute inset-0 flex items-center justify-center p-4">
-    <div class="bg-white rounded-lg shadow-2xl max-w-xl w-full transform transition-all duration-300 scale-95 opacity-0" id="cookie-popup">
+    <div class="bg-white/80 backdrop-blur-2xl rounded-2xl shadow-2xl shadow-black/20 max-w-xl w-full transform transition-all duration-300 scale-95 opacity-0 border border-white/50" id="cookie-popup">
       <div class="p-6 md:p-8">
         <!-- Title -->
         <h2 class="text-xl md:text-2xl font-bold text-gray-900 mb-4">
@@ -111,16 +111,16 @@ const t = content[lang] || content.en;
 <!-- Cookie Preferences Modal -->
 <div id="cookie-modal" class="fixed inset-0 z-[60] hidden">
   <!-- Backdrop -->
-  <div class="absolute inset-0 bg-black/50 backdrop-blur-sm" id="cookie-modal-backdrop"></div>
+  <div class="absolute inset-0 bg-black/40 backdrop-blur-md" id="cookie-modal-backdrop"></div>
   
   <!-- Modal Content -->
   <div class="absolute inset-0 flex items-center justify-center p-2 sm:p-4">
-    <div class="bg-white rounded-2xl shadow-2xl max-w-lg w-full max-h-[95vh] overflow-hidden flex flex-col">
+    <div class="bg-white/80 backdrop-blur-2xl rounded-2xl shadow-2xl shadow-black/20 max-w-lg w-full max-h-[95vh] overflow-hidden flex flex-col border border-white/50">
       <!-- Header -->
-      <div class="p-4 sm:p-6 border-b border-gray-200">
+      <div class="p-4 sm:p-6 border-b border-gray-200/50">
         <div class="flex items-center justify-between">
           <h2 class="text-lg sm:text-xl font-bold text-gray-900">{t.preferencesTitle}</h2>
-          <button id="cookie-modal-close" class="p-2 hover:bg-gray-100 rounded-lg transition-colors flex-shrink-0">
+          <button id="cookie-modal-close" class="p-2 hover:bg-white/50 rounded-lg transition-colors flex-shrink-0">
             <svg class="w-5 h-5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
             </svg>
@@ -296,8 +296,8 @@ const t = content[lang] || content.en;
     function loadGoogleAnalytics() {
       if (window.gaLoaded) return;
       
-      // Replace GA_MEASUREMENT_ID with your actual Google Analytics ID
-      const GA_MEASUREMENT_ID = 'G-XXXXXXXXXX';
+      // HORIZONTECH MBA - Google Analytics 4
+      const GA_MEASUREMENT_ID = 'G-6RR6F0GWKH';
       
       const script = document.createElement('script');
       script.async = true;
