@@ -1,0 +1,202 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getLangFromUrl, useTranslations } from '../../i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<Layout 
+  title="Politique de Cookies"
+  description="Découvrez comment HORIZONTECH MBA inc. utilise les cookies sur notre site web. Gérez vos préférences de cookies et comprenez nos pratiques de collecte de données."
+  keywords="politique cookies, confidentialité, collecte données, HORIZONTECH MBA cookies, cookies site web, préférences suivi"
+>
+  <section class="pt-32 pb-20">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-4xl mx-auto">
+        <!-- Header -->
+        <div class="text-center mb-12">
+          <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Politique de Cookies</h1>
+          <p class="text-lg text-gray-600">Dernière mise à jour : 25 janvier 2026</p>
+        </div>
+
+        <!-- Content -->
+        <div class="prose prose-lg max-w-none">
+          <!-- Introduction -->
+          <section class="mb-12">
+            <h2 class="text-2xl font-bold text-gray-900 mb-4">Que sont les cookies ?</h2>
+            <p class="text-gray-700 leading-relaxed">
+              Les cookies sont de petits fichiers texte qui sont placés sur votre ordinateur ou appareil mobile lorsque vous visitez un site web. Ils sont largement utilisés pour faire fonctionner les sites web plus efficacement et fournir des informations aux propriétaires du site. Les cookies nous aident à améliorer votre expérience sur notre site web en mémorisant vos préférences et en comprenant comment vous utilisez notre site.
+            </p>
+          </section>
+
+          <!-- Types of Cookies -->
+          <section class="mb-12">
+            <h2 class="text-2xl font-bold text-gray-900 mb-4">Types de cookies que nous utilisons</h2>
+            
+            <div class="space-y-6">
+              <!-- Essential -->
+              <div class="p-6 bg-gray-50 rounded-xl">
+                <h3 class="text-xl font-semibold text-gray-900 mb-2 flex items-center gap-2">
+                  <span class="w-3 h-3 bg-green-500 rounded-full"></span>
+                  Cookies essentiels
+                </h3>
+                <p class="text-gray-700 mb-3">
+                  Ces cookies sont nécessaires au bon fonctionnement du site web. Ils permettent des fonctionnalités de base telles que la sécurité, la gestion du réseau et l'accessibilité. Vous ne pouvez pas refuser ces cookies car le site web ne fonctionnerait pas correctement sans eux.
+                </p>
+                <div class="text-sm text-gray-600">
+                  <strong>Exemples :</strong> Gestion de session, préférences de langue, préférences de consentement aux cookies
+                </div>
+              </div>
+
+              <!-- Analytics -->
+              <div class="p-6 bg-gray-50 rounded-xl">
+                <h3 class="text-xl font-semibold text-gray-900 mb-2 flex items-center gap-2">
+                  <span class="w-3 h-3 bg-blue-500 rounded-full"></span>
+                  Cookies analytiques
+                </h3>
+                <p class="text-gray-700 mb-3">
+                  Ces cookies nous aident à comprendre comment les visiteurs interagissent avec notre site web en collectant et en rapportant des informations de manière anonyme. Cela nous permet d'améliorer notre site web et de fournir une meilleure expérience utilisateur.
+                </p>
+                <div class="text-sm text-gray-600">
+                  <strong>Fournisseur :</strong> Google Analytics 4<br>
+                  <strong>Objectif :</strong> Analyse du trafic du site web, informations sur le comportement des utilisateurs<br>
+                  <strong>Rétention :</strong> Jusqu'à 26 mois
+                </div>
+              </div>
+
+              <!-- Marketing -->
+              <div class="p-6 bg-gray-50 rounded-xl">
+                <h3 class="text-xl font-semibold text-gray-900 mb-2 flex items-center gap-2">
+                  <span class="w-3 h-3 bg-purple-500 rounded-full"></span>
+                  Cookies marketing
+                </h3>
+                <p class="text-gray-700 mb-3">
+                  Ces cookies sont utilisés pour suivre les visiteurs sur les sites web. L'intention est d'afficher des publicités pertinentes et engageantes pour l'utilisateur individuel et donc plus précieuses pour les éditeurs et les annonceurs tiers.
+                </p>
+                <div class="text-sm text-gray-600">
+                  <strong>Objectif :</strong> Publicité ciblée, campagnes de remarketing<br>
+                  <strong>Rétention :</strong> Varie selon le fournisseur
+                </div>
+              </div>
+
+              <!-- Performance -->
+              <div class="p-6 bg-gray-50 rounded-xl">
+                <h3 class="text-xl font-semibold text-gray-900 mb-2 flex items-center gap-2">
+                  <span class="w-3 h-3 bg-orange-500 rounded-full"></span>
+                  Cookies de performance
+                </h3>
+                <p class="text-gray-700 mb-3">
+                  Ces cookies nous permettent de compter les visites et les sources de trafic afin de mesurer et d'améliorer les performances de notre site. Ils nous aident à savoir quelles pages sont les plus et les moins populaires et à voir comment les visiteurs se déplacent sur le site.
+                </p>
+                <div class="text-sm text-gray-600">
+                  <strong>Objectif :</strong> Surveillance des performances du site web, optimisation du temps de chargement<br>
+                  <strong>Rétention :</strong> Basée sur la session ou jusqu'à 12 mois
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Managing Cookies -->
+          <section class="mb-12">
+            <h2 class="text-2xl font-bold text-gray-900 mb-4">Gérer vos préférences de cookies</h2>
+            <p class="text-gray-700 leading-relaxed mb-4">
+              Vous pouvez gérer vos préférences de cookies à tout moment en cliquant sur le bouton ci-dessous. Vous pouvez également contrôler les cookies via les paramètres de votre navigateur. Veuillez noter que la désactivation de certains cookies peut avoir un impact sur la fonctionnalité de notre site web.
+            </p>
+            <button 
+              onclick="window.openCookiePreferences && window.openCookiePreferences()"
+              class="inline-flex items-center px-6 py-3 bg-primary text-white font-medium rounded-lg hover:bg-primary/90 transition-colors"
+            >
+              <svg class="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+              </svg>
+              Gérer les préférences de cookies
+            </button>
+          </section>
+
+          <!-- Browser Controls -->
+          <section class="mb-12">
+            <h2 class="text-2xl font-bold text-gray-900 mb-4">Contrôles des cookies du navigateur</h2>
+            <p class="text-gray-700 leading-relaxed mb-4">
+              La plupart des navigateurs web vous permettent de contrôler les cookies via leurs paramètres. Voici des liens vers les instructions de gestion des cookies pour les navigateurs populaires :
+            </p>
+            <ul class="list-disc list-inside text-gray-700 space-y-2">
+              <li><a href="https://support.google.com/chrome/answer/95647" target="_blank" rel="noopener" class="text-primary hover:underline">Google Chrome</a></li>
+              <li><a href="https://support.mozilla.org/fr/kb/activer-desactiver-cookies" target="_blank" rel="noopener" class="text-primary hover:underline">Mozilla Firefox</a></li>
+              <li><a href="https://support.apple.com/fr-ca/guide/safari/sfri11471/mac" target="_blank" rel="noopener" class="text-primary hover:underline">Safari</a></li>
+              <li><a href="https://support.microsoft.com/fr-fr/microsoft-edge/supprimer-les-cookies-dans-microsoft-edge-63947406-40ac-c3b8-57b9-2a946a29ae09" target="_blank" rel="noopener" class="text-primary hover:underline">Microsoft Edge</a></li>
+            </ul>
+          </section>
+
+          <!-- Data Collection -->
+          <section class="mb-12">
+            <h2 class="text-2xl font-bold text-gray-900 mb-4">Données que nous collectons</h2>
+            <p class="text-gray-700 leading-relaxed mb-4">
+              Lorsque vous interagissez avec notre site web, nous pouvons collecter les informations suivantes :
+            </p>
+            <ul class="list-disc list-inside text-gray-700 space-y-2">
+              <li><strong>Données techniques :</strong> Adresse IP (anonymisée), type et version du navigateur, système d'exploitation, type d'appareil</li>
+              <li><strong>Données d'utilisation :</strong> Pages visitées, temps passé sur les pages, site web référent, chemins de navigation</li>
+              <li><strong>Données de contact :</strong> Informations que vous fournissez volontairement via notre formulaire de contact (nom, email, entreprise, message)</li>
+            </ul>
+          </section>
+
+          <!-- Third-Party Services -->
+          <section class="mb-12">
+            <h2 class="text-2xl font-bold text-gray-900 mb-4">Services tiers</h2>
+            <p class="text-gray-700 leading-relaxed mb-4">
+              Nous utilisons les services tiers suivants qui peuvent définir des cookies :
+            </p>
+            <div class="overflow-x-auto">
+              <table class="w-full text-left border-collapse">
+                <thead>
+                  <tr class="bg-gray-100">
+                    <th class="p-3 border border-gray-200 font-semibold">Service</th>
+                    <th class="p-3 border border-gray-200 font-semibold">Objectif</th>
+                    <th class="p-3 border border-gray-200 font-semibold">Politique de confidentialité</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="p-3 border border-gray-200">Google Analytics</td>
+                    <td class="p-3 border border-gray-200">Analytique web</td>
+                    <td class="p-3 border border-gray-200"><a href="https://policies.google.com/privacy" target="_blank" rel="noopener" class="text-primary hover:underline">Lien</a></td>
+                  </tr>
+                  <tr>
+                    <td class="p-3 border border-gray-200">Google Fonts</td>
+                    <td class="p-3 border border-gray-200">Polices web</td>
+                    <td class="p-3 border border-gray-200"><a href="https://policies.google.com/privacy" target="_blank" rel="noopener" class="text-primary hover:underline">Lien</a></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <!-- Contact -->
+          <section class="mb-12">
+            <h2 class="text-2xl font-bold text-gray-900 mb-4">Nous contacter</h2>
+            <p class="text-gray-700 leading-relaxed mb-4">
+              Si vous avez des questions concernant notre utilisation des cookies ou cette politique de cookies, veuillez nous contacter :
+            </p>
+            <div class="p-6 bg-primary/5 rounded-xl">
+              <p class="text-gray-900 font-semibold">HORIZONTECH MBA inc.</p>
+              <p class="text-gray-700">7139 Rue Henri-Julien, Lévis, QC G6Y 9X5, Canada</p>
+              <p class="text-gray-700">
+                Courriel : <a href="mailto:contact@horizontechmba.com" class="text-primary hover:underline">contact@horizontechmba.com</a>
+              </p>
+            </div>
+          </section>
+
+          <!-- Updates -->
+          <section>
+            <h2 class="text-2xl font-bold text-gray-900 mb-4">Mises à jour de cette politique</h2>
+            <p class="text-gray-700 leading-relaxed">
+              Nous pouvons mettre à jour cette politique de cookies de temps en temps pour refléter les changements dans nos pratiques ou pour d'autres raisons opérationnelles, légales ou réglementaires. Nous vous encourageons à consulter périodiquement cette page pour obtenir les dernières informations sur nos pratiques en matière de cookies.
+            </p>
+          </section>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>

@@ -2,6 +2,8 @@
 import Layout from '../../layouts/Layout.astro';
 import { getLangFromUrl, useTranslations } from '../../i18n/utils';
 import HeroSection from '../../components/HeroSection.astro';
+import TrustBadges from '../../components/TrustBadges.astro';
+import ValueProps from '../../components/ValueProps.astro';
 import ServicesPreview from '../../components/ServicesPreview.astro';
 import ExpertiseSection from '../../components/ExpertiseSection.astro';
 import StatsSection from '../../components/StatsSection.astro';
@@ -11,8 +13,14 @@ const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 ---
 
-<Layout title={t('nav.home')}>
+<Layout 
+  title={t('nav.home')}
+  description="HORIZONTECH MBA inc. - Expert engineering consulting in embedded systems, IoT, AI, software development and energy solutions. Serving aerospace, healthcare, energy and industrial sectors in Quebec, Canada."
+  keywords="engineering consulting Lévis Quebec, embedded systems development Canada, IoT solutions, AI consulting, software engineering, aerospace consulting, healthcare technology, energy solutions Quebec"
+>
   <HeroSection />
+  <TrustBadges />
+  <ValueProps />
   <StatsSection />
   <ServicesPreview />
   <ExpertiseSection />

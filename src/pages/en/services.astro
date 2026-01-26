@@ -7,6 +7,9 @@ const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 const translatePath = useTranslatedPath(lang);
 
+const pageDescription = "Engineering consulting services: Embedded Systems & IoT, AI & Software Development, Energy Solutions, R&D for Healthcare and Aerospace. Custom technology solutions for complex challenges.";
+const pageKeywords = "embedded systems consulting, IoT development services, AI solutions, software engineering, energy technology consulting, aerospace R&D, healthcare technology, firmware development, FPGA design";
+
 const services = [
   {
     icon: `<svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>`,
@@ -56,7 +59,11 @@ const services = [
 ];
 ---
 
-<Layout title={t('nav.services')}>
+<Layout 
+  title={t('nav.services')}
+  description={pageDescription}
+  keywords={pageKeywords}
+>
   <!-- Hero Section -->
   <section class="pt-32 pb-20 bg-gradient-to-br from-primary-50 via-white to-secondary-50">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -129,27 +136,34 @@ const services = [
         </p>
       </div>
       
-      <div class="grid md:grid-cols-4 gap-8">
+      <div class="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-0">
         {[
           { step: '01', title: lang === 'fr' ? 'Découverte' : 'Discovery', desc: lang === 'fr' ? 'Analyse approfondie de vos besoins et objectifs' : 'In-depth analysis of your needs and goals' },
           { step: '02', title: lang === 'fr' ? 'Conception' : 'Design', desc: lang === 'fr' ? 'Élaboration de solutions sur mesure' : 'Development of tailored solutions' },
           { step: '03', title: lang === 'fr' ? 'Développement' : 'Development', desc: lang === 'fr' ? 'Réalisation avec méthodologie agile' : 'Implementation with agile methodology' },
           { step: '04', title: lang === 'fr' ? 'Livraison' : 'Delivery', desc: lang === 'fr' ? 'Déploiement et accompagnement continu' : 'Deployment and ongoing support' }
         ].map((item, index) => (
-          <div class="text-center">
-            <div class="w-16 h-16 mx-auto bg-gradient-to-br from-primary-600 to-secondary-500 rounded-full flex items-center justify-center text-white font-bold text-xl mb-4">
-              {item.step}
+          <>
+            <div class="text-center flex-1 px-4">
+              <div class="w-16 h-16 mx-auto bg-gradient-to-br from-primary-600 to-primary-700 rounded-full flex items-center justify-center text-white font-bold text-xl mb-4 shadow-lg">
+                {item.step}
+              </div>
+              <h3 class="text-xl font-semibold text-gray-900 mb-2">{item.title}</h3>
+              <p class="text-gray-600 text-sm">{item.desc}</p>
             </div>
-            <h3 class="text-xl font-semibold text-gray-900 mb-2">{item.title}</h3>
-            <p class="text-gray-600">{item.desc}</p>
             {index < 3 && (
-              <div class="hidden md:block absolute transform translate-x-full -translate-y-12">
-                <svg class="w-8 h-8 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+              <div class="flex items-center justify-center py-4 md:py-0 md:px-2">
+                {/* Mobile arrow (vertical) */}
+                <svg class="w-6 h-6 text-gray-400 md:hidden rotate-90" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                </svg>
+                {/* Desktop arrow (horizontal) */}
+                <svg class="hidden md:block w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
                 </svg>
               </div>
             )}
-          </div>
+          </>
         ))}
       </div>
     </div>

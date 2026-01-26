@@ -1,0 +1,91 @@
+---
+interface Props {
+  class?: string;
+  width?: string;
+  height?: string;
+  variant?: 'default' | 'white';
+}
+
+const { class: className = '', width = '200', height = '60', variant = 'default' } = Astro.props;
+
+const colors = {
+  default: {
+    horizon: '#2D3436',
+    tech: '#009999',
+    mba: '#6B7280',
+    line: '#009999',
+    lineEnd: '#33cccc'
+  },
+  white: {
+    horizon: '#FFFFFF',
+    tech: '#33cccc',
+    mba: '#D1D5DB',
+    line: '#33cccc',
+    lineEnd: '#66d9d9'
+  }
+};
+
+const c = colors[variant];
+---
+
+<svg 
+  viewBox="0 0 300 80" 
+  fill="none" 
+  xmlns="http://www.w3.org/2000/svg"
+  class={className}
+  width={width}
+  height={height}
+  role="img"
+  aria-label="HORIZONTECH MBA"
+>
+  <!-- HORIZON text -->
+  <text 
+    x="10" 
+    y="38" 
+    font-family="Arial, Helvetica, sans-serif" 
+    font-size="28" 
+    font-weight="bold" 
+    letter-spacing="2"
+    fill={c.horizon}
+  >HORIZON</text>
+  
+  <!-- TECH text -->
+  <text 
+    x="138" 
+    y="38" 
+    font-family="Arial, Helvetica, sans-serif" 
+    font-size="28" 
+    font-weight="bold" 
+    letter-spacing="2"
+    fill={c.tech}
+  >TECH</text>
+  
+  <!-- Horizontal line -->
+  <line 
+    x1="10" 
+    y1="48" 
+    x2="220" 
+    y2="48" 
+    stroke={`url(#logoGradient-${variant})`}
+    stroke-width="2"
+  />
+  
+  <!-- MBA text with dots -->
+  <text 
+    x="75" 
+    y="68" 
+    font-family="Arial, Helvetica, sans-serif" 
+    font-size="16" 
+    font-weight="500" 
+    letter-spacing="8"
+    fill={c.mba}
+  >• MBA •</text>
+  
+  <defs>
+    <linearGradient id={`logoGradient-${variant}`} x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color={c.line}/>
+      <stop offset="100%" stop-color={c.lineEnd}/>
+    </linearGradient>
+  </defs>
+</svg>
+

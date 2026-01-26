@@ -7,72 +7,105 @@ const translatePath = useTranslatedPath(lang);
 
 const services = [
   {
-    icon: `<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>`,
+    icon: 'consulting',
     titleKey: 'services.consulting.title',
     descKey: 'services.consulting.description',
-    color: 'primary'
+    gradient: 'from-primary-500 to-primary-600'
   },
   {
-    icon: `<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"></path></svg>`,
+    icon: 'embedded',
     titleKey: 'services.embedded.title',
     descKey: 'services.embedded.description',
-    color: 'secondary'
+    gradient: 'from-primary-600 to-primary-700'
   },
   {
-    icon: `<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>`,
+    icon: 'ai',
     titleKey: 'services.ai.title',
     descKey: 'services.ai.description',
-    color: 'primary'
+    gradient: 'from-primary-500 to-primary-600'
   },
   {
-    icon: `<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>`,
+    icon: 'energy',
     titleKey: 'services.energy.title',
     descKey: 'services.energy.description',
-    color: 'secondary'
+    gradient: 'from-primary-600 to-primary-700'
   }
 ];
 ---
 
-<section class="py-20 bg-gray-50">
+<section class="py-24 bg-gradient-to-b from-white to-gray-50">
   <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="text-center mb-16">
-      <h2 class="text-3xl md:text-4xl font-bold text-gray-900">
+    <div class="text-center mb-20">
+      <span class="inline-block px-4 py-2 bg-primary-100 text-primary-700 rounded-full text-sm font-semibold mb-4">
+        {lang === 'fr' ? 'Nos Expertises' : 'Our Expertise'}
+      </span>
+      <h2 class="text-3xl md:text-5xl font-bold text-gray-900">
         {t('services.title')}
       </h2>
-      <p class="mt-4 text-xl text-gray-600 max-w-2xl mx-auto">
+      <p class="mt-6 text-xl text-gray-600 max-w-3xl mx-auto">
         {t('services.subtitle')}
       </p>
     </div>
     
-    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+    <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
       {services.map((service, index) => (
         <div 
-          class="group bg-white rounded-2xl p-8 shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100"
-          style={`animation-delay: ${index * 100}ms`}
+          class="group relative bg-white rounded-3xl p-8 shadow-sm hover:shadow-2xl transition-all duration-500 border border-gray-100 overflow-hidden"
         >
-          <div class={`w-16 h-16 rounded-xl flex items-center justify-center mb-6 ${
-            service.color === 'primary' 
-              ? 'bg-primary-100 text-primary-600 group-hover:bg-primary-600 group-hover:text-white' 
-              : 'bg-secondary-100 text-secondary-600 group-hover:bg-secondary-600 group-hover:text-white'
-          } transition-colors duration-300`}>
-            <Fragment set:html={service.icon} />
+          <!-- Hover background -->
+          <div class={`absolute inset-0 bg-gradient-to-br ${service.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500`}></div>
+          
+          <!-- Content -->
+          <div class="relative z-10">
+            <!-- Icon -->
+            <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary-500 to-primary-600 flex items-center justify-center mb-6 shadow-lg shadow-primary-500/25 group-hover:bg-white/20 group-hover:shadow-none transition-all duration-500">
+              {service.icon === 'consulting' && (
+                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                </svg>
+              )}
+              {service.icon === 'embedded' && (
+                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"></path>
+                </svg>
+              )}
+              {service.icon === 'ai' && (
+                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                </svg>
+              )}
+              {service.icon === 'energy' && (
+                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                </svg>
+              )}
+            </div>
+            
+            <h3 class="text-2xl font-bold text-gray-900 group-hover:text-white mb-4 transition-colors duration-500">
+              {t(service.titleKey)}
+            </h3>
+            <p class="text-gray-600 group-hover:text-white/90 leading-relaxed transition-colors duration-500">
+              {t(service.descKey)}
+            </p>
+            
+            <!-- Arrow -->
+            <div class="mt-6 flex items-center text-primary-600 group-hover:text-white font-medium transition-colors duration-500">
+              <span class="text-sm">{lang === 'fr' ? 'En savoir plus' : 'Learn more'}</span>
+              <svg class="w-5 h-5 ml-2 transform group-hover:translate-x-2 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+              </svg>
+            </div>
           </div>
-          <h3 class="text-xl font-semibold text-gray-900 mb-3">
-            {t(service.titleKey)}
-          </h3>
-          <p class="text-gray-600 leading-relaxed">
-            {t(service.descKey)}
-          </p>
         </div>
       ))}
     </div>
     
-    <div class="text-center mt-12">
+    <div class="text-center mt-16">
       <a 
         href={translatePath('/services')} 
-        class="inline-flex items-center px-6 py-3 text-primary-600 font-semibold hover:text-primary-700 transition-colors"
+        class="inline-flex items-center px-8 py-4 bg-primary-500 hover:bg-primary-600 text-white font-bold rounded-xl shadow-lg shadow-primary-500/30 hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300"
       >
-        {lang === 'fr' ? 'Voir tous nos services' : 'View all services'}
+        {lang === 'fr' ? 'Découvrir tous nos services' : 'Discover all our services'}
         <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
         </svg>

@@ -1,0 +1,35 @@
+# Robots.txt for HORIZONTECH MBA inc.
+# https://horizontechmba.com
+
+# Allow all search engines to crawl the entire site
+User-agent: *
+Allow: /
+
+# Disallow admin and private paths (if any)
+Disallow: /admin/
+Disallow: /private/
+Disallow: /_astro/
+
+# Crawl-delay (be friendly to search engines)
+Crawl-delay: 1
+
+# Sitemap location
+Sitemap: https://horizontechmba.com/sitemap.xml
+
+# Google-specific
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
+
+# Bing-specific
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 0
+
+# Google Images
+User-agent: Googlebot-Image
+Allow: /
+
+# Bing Images
+User-agent: MSNBot-Media
+Allow: /

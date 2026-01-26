@@ -20,16 +20,16 @@ const translatePath = useTranslatedPath(lang);
     </svg>
   </div>
   
-  <!-- Floating Elements -->
-  <div class="absolute top-1/4 left-10 w-20 h-20 bg-primary-400/20 rounded-full blur-xl animate-pulse"></div>
-  <div class="absolute bottom-1/4 right-10 w-32 h-32 bg-secondary-400/20 rounded-full blur-xl animate-pulse" style="animation-delay: 1s;"></div>
-  <div class="absolute top-1/2 right-1/4 w-16 h-16 bg-primary-300/30 rounded-full blur-lg animate-pulse" style="animation-delay: 0.5s;"></div>
+  <!-- Floating Elements - Hidden on mobile to prevent overflow -->
+  <div class="hidden sm:block absolute top-1/4 left-4 sm:left-10 w-16 sm:w-20 h-16 sm:h-20 bg-primary-400/20 rounded-full blur-xl animate-pulse"></div>
+  <div class="hidden sm:block absolute bottom-1/4 right-4 sm:right-10 w-24 sm:w-32 h-24 sm:h-32 bg-secondary-400/20 rounded-full blur-xl animate-pulse" style="animation-delay: 1s;"></div>
+  <div class="hidden md:block absolute top-1/2 right-1/4 w-16 h-16 bg-primary-300/30 rounded-full blur-lg animate-pulse" style="animation-delay: 0.5s;"></div>
   
   <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-    <div class="grid lg:grid-cols-2 gap-12 items-center">
+    <div class="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
       <!-- Content -->
       <div class="text-center lg:text-left">
-        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-secondary-900 leading-tight">
+        <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-secondary-900 leading-tight">
           {t('hero.title')}
           <span class="block text-primary-500">
             {t('hero.titleHighlight')}
@@ -55,8 +55,56 @@ const translatePath = useTranslatedPath(lang);
       </div>
       
       <!-- Illustration -->
-      <div class="relative hidden lg:block">
-        <div class="relative w-full aspect-square max-w-lg mx-auto">
+      <div class="relative">
+        <!-- Mobile version - smaller and centered -->
+        <div class="lg:hidden flex justify-center mt-8">
+          <div class="relative w-64 h-64 sm:w-80 sm:h-80">
+            <svg viewBox="0 0 400 400" class="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- Circuit board pattern -->
+              <circle cx="200" cy="200" r="150" stroke="url(#gradient1m)" stroke-width="2" fill="none" class="animate-spin" style="animation-duration: 20s;"/>
+              <circle cx="200" cy="200" r="120" stroke="url(#gradient2m)" stroke-width="1.5" fill="none" class="animate-spin" style="animation-duration: 15s; animation-direction: reverse;"/>
+              <circle cx="200" cy="200" r="90" stroke="url(#gradient1m)" stroke-width="1" fill="none" class="animate-spin" style="animation-duration: 25s;"/>
+              
+              <!-- Nodes -->
+              <circle cx="200" cy="50" r="10" fill="#009999"/>
+              <circle cx="350" cy="200" r="10" fill="#009999"/>
+              <circle cx="200" cy="350" r="10" fill="#009999"/>
+              <circle cx="50" cy="200" r="10" fill="#009999"/>
+              <circle cx="290" cy="110" r="7" fill="#33cccc"/>
+              <circle cx="290" cy="290" r="7" fill="#33cccc"/>
+              <circle cx="110" cy="290" r="7" fill="#33cccc"/>
+              <circle cx="110" cy="110" r="7" fill="#33cccc"/>
+              
+              <!-- Center icon -->
+              <circle cx="200" cy="200" r="45" fill="url(#gradient3m)"/>
+              <path d="M185 200 L195 210 L215 190" stroke="white" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+              
+              <!-- Connection lines -->
+              <line x1="200" y1="50" x2="200" y2="155" stroke="#009999" stroke-width="1.5" stroke-dasharray="4 4"/>
+              <line x1="350" y1="200" x2="245" y2="200" stroke="#009999" stroke-width="1.5" stroke-dasharray="4 4"/>
+              <line x1="200" y1="350" x2="200" y2="245" stroke="#009999" stroke-width="1.5" stroke-dasharray="4 4"/>
+              <line x1="50" y1="200" x2="155" y2="200" stroke="#009999" stroke-width="1.5" stroke-dasharray="4 4"/>
+              
+              <defs>
+                <linearGradient id="gradient1m" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#009999"/>
+                  <stop offset="100%" stop-color="#006666"/>
+                </linearGradient>
+                <linearGradient id="gradient2m" x1="100%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stop-color="#006666"/>
+                  <stop offset="100%" stop-color="#009999"/>
+                </linearGradient>
+                <linearGradient id="gradient3m" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#009999"/>
+                  <stop offset="100%" stop-color="#006666"/>
+                </linearGradient>
+              </defs>
+            </svg>
+          </div>
+        </div>
+        
+        <!-- Desktop version -->
+        <div class="relative w-full aspect-square max-w-lg mx-auto hidden lg:block">
           <!-- Abstract Tech Illustration -->
           <svg viewBox="0 0 400 400" class="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
             <!-- Circuit board pattern -->

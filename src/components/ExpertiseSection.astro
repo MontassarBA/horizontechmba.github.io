@@ -6,59 +6,103 @@ const t = useTranslations(lang);
 
 const expertiseAreas = [
   {
-    icon: `<svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>`,
+    icon: 'energy',
     titleKey: 'expertise.energy.title',
     descKey: 'expertise.energy.description',
-    gradient: 'from-yellow-400 to-orange-500'
+    stat: '30%',
+    statLabel: lang === 'fr' ? 'Économies moyennes' : 'Avg. savings'
   },
   {
-    icon: `<svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>`,
+    icon: 'health',
     titleKey: 'expertise.health.title',
     descKey: 'expertise.health.description',
-    gradient: 'from-red-400 to-pink-500'
+    stat: 'FDA/CE',
+    statLabel: lang === 'fr' ? 'Conformité' : 'Compliant'
   },
   {
-    icon: `<svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>`,
+    icon: 'space',
     titleKey: 'expertise.space.title',
     descKey: 'expertise.space.description',
-    gradient: 'from-purple-400 to-indigo-500'
+    stat: '100%',
+    statLabel: lang === 'fr' ? 'Fiabilité' : 'Reliability'
   },
   {
-    icon: `<svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.141 0M1.394 9.393c5.857-5.857 15.355-5.857 21.213 0"></path></svg>`,
+    icon: 'iot',
     titleKey: 'expertise.iot.title',
     descKey: 'expertise.iot.description',
-    gradient: 'from-cyan-400 to-blue-500'
+    stat: '24/7',
+    statLabel: lang === 'fr' ? 'Monitoring' : 'Monitoring'
   }
 ];
 ---
 
-<section class="py-20 bg-dark-900 text-white">
-  <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="text-center mb-16">
-      <h2 class="text-3xl md:text-4xl font-bold">
+<section class="py-24 bg-gradient-to-b from-gray-900 to-gray-800 text-white relative overflow-hidden">
+  <!-- Background pattern -->
+  <div class="absolute inset-0 opacity-5">
+    <svg class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <pattern id="expertiseGrid" width="40" height="40" patternUnits="userSpaceOnUse">
+          <path d="M 40 0 L 0 0 0 40" fill="none" stroke="white" stroke-width="0.5"/>
+        </pattern>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#expertiseGrid)" />
+    </svg>
+  </div>
+  
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <div class="text-center mb-20">
+      <span class="inline-block px-4 py-2 bg-primary-500/20 text-primary-400 rounded-full text-sm font-semibold mb-4">
+        {lang === 'fr' ? 'Expertise Sectorielle' : 'Industry Expertise'}
+      </span>
+      <h2 class="text-3xl md:text-5xl font-bold">
         {t('expertise.title')}
       </h2>
-      <p class="mt-4 text-xl text-gray-400 max-w-2xl mx-auto">
+      <p class="mt-6 text-xl text-gray-400 max-w-3xl mx-auto">
         {t('expertise.subtitle')}
       </p>
     </div>
     
-    <div class="grid md:grid-cols-2 gap-8">
+    <div class="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
       {expertiseAreas.map((area, index) => (
         <div 
-          class="group relative bg-dark-800 rounded-2xl p-8 overflow-hidden hover:bg-gradient-to-br hover:from-dark-800 hover:to-dark-900 transition-all duration-300"
+          class="group relative bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10 hover:border-primary-500/50 hover:bg-white/10 transition-all duration-500"
         >
-          <!-- Gradient border effect -->
-          <div class={`absolute inset-0 rounded-2xl bg-gradient-to-r ${area.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-300`} style="padding: 2px; -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite: xor; mask-composite: exclude;"></div>
-          
-          <div class="relative z-10 flex items-start gap-6">
-            <div class={`flex-shrink-0 w-16 h-16 rounded-xl bg-gradient-to-br ${area.gradient} flex items-center justify-center text-white`}>
-              <Fragment set:html={area.icon} />
+          <div class="flex items-start gap-6">
+            <!-- Icon -->
+            <div class="flex-shrink-0 w-14 h-14 rounded-xl bg-gradient-to-br from-primary-500 to-primary-600 flex items-center justify-center text-white shadow-lg shadow-primary-500/25">
+              {area.icon === 'energy' && (
+                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                </svg>
+              )}
+              {area.icon === 'health' && (
+                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                </svg>
+              )}
+              {area.icon === 'space' && (
+                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+              )}
+              {area.icon === 'iot' && (
+                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.141 0M1.394 9.393c5.857-5.857 15.355-5.857 21.213 0"></path>
+                </svg>
+              )}
             </div>
-            <div>
-              <h3 class="text-xl font-semibold mb-3">
-                {t(area.titleKey)}
-              </h3>
+            
+            <!-- Content -->
+            <div class="flex-1">
+              <div class="flex items-center justify-between mb-3">
+                <h3 class="text-xl font-bold text-white">
+                  {t(area.titleKey)}
+                </h3>
+                <div class="text-right">
+                  <div class="text-lg font-bold text-primary-400">{area.stat}</div>
+                  <div class="text-xs text-gray-500">{area.statLabel}</div>
+                </div>
+              </div>
               <p class="text-gray-400 leading-relaxed">
                 {t(area.descKey)}
               </p>

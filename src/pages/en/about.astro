@@ -31,7 +31,11 @@ const values = [
 ];
 ---
 
-<Layout title={t('nav.about')}>
+<Layout 
+  title={t('nav.about')}
+  description="About HORIZONTECH MBA inc. - Engineering consulting firm with 15+ years experience in embedded systems, IoT, AI and software. Meet our team of expert engineers in Lévis, Quebec, Canada."
+  keywords="about HORIZONTECH MBA, engineering team Lévis Quebec, technology consulting company, embedded systems experts, IoT specialists, AI consultants, software engineers Canada"
+>
   <!-- Hero Section -->
   <section class="pt-32 pb-20 bg-gradient-to-br from-primary-50 via-white to-secondary-50">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -109,6 +113,55 @@ const values = [
               <p class="text-secondary-700 text-sm">{t('about.vision.description')}</p>
             </div>
           </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Why Choose Us Section -->
+  <section class="py-20 bg-white border-t border-gray-100">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-900">
+          {t('about.why.title')}
+        </h2>
+      </div>
+      
+      <div class="grid md:grid-cols-3 gap-8">
+        <!-- Deep Expertise -->
+        <div class="relative bg-gradient-to-br from-primary-50 to-white rounded-2xl p-8 border border-primary-100 group hover:shadow-xl transition-shadow">
+          <div class="absolute top-0 right-0 w-24 h-24 bg-primary-500/10 rounded-bl-full"></div>
+          <div class="w-14 h-14 bg-primary-500 rounded-xl flex items-center justify-center mb-6">
+            <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-gray-900 mb-3">{t('about.why.expertise')}</h3>
+          <p class="text-gray-600">{t('about.why.expertise.desc')}</p>
+        </div>
+        
+        <!-- Agile -->
+        <div class="relative bg-gradient-to-br from-primary-50 to-white rounded-2xl p-8 border border-primary-100 group hover:shadow-xl transition-shadow">
+          <div class="absolute top-0 right-0 w-24 h-24 bg-primary-500/10 rounded-bl-full"></div>
+          <div class="w-14 h-14 bg-primary-500 rounded-xl flex items-center justify-center mb-6">
+            <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-gray-900 mb-3">{t('about.why.agile')}</h3>
+          <p class="text-gray-600">{t('about.why.agile.desc')}</p>
+        </div>
+        
+        <!-- Results -->
+        <div class="relative bg-gradient-to-br from-primary-50 to-white rounded-2xl p-8 border border-primary-100 group hover:shadow-xl transition-shadow">
+          <div class="absolute top-0 right-0 w-24 h-24 bg-primary-500/10 rounded-bl-full"></div>
+          <div class="w-14 h-14 bg-primary-500 rounded-xl flex items-center justify-center mb-6">
+            <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-gray-900 mb-3">{t('about.why.results')}</h3>
+          <p class="text-gray-600">{t('about.why.results.desc')}</p>
         </div>
       </div>
     </div>

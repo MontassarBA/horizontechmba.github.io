@@ -9,10 +9,15 @@ const translatePath = useTranslatedPath(lang);
 
 <header class="fixed w-full top-0 z-50 bg-white/95 backdrop-blur-sm shadow-sm">
   <nav class="container mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="flex items-center justify-between h-20">
+    <div class="flex items-center justify-between h-16 sm:h-18 md:h-20">
       <!-- Logo -->
-      <a href={translatePath('/')} class="flex items-center space-x-3">
-        <img src="/logo.png" alt="HORIZONTECH MBA" class="h-12 w-auto" />
+      <a href={translatePath('/')} class="flex items-center flex-shrink-0">
+        <img 
+          src="/logo.png" 
+          alt="HORIZONTECH MBA" 
+          class="h-12 sm:h-14 md:h-16 w-auto object-contain" 
+        />
+      </a>
       </a>
       
       <!-- Desktop Navigation -->

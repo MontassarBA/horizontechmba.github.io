@@ -6,24 +6,58 @@ const t = useTranslations(lang);
 const translatePath = useTranslatedPath(lang);
 ---
 
-<section class="py-20 bg-gradient-to-r from-primary-600 to-secondary-500">
-  <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
-    <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">
-      {lang === 'fr' ? 'Prêt à innover ensemble ?' : 'Ready to innovate together?'}
-    </h2>
-    <p class="text-xl text-white/90 max-w-2xl mx-auto mb-10">
-      {lang === 'fr' 
-        ? 'Discutons de votre prochain projet et découvrez comment nous pouvons vous aider à atteindre vos objectifs technologiques.'
-        : 'Let\'s discuss your next project and discover how we can help you achieve your technological goals.'}
-    </p>
-    <a 
-      href={translatePath('/contact')}
-      class="inline-flex items-center px-8 py-4 bg-white text-primary-600 font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300"
-    >
-      {t('hero.cta.secondary')}
-      <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-      </svg>
-    </a>
+<section class="relative py-24 overflow-hidden">
+  <!-- Background with gradient and pattern -->
+  <div class="absolute inset-0 bg-gradient-to-br from-primary-600 via-primary-700 to-primary-800"></div>
+  <div class="absolute inset-0 opacity-10">
+    <svg class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <pattern id="ctaGrid" width="60" height="60" patternUnits="userSpaceOnUse">
+          <circle cx="30" cy="30" r="1.5" fill="white"/>
+        </pattern>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#ctaGrid)" />
+    </svg>
+  </div>
+  
+  <!-- Floating elements -->
+  <div class="absolute top-10 left-10 w-32 h-32 bg-white/5 rounded-full blur-2xl"></div>
+  <div class="absolute bottom-10 right-10 w-40 h-40 bg-white/5 rounded-full blur-2xl"></div>
+  
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <div class="max-w-4xl mx-auto text-center">
+      <h2 class="text-3xl md:text-5xl font-bold text-white mb-6">
+        {t('cta.title')}
+      </h2>
+      <p class="text-xl text-white/80 max-w-2xl mx-auto mb-10">
+        {t('cta.subtitle')}
+      </p>
+      
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a 
+          href={translatePath('/contact')}
+          class="inline-flex items-center justify-center px-8 py-4 bg-white text-primary-600 font-bold rounded-xl shadow-2xl hover:shadow-white/20 transform hover:-translate-y-1 transition-all duration-300 group"
+        >
+          {t('cta.button')}
+          <svg class="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+          </svg>
+        </a>
+        <a 
+          href={translatePath('/services')}
+          class="inline-flex items-center justify-center px-8 py-4 bg-transparent text-white font-semibold rounded-xl border-2 border-white/30 hover:border-white hover:bg-white/10 transition-all duration-300"
+        >
+          {t('hero.cta.secondary')}
+        </a>
+      </div>
+      
+      <!-- Trust indicator -->
+      <div class="mt-12 flex items-center justify-center gap-2 text-white/70">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+        </svg>
+        <span class="text-sm">{t('contact.response')}</span>
+      </div>
+    </div>
   </div>
 </section>

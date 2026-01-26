@@ -2,6 +2,8 @@
 import Layout from '../../layouts/Layout.astro';
 import { getLangFromUrl, useTranslations } from '../../i18n/utils';
 import HeroSection from '../../components/HeroSection.astro';
+import TrustBadges from '../../components/TrustBadges.astro';
+import ValueProps from '../../components/ValueProps.astro';
 import ServicesPreview from '../../components/ServicesPreview.astro';
 import ExpertiseSection from '../../components/ExpertiseSection.astro';
 import StatsSection from '../../components/StatsSection.astro';
@@ -11,8 +13,14 @@ const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 ---
 
-<Layout title={t('nav.home')}>
+<Layout 
+  title={t('nav.home')}
+  description="HORIZONTECH MBA inc. - Cabinet de consultation en ingénierie spécialisé en systèmes embarqués, IoT, IA et solutions logicielles. Expertise en aérospatiale, santé, énergie et industrie. Lévis, Québec."
+  keywords="consultation ingénierie Lévis Québec, systèmes embarqués Canada, solutions IoT, intelligence artificielle, développement logiciel, aérospatiale, technologie santé, solutions énergie Québec"
+>
   <HeroSection />
+  <TrustBadges />
+  <ValueProps />
   <StatsSection />
   <ServicesPreview />
   <ExpertiseSection />

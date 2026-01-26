@@ -1,15 +1,164 @@
 ---
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import CookieConsent from '../components/CookieConsent.astro';
 import { getLangFromUrl } from '../i18n/utils';
 
 interface Props {
   title: string;
   description?: string;
+  keywords?: string;
+  ogImage?: string;
+  ogType?: string;
+  canonicalPath?: string;
 }
 
-const { title, description = 'HorizontechMBA - Engineering Consulting & Innovative Technology Solutions' } = Astro.props;
+const { 
+  title, 
+  description = 'HORIZONTECH MBA inc. - Engineering Consulting, Embedded Systems, IoT, AI & Software Solutions. Expert technology partner in Aerospace, Healthcare, Energy & Industrial sectors.',
+  keywords = 'engineering consulting, embedded systems, IoT, artificial intelligence, AI solutions, software development, aerospace engineering, healthcare technology, energy solutions, R&D consulting, Lévis Quebec, Canada, systèmes embarqués, intelligence artificielle, consultation ingénierie',
+  ogImage = '/og-image.png',
+  ogType = 'website',
+  canonicalPath
+} = Astro.props;
+
 const lang = getLangFromUrl(Astro.url);
+const currentPath = Astro.url.pathname;
+const baseUrl = 'https://horizontechmba.com';
+
+// Determine canonical URL
+const canonical = canonicalPath ? `${baseUrl}${canonicalPath}` : `${baseUrl}${currentPath}`;
+
+// Determine alternate language URLs
+const pathWithoutLang = currentPath.replace(/^\/(en|fr)/, '');
+const enUrl = `${baseUrl}/en${pathWithoutLang}`;
+const frUrl = `${baseUrl}/fr${pathWithoutLang}`;
+
+// Full title for meta tags
+const fullTitle = `${title} | HORIZONTECH MBA inc.`;
+
+// Schema.org structured data
+const organizationSchema = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "HORIZONTECH MBA inc.",
+  "alternateName": "HORIZONTECH MBA",
+  "url": baseUrl,
+  "logo": `${baseUrl}/logo.png`,
+  "image": `${baseUrl}/og-image.png`,
+  "description": lang === 'fr' 
+    ? "Cabinet de consultation en ingénierie spécialisé dans les systèmes embarqués, IoT, IA et solutions logicielles pour l'aérospatiale, la santé, l'énergie et l'industrie."
+    : "Engineering consulting firm specialized in embedded systems, IoT, AI and software solutions for aerospace, healthcare, energy and industrial sectors.",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "7139 Rue Henri-Julien",
+    "addressLocality": "Lévis",
+    "addressRegion": "QC",
+    "postalCode": "G6Y 9X5",
+    "addressCountry": "CA"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": "46.7387",
+    "longitude": "-71.2480"
+  },
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "email": "contact@horizontechmba.com",
+    "contactType": "customer service",
+    "availableLanguage": ["English", "French"]
+  },
+  "sameAs": [
+    "https://www.linkedin.com/company/horizontechmba"
+  ],
+  "areaServed": ["CA", "US", "FR"],
+  "serviceType": [
+    "Engineering Consulting",
+    "Embedded Systems Development",
+    "IoT Solutions",
+    "Artificial Intelligence",
+    "Software Development",
+    "R&D Services"
+  ],
+  "knowsAbout": [
+    "Aerospace Engineering",
+    "Healthcare Technology",
+    "Energy Solutions",
+    "Industrial Automation",
+    "Telecommunications"
+  ]
+};
+
+const localBusinessSchema = {
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "@id": `${baseUrl}/#localbusiness`,
+  "name": "HORIZONTECH MBA inc.",
+  "image": `${baseUrl}/logo.png`,
+  "url": baseUrl,
+  "telephone": "",
+  "email": "contact@horizontechmba.com",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "7139 Rue Henri-Julien",
+    "addressLocality": "Lévis",
+    "addressRegion": "QC",
+    "postalCode": "G6Y 9X5",
+    "addressCountry": "CA"
+  },
+  "priceRange": "$$$$",
+  "openingHours": "Mo-Fr 09:00-17:00"
+};
+
+const professionalServiceSchema = {
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  "name": "HORIZONTECH MBA inc.",
+  "url": baseUrl,
+  "serviceType": "Engineering Consulting",
+  "areaServed": {
+    "@type": "Country",
+    "name": "Canada"
+  },
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Engineering Services",
+    "itemListElement": [
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Embedded Systems & IoT",
+          "description": "Custom embedded systems development and IoT solutions"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "AI & Software Solutions",
+          "description": "Artificial intelligence and custom software development"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Energy Solutions",
+          "description": "Sustainable energy technology consulting"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "R&D Consulting",
+          "description": "Research and development for healthcare and aerospace"
+        }
+      }
+    ]
+  }
+};
 ---
 
 <!DOCTYPE html>
@@ -17,30 +166,122 @@ const lang = getLangFromUrl(Astro.url);
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- Primary Meta Tags -->
+    <title>{fullTitle}</title>
+    <meta name="title" content={fullTitle} />
     <meta name="description" content={description} />
+    <meta name="keywords" content={keywords} />
+    <meta name="author" content="HORIZONTECH MBA inc." />
     <meta name="generator" content={Astro.generator} />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta name="googlebot" content="index, follow" />
+    <meta name="bingbot" content="index, follow" />
+    
+    <!-- Geo Tags for Local SEO -->
+    <meta name="geo.region" content="CA-QC" />
+    <meta name="geo.placename" content="Lévis, Quebec" />
+    <meta name="geo.position" content="46.7387;-71.2480" />
+    <meta name="ICBM" content="46.7387, -71.2480" />
+    
+    <!-- Language & Locale -->
+    <meta http-equiv="content-language" content={lang} />
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href={canonical} />
+    
+    <!-- Hreflang tags for International SEO -->
+    <link rel="alternate" hreflang="en" href={enUrl} />
+    <link rel="alternate" hreflang="fr" href={frUrl} />
+    <link rel="alternate" hreflang="en-CA" href={enUrl} />
+    <link rel="alternate" hreflang="fr-CA" href={frUrl} />
+    <link rel="alternate" hreflang="x-default" href={enUrl} />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content={ogType} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={`${baseUrl}${ogImage}`} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="HORIZONTECH MBA inc. - Engineering Consulting" />
+    <meta property="og:site_name" content="HORIZONTECH MBA inc." />
+    <meta property="og:locale" content={lang === 'fr' ? 'fr_CA' : 'en_CA'} />
+    <meta property="og:locale:alternate" content={lang === 'fr' ? 'en_CA' : 'fr_CA'} />
+    
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content={canonical} />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={`${baseUrl}${ogImage}`} />
+    <meta name="twitter:image:alt" content="HORIZONTECH MBA inc. - Engineering Consulting" />
+    
+    <!-- Additional SEO Meta Tags -->
+    <meta name="theme-color" content="#009999" />
+    <meta name="msapplication-TileColor" content="#009999" />
+    <meta name="format-detection" content="telephone=no" />
     
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     
     <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
     
-    <!-- Hreflang tags for SEO -->
-    <link rel="alternate" hreflang="en" href="https://horizontechmba.com/en/" />
-    <link rel="alternate" hreflang="fr" href="https://horizontechmba.com/fr/" />
-    <link rel="alternate" hreflang="x-default" href="https://horizontechmba.com/en/" />
+    <!-- Schema.org Structured Data -->
+    <script type="application/ld+json" set:html={JSON.stringify(organizationSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(localBusinessSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(professionalServiceSchema)} />
     
-    <title>{title} | HorizontechMBA</title>
+    <!-- Preload critical resources -->
+    <link rel="preload" as="image" href="/logo.png" />
+    
+    <!-- Google Tag Manager - Will be loaded after cookie consent -->
+    <script is:inline>
+      // GTM Configuration - Replace GTM-XXXXXXX with your actual GTM ID
+      window.GTM_ID = 'GTM-XXXXXXX';
+      
+      // Function to load GTM (called after consent)
+      window.loadGTM = function() {
+        if (window.gtmLoaded) return;
+        (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer',window.GTM_ID);
+        window.gtmLoaded = true;
+      };
+      
+      // DataLayer for tracking
+      window.dataLayer = window.dataLayer || [];
+      
+      // Track page view
+      window.dataLayer.push({
+        'event': 'page_view',
+        'page_title': document.title,
+        'page_location': window.location.href,
+        'page_path': window.location.pathname,
+        'language': document.documentElement.lang
+      });
+    </script>
   </head>
   <body class="bg-white text-gray-900 font-sans antialiased">
+    <!-- Google Tag Manager (noscript) - Loaded after consent -->
+    <noscript>
+      <iframe src="about:blank" id="gtm-noscript-frame" height="0" width="0" style="display:none;visibility:hidden"></iframe>
+    </noscript>
     <Header />
-    <main>
+    <main class="pt-24">
       <slot />
     </main>
     <Footer />
+    <CookieConsent />
   </body>
 </html>
 
