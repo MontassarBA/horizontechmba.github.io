@@ -13,6 +13,7 @@ export const ui = {
     'nav.about': 'About',
     'nav.expertise': 'Expertise',
     'nav.contact': 'Contact',
+    'nav.call': 'Call Now',
     
     // Hero Section - More impactful, client-focused
     'hero.title': 'Turn Your Vision',
@@ -115,6 +116,7 @@ export const ui = {
     'nav.about': 'À propos',
     'nav.expertise': 'Expertise',
     'nav.contact': 'Contact',
+    'nav.call': 'Appelez Maintenant',
     
     // Hero Section - More impactful, client-focused
     'hero.title': 'Transformez Votre Vision',

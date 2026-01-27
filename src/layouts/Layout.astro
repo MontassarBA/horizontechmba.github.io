@@ -97,7 +97,7 @@ const localBusinessSchema = {
   "name": "HORIZONTECH MBA inc.",
   "image": `${baseUrl}/logo.png`,
   "url": baseUrl,
-  "telephone": "+1 581-578-3505",
+  "telephone": "+1 (581) 578-3505",
   "email": "contact@horizontechmba.com",
   "address": {
     "@type": "PostalAddress",
@@ -246,9 +246,10 @@ const professionalServiceSchema = {
     <!-- Preload critical resources -->
     <link rel="preload" as="image" href="/logo.png" />
     
-    <!-- Google Tag Manager - Will be loaded after cookie consent -->
+    <!-- Google Analytics 4 & Google Tag Manager - Will be loaded after cookie consent -->
     <script is:inline>
-      // GTM Configuration - HORIZONTECH MBA
+      // GA4 & GTM Configuration - HORIZONTECH MBA
+      window.GA4_ID = 'G-6RR6F0GWKH';
       window.GTM_ID = 'GTM-MB2PFGKF';
       // Contact API URL exposed for client-side form submission
       window.CONTACT_API_URL = {JSON.stringify(contactApiUrl)};
