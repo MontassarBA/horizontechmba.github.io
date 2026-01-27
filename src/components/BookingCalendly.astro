@@ -42,8 +42,8 @@ const content = {
 
 const t = content[lang] || content.en;
 
-// Replace with your actual Calendly URL
-const calendlyUrl = 'https://calendly.com/horizontechmba';
+// Microsoft Bookings URL fourni par l'utilisateur
+const bookingsUrl = 'https://outlook.office.com/bookwithme/user/5593e667ecdf491cacf6077e3b63c82a@horizontechmba.com/meetingtype/edw3oA-06kWAsEaDeHGH7g2?anonymous&ismsaljsauthenabled&ep=mlink';
 ---
 
 <section id="booking" class="py-24 bg-gradient-to-b from-gray-50/50 to-white">
@@ -115,57 +115,31 @@ const calendlyUrl = 'https://calendly.com/horizontechmba';
           </div>
         </div>
         
-        <!-- Right: Calendly Widget -->
-        <div class="bg-white/70 backdrop-blur-lg rounded-3xl shadow-2xl shadow-black/10 border border-white/50 overflow-hidden">
-          <div class="p-6 bg-primary-500 text-white text-center">
+        <!-- Right: Microsoft Bookings Button -->
+        <div class="bg-white/70 backdrop-blur-lg rounded-3xl shadow-2xl shadow-black/10 border border-white/50 overflow-hidden flex flex-col items-center justify-center min-h-[300px] p-10">
+          <div class="p-6 bg-primary-500 text-white text-center rounded-2xl mb-6">
             <h3 class="font-bold text-lg">{t.cta}</h3>
           </div>
-          
-          <!-- Calendly inline widget -->
-          <div 
-            id="calendly-widget"
-            class="calendly-inline-widget" 
-            data-url={`${calendlyUrl}?hide_gdpr_banner=1&primary_color=009999`}
-            style="min-width:320px;height:600px;"
+          <a 
+            href={bookingsUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 px-8 py-4 bg-primary-600 hover:bg-primary-700 text-white font-semibold rounded-xl text-lg shadow-lg transition-colors"
           >
-            <!-- Fallback content while loading -->
-            <div class="flex items-center justify-center h-full p-8">
-              <div class="text-center">
-                <div class="w-16 h-16 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-4 animate-pulse">
-                  <svg class="w-8 h-8 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                  </svg>
-                </div>
-                <p class="text-gray-500 mb-4">
-                  {lang === 'fr' ? 'Chargement du calendrier...' : 'Loading calendar...'}
-                </p>
-                <a 
-                  href={calendlyUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="inline-flex items-center gap-2 px-6 py-3 bg-primary-500 hover:bg-primary-600 text-white font-semibold rounded-xl transition-colors"
-                >
-                  {t.cta}
-                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
-                  </svg>
-                </a>
-              </div>
-            </div>
-          </div>
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+            </svg>
+            {lang === 'fr' ? 'Réserver avec Microsoft Bookings' : 'Book with Microsoft Bookings'}
+          </a>
+          <p class="mt-6 text-gray-500 text-center text-sm max-w-xs">
+            {lang === 'fr' 
+              ? 'Vous serez redirigé vers notre page de réservation Microsoft Bookings pour choisir un créneau.'
+              : 'You will be redirected to our Microsoft Bookings page to select a time slot.'}
+          </p>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- Calendly script -->
-<script is:inline>
-  // Load Calendly widget script
-  (function() {
-    const script = document.createElement('script');
-    script.src = 'https://assets.calendly.com/assets/external/widget.js';
-    script.async = true;
-    document.head.appendChild(script);
-  })();
-</script>
+
