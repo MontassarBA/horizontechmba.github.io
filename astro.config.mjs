@@ -5,10 +5,10 @@ export default defineConfig({
   site: 'https://www.horizontechmba.com',
   integrations: [tailwind()],
   i18n: {
-    defaultLocale: 'en',
+    defaultLocale: 'fr',
     locales: ['en', 'fr'],
     routing: {
-      prefixDefaultLocale: true
+      prefixDefaultLocale: false
     }
   }
 });
