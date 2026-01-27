@@ -1,0 +1,24 @@
+name: OWASP ZAP Baseline Scan
+
+on:
+  push:
+    branches: [ main ]
+  schedule:
+    - cron: '0 3 * * 1' # Weekly on Mondays
+  workflow_dispatch:
+
+jobs:
+  zap_scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Baseline scan against production site
+        uses: zaproxy/action-baseline@v0.13.0
+        with:
+          target: 'https://www.horizontechmba.com/'
+          rules_file_name: '.zap-rules.tsv'
+          fail_action: 'false'
+      - name: Upload ZAP report
+        uses: actions/upload-artifact@v4
+        with:
+          name: zap-report
+          path: zap_report.html

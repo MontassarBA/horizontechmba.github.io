@@ -1,0 +1,21 @@
+name: Uptime Monitor
+
+on:
+  schedule:
+    - cron: '*/15 * * * *'
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check site homepage
+        run: |
+          set -e
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" https://www.horizontechmba.com/)
+          echo "HTTP Status: $STATUS"
+          if [ "$STATUS" -ne "200" ] && [ "$STATUS" -ne "301" ] && [ "$STATUS" -ne "302" ]; then
+            echo "Site is down or misconfigured"
+            exit 1
+          fi
+          echo "Site is up"
