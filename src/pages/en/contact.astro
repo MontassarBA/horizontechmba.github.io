@@ -122,6 +122,10 @@ const t = useTranslations(lang);
             </div>
             
             <div id="form-status" class="hidden text-sm"></div>
+            
+            <!-- reCAPTCHA v3 -->
+            <div class="g-recaptcha" data-sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI" data-action="submit" style="display:none"></div>
+            
             <button 
               id="contact-submit"
               type="submit"
@@ -152,15 +156,25 @@ const t = useTranslations(lang);
                 submitBtn.disabled = true;
                 setStatus(`${document.documentElement.lang === 'fr' ? 'Envoi en cours…' : 'Sending…'}`, '');
                 const formData = new FormData(form);
-                const payload = {
-                  name: formData.get('name'),
-                  company: formData.get('company'),
-                  email: formData.get('email'),
-                  subject: formData.get('subject'),
-                  message: formData.get('message'),
-                  locale: document.documentElement.lang
-                };
                 try {
+                  const token = await new Promise((resolve, reject) => {
+                    if (window.grecaptcha) {
+                      window.grecaptcha.ready(() => {
+                        window.grecaptcha.execute('6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI', { action: 'submit' }).then(resolve).catch(reject);
+                      });
+                    } else {
+                      reject(new Error('reCAPTCHA not loaded'));
+                    }
+                  });
+                  const payload = {
+                    name: formData.get('name'),
+                    company: formData.get('company'),
+                    email: formData.get('email'),
+                    subject: formData.get('subject'),
+                    message: formData.get('message'),
+                    locale: document.documentElement.lang,
+                    recaptchaToken: token
+                  };
                   const res = await fetch(API_URL, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },

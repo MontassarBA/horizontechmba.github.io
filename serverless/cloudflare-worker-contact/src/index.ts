@@ -3,12 +3,56 @@ export interface Env {
   TO_EMAIL: string;
   FROM_EMAIL: string;
   ALLOWED_ORIGINS: string; // comma-separated
+  RECAPTCHA_SECRET: string; // reCAPTCHA secret key
 }
 
-function jsonResponse(body: unknown, status = 200) {
+// Rate limiting store (KV in production)
+const rateLimitStore = new Map<string, { count: number; resetTime: number }>();
+
+function sanitizeHtml(input: string): string {
+  return String(input)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#x27;')
+    .substring(0, 5000); // Max 5000 chars
+}
+
+function validateEmail(email: string): boolean {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(email));
+}
+
+async function verifyRecaptcha(token: string, secret: string): Promise<boolean> {
+  try {
+    const res = await fetch('https://www.google.com/recaptcha/api/siteverify', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: `secret=${secret}&response=${token}`
+    });
+    const data = await res.json();
+    return data.success && (data.score || 0) > 0.5; // Require score > 0.5
+  } catch (err) {
+    return false;
+  }
+}
+
+function checkRateLimit(ip: string): boolean {
+  const now = Date.now();
+  const limit = rateLimitStore.get(ip);
+  if (!limit || now > limit.resetTime) {
+    rateLimitStore.set(ip, { count: 1, resetTime: now + 3600000 }); // 1 hour window
+    return true;
+  }
+  if (limit.count >= 5) return false; // Max 5 requests per hour
+  limit.count++;
+  return true;
+}
+
+function jsonResponse(body: unknown, status = 200, headers: Record<string, string> = {}) {
   return new Response(JSON.stringify(body), {
     status,
-    headers: { 'Content-Type': 'application/json' }
+    headers: { 'Content-Type': 'application/json', ...headers }
   });
 }
 
@@ -39,23 +83,57 @@ export default {
 
     try {
       const body = await request.json();
-      const { name, company, email, subject, message, locale } = body || {};
-      if (!name || !email || !message) {
-        return new Response('Invalid payload', { status: 400, headers: baseHeaders });
+      const { name, company, email, subject, message, locale, recaptchaToken } = body || {};
+      
+      // Validate required fields
+      if (!name || !email || !message || !recaptchaToken) {
+        return jsonResponse({ error: 'Missing required fields' }, 400, baseHeaders);
       }
+
+      // Validate email format
+      if (!validateEmail(email)) {
+        return jsonResponse({ error: 'Invalid email format' }, 400, baseHeaders);
+      }
+
+      // Check rate limit by IP
+      const ip = request.headers.get('CF-Connecting-IP') || 'unknown';
+      if (!checkRateLimit(ip)) {
+        return jsonResponse({ error: 'Rate limit exceeded' }, 429, baseHeaders);
+      }
+
+      // Verify reCAPTCHA token
+      if (!env.RECAPTCHA_SECRET) {
+        return jsonResponse({ error: 'reCAPTCHA not configured' }, 500, baseHeaders);
+      }
+      const captchaValid = await verifyRecaptcha(recaptchaToken, env.RECAPTCHA_SECRET);
+      if (!captchaValid) {
+        return jsonResponse({ error: 'reCAPTCHA verification failed' }, 403, baseHeaders);
+      }
+
+      // Sanitize all inputs
+      const sanitized = {
+        name: sanitizeHtml(name),
+        company: sanitizeHtml(company || ''),
+        email: sanitizeHtml(email),
+        subject: sanitizeHtml(subject || 'Contact'),
+        message: sanitizeHtml(message),
+        locale: sanitizeHtml(locale || '')
+      };
 
       // Compose email via Resend API
       const html = `
         <div style="font-family:Inter,Arial,sans-serif;line-height:1.6;color:#111">
           <h2 style="margin:0 0 12px">New Contact Message</h2>
-          <p><strong>Name:</strong> ${String(name)}</p>
-          <p><strong>Company:</strong> ${String(company || '')}</p>
-          <p><strong>Email:</strong> ${String(email)}</p>
-          <p><strong>Subject:</strong> ${String(subject || 'Contact')}</p>
-          <p><strong>Locale:</strong> ${String(locale || '')}</p>
+          <p><strong>Name:</strong> ${sanitized.name}</p>
+          <p><strong>Company:</strong> ${sanitized.company}</p>
+          <p><strong>Email:</strong> ${sanitized.email}</p>
+          <p><strong>Subject:</strong> ${sanitized.subject}</p>
+          <p><strong>Locale:</strong> ${sanitized.locale}</p>
+          <p><strong>IP Address:</strong> ${ip}</p>
+          <p><strong>Timestamp:</strong> ${new Date().toISOString()}</p>
           <hr/>
           <p><strong>Message:</strong></p>
-          <p>${String(message).replace(/</g,'&lt;').replace(/>/g,'&gt;')}</p>
+          <p>${sanitized.message}</p>
         </div>
       `;
 
@@ -68,19 +146,19 @@ export default {
         body: JSON.stringify({
           from: env.FROM_EMAIL,
           to: env.TO_EMAIL,
-          subject: `Contact: ${subject || 'Contact'} — ${name}`,
+          subject: `[Contact] ${sanitized.subject} — ${sanitized.name}`,
           html
         })
       });
 
       if (!resendRes.ok) {
         const text = await resendRes.text();
-        return new Response(text || 'Email send failed', { status: 502, headers: baseHeaders });
+        return jsonResponse({ error: 'Email send failed' }, 502, baseHeaders);
       }
 
-      return new Response('OK', { status: 200, headers: baseHeaders });
+      return jsonResponse({ success: true }, 200, baseHeaders);
     } catch (err) {
-      return new Response('Server error', { status: 500, headers: baseHeaders });
+      return jsonResponse({ error: 'Server error' }, 500, baseHeaders);
     }
   }
 };

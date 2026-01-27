@@ -7,7 +7,11 @@
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "test": "node scripts/security-tests.js",
+    "test:build": "npm run build && npm run test",
+    "test:security": "npm run test",
+    "deploy:check": "npm run build && npm run test"
   },
   "dependencies": {
     "astro": "^4.5.0",

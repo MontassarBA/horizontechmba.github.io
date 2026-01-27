@@ -1,0 +1,21 @@
+# Security Headers for GitHub Pages / Netlify
+# Prevent clickjacking attacks
+X-Frame-Options: DENY
+
+# Prevent MIME sniffing
+X-Content-Type-Options: nosniff
+
+# Legacy XSS protection
+X-XSS-Protection: 1; mode=block
+
+# Control referrer information
+Referrer-Policy: strict-origin-when-cross-origin
+
+# Permissions Policy (formerly Feature Policy)
+Permissions-Policy: geolocation=(), microphone=(), camera=(), payment=()
+
+# Strict HTTPS
+Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
+
+# Content Security Policy - Strict
+Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google.com/recaptcha/ https://www.gstatic.com/recaptcha/; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://www.google.com/recaptcha/ https://www.gstatic.com; frame-src https://www.google.com/recaptcha/; object-src 'none'
