@@ -16,7 +16,7 @@ interface Props {
 const { 
   title, 
   description = 'HORIZONTECH MBA inc. - Engineering Consulting, Embedded Systems, IoT, AI & Software Solutions. Expert technology partner in Aerospace, Healthcare, Energy & Industrial sectors.',
-  keywords = 'engineering consulting, embedded systems, IoT, artificial intelligence, AI solutions, software development, aerospace engineering, healthcare technology, energy solutions, R&D consulting, Lévis Quebec, Canada, systèmes embarqués, intelligence artificielle, consultation ingénierie',
+  keywords = 'engineering consulting, embedded systems, EMI/EMC, HIL/SIL, Matlab, Simulink, quality engineering, risk analysis, development project management, IoT, artificial intelligence, AI solutions, software development, aerospace engineering, healthcare technology, energy solutions, R&D consulting, Lévis Quebec, Canada, systèmes embarqués, intelligence artificielle, consultation ingénierie',
   ogImage = '/og-image.png',
   ogType = 'website',
   canonicalPath
@@ -76,6 +76,12 @@ const organizationSchema = {
   "serviceType": [
     "Engineering Consulting",
     "Embedded Systems Development",
+    "EMI/EMC Consulting",
+    "HIL/SIL Testing",
+    "Matlab/Simulink",
+    "Quality Engineering",
+    "Risk Analysis",
+    "Development Project Management",
     "IoT Solutions",
     "Artificial Intelligence",
     "Software Development",
@@ -83,6 +89,13 @@ const organizationSchema = {
   ],
   "knowsAbout": [
     "Aerospace Engineering",
+    "Embedded Systems",
+    "EMI/EMC",
+    "HIL/SIL",
+    "Matlab/Simulink",
+    "Quality Engineering",
+    "Risk Analysis",
+    "Project Management",
     "Healthcare Technology",
     "Energy Solutions",
     "Industrial Automation",
@@ -117,10 +130,10 @@ const professionalServiceSchema = {
   "name": "HORIZONTECH MBA inc.",
   "url": baseUrl,
   "serviceType": "Engineering Consulting",
-  "areaServed": {
-    "@type": "Country",
-    "name": "Canada"
-  },
+  "areaServed": [
+    { "@type": "Country", "name": "Canada" },
+    { "@type": "Country", "name": "United States" }
+  ],
   "hasOfferCatalog": {
     "@type": "OfferCatalog",
     "name": "Engineering Services",
@@ -131,6 +144,30 @@ const professionalServiceSchema = {
           "@type": "Service",
           "name": "Embedded Systems & IoT",
           "description": "Custom embedded systems development and IoT solutions"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "EMI/EMC Consulting",
+          "description": "EMI/EMC compliance guidance and design recommendations"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "HIL/SIL & Matlab/Simulink",
+          "description": "Test strategy, model-based development, and validation"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Quality & Risk Analysis",
+          "description": "Quality engineering and risk analysis for critical systems"
         }
       },
       {

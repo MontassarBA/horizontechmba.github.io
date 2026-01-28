@@ -8,8 +8,8 @@ const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 const translatePath = useTranslatedPath(lang);
 
-const pageDescription = "Services de consultation en ingénierie: Systèmes embarqués & IoT, IA & Développement logiciel, Solutions énergétiques, R&D pour santé et aérospatiale. Solutions technologiques sur mesure.";
-const pageKeywords = "consultation systèmes embarqués, services développement IoT, solutions intelligence artificielle, génie logiciel, consultation énergie, R&D aérospatiale, technologie santé, développement firmware, conception FPGA";
+const pageDescription = "Services de consultation en ingénierie: systèmes embarqués & IoT, IA & développement logiciel, solutions énergétiques, R&D santé et aérospatiale, EMI/EMC, HIL/SIL Matlab, qualité, analyse de risques et gestion de projets de développement.";
+const pageKeywords = "consultation systèmes embarqués, services développement IoT, solutions intelligence artificielle, génie logiciel, consultation énergie, R&D aérospatiale, technologie santé, développement firmware, conception FPGA, consultant EMI EMC, HIL SIL Matlab, qualité ingénierie, analyse de risques, gestion de projet développement";
 
 const services = [
   {
@@ -80,6 +80,16 @@ const services = [
   <!-- Services List -->
   <section class="py-20 bg-white">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-5xl mx-auto mb-16">
+        <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
+          Services spécialisés en systèmes embarqués, EMI/EMC, HIL/SIL, Matlab
+        </h2>
+        <p class="text-gray-600">
+          Nous accompagnons vos projets de développement avec une expertise pratique en systèmes embarqués,
+          EMI/EMC, HIL/SIL, Matlab/Simulink, qualité et analyse de risques. Basés à Lévis, nous intervenons
+          au Québec, partout au Canada et aux États-Unis.
+        </p>
+      </div>
       <div class="space-y-16">
         {services.map((service, index) => (
           <div class={`flex flex-col ${index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'} gap-12 items-center`}>
