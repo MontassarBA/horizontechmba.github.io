@@ -172,7 +172,7 @@ test('X-Frame-Options header', headers && headers.includes('X-Frame-Options: DEN
 test('X-Content-Type-Options header', headers && headers.includes('X-Content-Type-Options: nosniff'));
 test('HSTS preload enabled', headers && headers.includes('Strict-Transport-Security'));
 test('Permissions-Policy configured', headers && headers.includes('Permissions-Policy'));
-test('reCAPTCHA domains in CSP', headers && headers.includes('recaptcha'));
+test('Formspree domains in CSP', headers && headers.includes('formspree.io'));
 test('GTM domain in CSP', headers && headers.includes('googletagmanager.com'));
 
 // ========================================
