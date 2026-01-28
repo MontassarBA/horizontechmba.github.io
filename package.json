@@ -19,7 +19,8 @@
     "precommit": "npm run test:pre-commit",
     "check:public-assets": "node scripts/public-assets-check.js",
     "pre-deploy-check": "node scripts/pre-deploy-check.js",
-    "test:post-deploy": "node scripts/post-deploy-verification.js"
+    "test:post-deploy": "node scripts/post-deploy-verification.js",
+    "test:apple-devices": "npm run build && node scripts/test-apple-devices-simplified.js"
   },
   "dependencies": {
     "astro": "^4.5.0",
