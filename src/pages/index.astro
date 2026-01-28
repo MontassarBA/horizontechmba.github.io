@@ -1,5 +1,23 @@
 ---
 // Redirect to default language (French)
-return Astro.redirect('/fr/');
+// Using client-side redirect to avoid Astro's absolute URL resolution
 ---
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Redirecting to French version...</title>
+  <meta http-equiv="refresh" content="0;url=/fr/" />
+  <link rel="canonical" href="/fr/" />
+  <meta name="robots" content="noindex" />
+</head>
+<body>
+  <p>If you are not redirected automatically, follow the <a href="/fr/">link to the French version</a>.</p>
+  <script>
+    // Immediate client-side redirect as fallback
+    window.location.href = '/fr/';
+  </script>
+</body>
+</html>
 

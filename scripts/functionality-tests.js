@@ -87,6 +87,29 @@ pages.forEach(page => {
 });
 
 // ========================================
+// 1B. Root Redirect Page Verification (CRITICAL FIX)
+// ========================================
+log('\n🌍 TEST 1B: Root Redirect Page (Prevents Infinite Loop)\n', 'cyan');
+
+// Check index.html uses RELATIVE redirect not ABSOLUTE URL
+const indexHtml = readFile(path.join(distDir, 'index.html'));
+const hasRelativeRedirect = indexHtml && indexHtml.includes('href="/fr/"');
+const hasAbsoluteRedirect = indexHtml && /href="https:\/\/(www\.)?horizontechmba\.com\/fr\/"/.test(indexHtml);
+
+test('Root index uses relative redirect (/fr/)', hasRelativeRedirect,
+  'CRITICAL: Using absolute URL causes redirect loop on domain propagation');
+test('Root index does NOT use absolute URL redirect', !hasAbsoluteRedirect,
+  'CRITICAL: Absolute URLs break when custom domain not yet propagated');
+
+// Verify the redirect meta refresh also uses proper reference
+const hasProperMetaRefresh = indexHtml && (
+  indexHtml.includes('url=/fr/') ||  // Catches both 0;url=/fr/ and 2;url=/fr/
+  indexHtml.includes('href="/fr/"')   // Also check href attribute
+);
+test('Root index meta refresh uses correct URL', hasProperMetaRefresh,
+  'Meta refresh should be relative or use GitHub Pages URL');
+
+// ========================================
 // 2. Build Quality & Syntax Verification
 // ========================================
 log('\n🔧 TEST 2: Build Quality & Syntax\n', 'cyan');
