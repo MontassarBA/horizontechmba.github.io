@@ -8,7 +8,11 @@ const route = getRouteFromUrl(Astro.url);
 <div class="relative">
   <button 
     id="lang-picker-btn"
-    class="flex items-center space-x-1 px-3 py-2 rounded-lg border border-gray-200 hover:border-primary-300 hover:bg-primary-50 transition-all"
+    class="flex items-center space-x-1 px-3 py-2 rounded-lg border border-gray-200 hover:border-primary-300 hover:bg-primary-50 transition-all cursor-pointer touch-manipulation"
+    type="button"
+    aria-label="Select language"
+    aria-haspopup="true"
+    aria-expanded="false"
   >
     <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path>
@@ -41,12 +45,28 @@ const route = getRouteFromUrl(Astro.url);
   const btn = document.getElementById('lang-picker-btn');
   const dropdown = document.getElementById('lang-picker-dropdown');
   
-  btn?.addEventListener('click', (e) => {
+  // Function to toggle dropdown
+  function toggleDropdown(e) {
+    e.preventDefault();
     e.stopPropagation();
+    const isHidden = dropdown?.classList.contains('hidden');
     dropdown?.classList.toggle('hidden');
-  });
+    btn?.setAttribute('aria-expanded', String(!isHidden));
+  }
   
-  document.addEventListener('click', () => {
+  // Function to close dropdown
+  function closeDropdown() {
     dropdown?.classList.add('hidden');
-  });
+    btn?.setAttribute('aria-expanded', 'false');
+  }
+  
+  // Support both click and touch events for iOS compatibility
+  if (btn) {
+    btn.addEventListener('click', toggleDropdown);
+    btn.addEventListener('touchstart', toggleDropdown, { passive: false });
+  }
+  
+  // Close dropdown when clicking/touching outside
+  document.addEventListener('click', closeDropdown);
+  document.addEventListener('touchstart', closeDropdown);
 </script>
