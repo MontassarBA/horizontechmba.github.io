@@ -2,6 +2,7 @@
 import Layout from '../../layouts/Layout.astro';
 import { getLangFromUrl, useTranslations, useTranslatedPath } from '../../i18n/utils';
 import CTASection from '../../components/CTASection.astro';
+import ExpertiseSection from '../../components/ExpertiseSection.astro';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
@@ -218,6 +219,9 @@ const values = [
       </div>
     </div>
   </section>
+  
+  <!-- Industry Expertise Section -->
+  <ExpertiseSection />
   
   <CTASection />
 </Layout>

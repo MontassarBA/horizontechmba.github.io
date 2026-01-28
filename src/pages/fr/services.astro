@@ -2,6 +2,7 @@
 import Layout from '../../layouts/Layout.astro';
 import { getLangFromUrl, useTranslations, useTranslatedPath } from '../../i18n/utils';
 import CTASection from '../../components/CTASection.astro';
+import CaseStudies from '../../components/CaseStudies.astro';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
@@ -168,6 +169,9 @@ const services = [
       </div>
     </div>
   </section>
+  
+  <!-- Case Studies Section -->
+  <CaseStudies />
   
   <CTASection />
 </Layout>

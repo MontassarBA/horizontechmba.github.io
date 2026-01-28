@@ -75,6 +75,8 @@ const pages = [
   { path: 'fr/contact/index.html', name: 'FR Contact' },
   { path: 'en/cookies/index.html', name: 'EN Cookies' },
   { path: 'fr/cookies/index.html', name: 'FR Cookies' },
+  { path: 'en/faq/index.html', name: 'EN FAQ' },
+  { path: 'fr/faq/index.html', name: 'FR FAQ' },
   { path: '404.html', name: '404 Page' },
 ];
 
@@ -101,9 +103,9 @@ const indexRedirect = readFile(path.join(distDir, 'index.html'));
 test('Home page redirects to /fr/', indexRedirect && (indexRedirect.includes('http-equiv="refresh"') || indexRedirect.includes('window.location')) && indexRedirect.includes('/fr/'));
 
 // ========================================
-// 3. Contact Form Tests
+// 3. Contact Form Tests & Booking
 // ========================================
-log('\n📧 TEST 3: Contact Forms & reCAPTCHA\n', 'cyan');
+log('\n📧 TEST 3: Contact Forms, reCAPTCHA & Booking\n', 'cyan');
 
 const frContact = readFile(path.join(distDir, 'fr/contact/index.html'));
 const enContact = readFile(path.join(distDir, 'en/contact/index.html'));
@@ -116,6 +118,8 @@ test('FR Contact has reCAPTCHA script', frContact && frContact.includes('www.goo
 test('EN Contact has reCAPTCHA script', enContact && enContact.includes('www.google.com/recaptcha/api.js'));
 test('FR Contact has grecaptcha.execute', frContact && frContact.includes('grecaptcha.execute'));
 test('EN Contact has grecaptcha.execute', enContact && enContact.includes('grecaptcha.execute'));
+test('FR Contact has BookingCalendly', frContact && frContact.includes('outlook.office.com/bookwithme'));
+test('EN Contact has BookingCalendly', enContact && enContact.includes('outlook.office.com/bookwithme'));
 
 // ========================================
 // 4. Analytics Integration
@@ -203,16 +207,23 @@ const envExample = readFile(path.join(projectRoot, '.env.example'));
 test('.env.example has API URL placeholder', envExample && envExample.includes('PUBLIC_CONTACT_API_URL'));
 
 // ========================================
-// 10. Content Quality
+// 10. Content Quality & Structure
 // ========================================
-log('\n✨ TEST 10: Content Quality\n', 'cyan');
+log('\n✨ TEST 10: Content Quality & UX Structure\n', 'cyan');
 
 const aboutPage = readFile(path.join(distDir, 'fr/about/index.html'));
 const servicesPage = readFile(path.join(distDir, 'fr/services/index.html'));
+const faqPage = readFile(path.join(distDir, 'fr/faq/index.html'));
 
 test('About page has founder content', aboutPage && aboutPage.includes('Expertise'));
 test('About page has 15+ years mention', aboutPage && aboutPage.includes('15'));
+test('About page has ExpertiseSection', aboutPage && aboutPage.includes('Industry Expertise') || aboutPage.includes('Expertise Industrielle'));
 test('Services page has service descriptions', servicesPage && servicesPage.includes('service'));
+test('Services page has CaseStudies', servicesPage && (servicesPage.includes('Case Studies') || servicesPage.includes('Études de Cas')));
+test('FAQ page exists and has questions', faqPage && (faqPage.includes('FAQ') || faqPage.includes('Foire Aux Questions')));
+test('Home page is streamlined (no FAQ section)', !frHome || !frHome.includes('Frequently Asked Questions'));
+test('Home page is streamlined (no CaseStudies section)', !frHome || !(frHome.includes('Case Studies') && frHome.includes('40% dev time reduction')));
+test('Home page is streamlined (no Newsletter full section)', !frHome || !frHome.includes('Restez à la pointe de l\'innovation'));
 test('No placeholder text in pages', !aboutPage || !aboutPage.includes('YOUR_FORM_ID'));
 
 // ========================================

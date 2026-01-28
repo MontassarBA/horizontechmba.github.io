@@ -57,6 +57,11 @@ const currentYear = new Date().getFullYear();
               {t('nav.about')}
             </a>
           </li>
+          <li>
+            <a href={translatePath('/faq')} class="text-gray-400 hover:text-primary-400 transition-colors">
+              FAQ
+            </a>
+          </li>
         </ul>
       </div>
       
@@ -80,6 +85,30 @@ const currentYear = new Date().getFullYear();
             <span>contact@horizontechmba.com</span>
           </li>
         </ul>
+      </div>
+    </div>
+    
+    <!-- Newsletter Widget -->
+    <div class="mt-12 pt-8 border-t border-gray-800">
+      <div class="max-w-2xl mx-auto text-center">
+        <h4 class="text-xl font-semibold mb-2">{t('footer.newsletter.title')}</h4>
+        <p class="text-gray-400 mb-6">{t('footer.newsletter.description')}</p>
+        <form id="footer-newsletter-form" class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+          <input 
+            type="email" 
+            id="footer-newsletter-email"
+            name="email"
+            required
+            placeholder={t('footer.newsletter.placeholder')}
+            class="flex-1 px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
+          />
+          <button 
+            type="submit"
+            class="px-6 py-3 bg-gradient-to-r from-primary-500 to-primary-600 text-white font-semibold rounded-lg hover:from-primary-600 hover:to-primary-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+          >
+            {t('footer.newsletter.button')}
+          </button>
+        </form>
       </div>
     </div>
     

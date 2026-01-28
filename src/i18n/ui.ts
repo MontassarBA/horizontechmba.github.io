@@ -93,6 +93,10 @@ export const ui = {
     'footer.services': 'Services',
     'footer.contact': 'Contact',
     'footer.rights': 'All rights reserved.',
+    'footer.newsletter.title': 'Stay Updated',
+    'footer.newsletter.description': 'Get the latest insights and updates.',
+    'footer.newsletter.placeholder': 'Your email',
+    'footer.newsletter.button': 'Subscribe',
     
     // Stats
     'stats.projects': 'Projects Delivered',
@@ -108,6 +112,13 @@ export const ui = {
     // Testimonials
     'testimonials.title': 'What Our Clients Say',
     'testimonials.subtitle': 'Success stories from industry leaders',
+    
+    // FAQ Page
+    'faq.title': 'Frequently Asked Questions',
+    'faq.subtitle': 'Find answers to common questions about our services and approach',
+    'faq.cta.title': 'Still have questions?',
+    'faq.cta.description': 'Our team is here to help. Contact us for personalized answers.',
+    'faq.cta.button': 'Contact Us',
   },
   fr: {
     // Navigation
@@ -196,6 +207,10 @@ export const ui = {
     'footer.services': 'Services',
     'footer.contact': 'Contact',
     'footer.rights': 'Tous droits réservés.',
+    'footer.newsletter.title': 'Restez Informé',
+    'footer.newsletter.description': 'Recevez nos dernières analyses et actualités.',
+    'footer.newsletter.placeholder': 'Votre email',
+    'footer.newsletter.button': 'S\'abonner',
     
     // Stats
     'stats.projects': 'Projets Livrés',
@@ -211,5 +226,12 @@ export const ui = {
     // Testimonials
     'testimonials.title': 'Ce Que Disent Nos Clients',
     'testimonials.subtitle': 'Histoires de succès de leaders de l\'industrie',
+    
+    // FAQ Page
+    'faq.title': 'Foire Aux Questions',
+    'faq.subtitle': 'Trouvez des réponses aux questions courantes sur nos services et notre approche',
+    'faq.cta.title': 'Vous avez encore des questions?',
+    'faq.cta.description': 'Notre équipe est là pour vous aider. Contactez-nous pour des réponses personnalisées.',
+    'faq.cta.button': 'Nous Contacter',
   },
 } as const;

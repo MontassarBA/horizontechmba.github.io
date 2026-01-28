@@ -1,6 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import { getLangFromUrl, useTranslations } from '../../i18n/utils';
+import BookingCalendly from '../../components/BookingCalendly.astro';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
@@ -292,4 +293,7 @@ const t = useTranslations(lang);
       </div>
     </div>
   </section>
+  
+  <!-- Booking Section -->
+  <BookingCalendly />
 </Layout>
