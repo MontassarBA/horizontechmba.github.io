@@ -2,7 +2,7 @@ import { defineConfig } from 'astro/config';
 import tailwind from '@astrojs/tailwind';
 
 export default defineConfig({
-  site: 'https://www.horizontechmba.com',
+  site: 'https://MontassarBA.github.io',
   integrations: [tailwind()],
   i18n: {
     defaultLocale: 'fr',

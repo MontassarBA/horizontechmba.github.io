@@ -208,7 +208,12 @@ log('\n🌐 TEST 8: Domain & URL Configuration\n', 'cyan');
 const astroConfig = readFile(path.join(projectRoot, 'astro.config.mjs'));
 const cname = readFile(path.join(projectRoot, 'CNAME'));
 
-test('Astro site URL configured', astroConfig && astroConfig.includes('https://www.horizontechmba.com'));
+// Accept both www.horizontechmba.com and MontassarBA.github.io URLs
+const hasValidSiteUrl = astroConfig && (
+  astroConfig.includes('https://www.horizontechmba.com') || 
+  astroConfig.includes('https://MontassarBA.github.io')
+);
+test('Astro site URL configured', hasValidSiteUrl);
 test('CNAME file has www domain', cname && cname.includes('www.horizontechmba.com'));
 test('i18n default locale is French', astroConfig && astroConfig.includes("defaultLocale: 'fr'"));
 test('prefixDefaultLocale is false', astroConfig && astroConfig.includes('prefixDefaultLocale: false'));
