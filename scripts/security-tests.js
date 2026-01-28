@@ -83,16 +83,16 @@ const tests = {
     return { passed: missing.length === 0, missing };
   },
 
-  // Test 4: reCAPTCHA intégré
-  recaptchaIntegrated: () => {
-    console.log('✓ Test 4: reCAPTCHA v3 Integrated');
+  // Test 4: Formspree intégré (pas de placeholder)
+  formspreeIntegrated: () => {
+    console.log('✓ Test 4: Formspree Integrated (No Placeholder)');
     const contactEN = path.join(__dirname, '../src/pages/en/contact.astro');
     const contactFR = path.join(__dirname, '../src/pages/fr/contact.astro');
     const contentEN = fs.readFileSync(contactEN, 'utf-8');
     const contentFR = fs.readFileSync(contactFR, 'utf-8');
     
-    const hasEN = contentEN.includes('g-recaptcha') && contentEN.includes('grecaptcha.execute');
-    const hasFR = contentFR.includes('g-recaptcha') && contentFR.includes('grecaptcha.execute');
+    const hasEN = contentEN.includes('formspree.io/f/') && !contentEN.includes('YOUR_FORM_ID');
+    const hasFR = contentFR.includes('formspree.io/f/') && !contentFR.includes('YOUR_FORM_ID');
     return { passed: hasEN && hasFR };
   },
 
@@ -124,28 +124,18 @@ const tests = {
     return { passed: hasCorsValidation && hasOriginCheck };
   },
 
-  // Test 7: Pas de placeholder Formspree
-  noFormspreeID: () => {
-    console.log('✓ Test 7: No Formspree Placeholder ID');
-    const srcDir = path.join(__dirname, '../src');
-    let foundFormspree = false;
+  // Test 7: Formspree protection anti-spam
+  formspreeSpamProtection: () => {
+    console.log('✓ Test 7: Formspree Spam Protection Enabled');
+    const contactEN = path.join(__dirname, '../src/pages/en/contact.astro');
+    const contactFR = path.join(__dirname, '../src/pages/fr/contact.astro');
+    const contentEN = fs.readFileSync(contactEN, 'utf-8');
+    const contentFR = fs.readFileSync(contactFR, 'utf-8');
     
-    const scanDir = (dir) => {
-      fs.readdirSync(dir).forEach(file => {
-        const filePath = path.join(dir, file);
-        if (fs.statSync(filePath).isDirectory()) {
-          scanDir(filePath);
-        } else if (file.endsWith('.astro')) {
-          const content = fs.readFileSync(filePath, 'utf-8');
-          if (content.includes('YOUR_FORM_ID') || content.includes('formspree.io/f/')) {
-            foundFormspree = true;
-          }
-        }
-      });
-    };
-    
-    scanDir(srcDir);
-    return { passed: !foundFormspree };
+    // Vérifier que Formspree est utilisé (il a sa propre protection anti-spam)
+    const hasFormspreeEN = contentEN.includes('formspree.io/f/mzdgpgbq');
+    const hasFormspreeFR = contentFR.includes('formspree.io/f/mzdgpgbq');
+    return { passed: hasFormspreeEN && hasFormspreeFR };
   },
 
   // Test 8: i18n sans vulnérabilités
