@@ -7,18 +7,33 @@ on:
     - cron: '0 3 * * 1' # Weekly on Mondays
   workflow_dispatch:
 
+permissions:
+  contents: read
+  security-events: write
+
 jobs:
   zap_scan:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        
       - name: Baseline scan against production site
         uses: zaproxy/action-baseline@v0.13.0
         with:
           target: 'https://www.horizontechmba.com/'
           rules_file_name: '.zap-rules.tsv'
           fail_action: 'false'
+          allow_issue_writing: 'false'
+          
       - name: Upload ZAP report
         uses: actions/upload-artifact@v4
+        if: always()
         with:
           name: zap-report
-          path: zap_report.html
+          path: |
+            zap_report.html
+            report_html.html
+            report_json.json
+            report_md.md
+          retention-days: 7

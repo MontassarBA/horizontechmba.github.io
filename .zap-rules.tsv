@@ -1,0 +1,76 @@
+# ZAP Scan Rules Configuration
+# Format: <rule-id> <action> [reason]
+# Actions: IGNORE, WARN, FAIL
+#
+# GitHub Pages Limitations:
+# - Custom headers (_headers file) are NOT supported by GitHub Pages
+# - These headers can only be set on Netlify, Cloudflare Pages, or custom servers
+# - We have the _headers file configured correctly, but GitHub Pages ignores it
+#
+# Rules ignored due to GitHub Pages limitations:
+
+# 10020 - Missing Anti-clickjacking Header (X-Frame-Options)
+# GitHub Pages does not allow custom security headers
+10020	IGNORE	GitHub Pages does not support custom headers - X-Frame-Options configured in _headers but not applied
+
+# 10021 - X-Content-Type-Options Header Missing
+# GitHub Pages does not allow custom security headers
+10021	IGNORE	GitHub Pages does not support custom headers - X-Content-Type-Options configured in _headers but not applied
+
+# 10035 - Strict-Transport-Security Header Not Set (HSTS)
+# GitHub Pages does not allow custom security headers
+10035	IGNORE	GitHub Pages does not support custom headers - HSTS configured in _headers but not applied
+
+# 10038 - Content Security Policy (CSP) Header Not Set
+# GitHub Pages does not allow custom security headers
+10038	IGNORE	GitHub Pages does not support custom headers - CSP configured in _headers but not applied
+
+# 10063 - Permissions Policy Header Not Set
+# GitHub Pages does not allow custom security headers
+10063	IGNORE	GitHub Pages does not support custom headers - Permissions-Policy configured in _headers but not applied
+
+# 10098 - Cross-Domain Misconfiguration
+# GitHub Pages serves fonts from fonts.googleapis.com (required for Google Fonts)
+10098	IGNORE	Google Fonts integration requires cross-domain requests - intentional and safe
+
+# 10109 - Modern Web Application
+# This is informational - not a security issue
+10109	IGNORE	Informational only - modern web frameworks are used intentionally
+
+# 90003 - Sub Resource Integrity Attribute Missing
+# SRI is not feasible for dynamically loaded Google Fonts and GTM
+90003	IGNORE	SRI not applicable for third-party CDN resources (Google Fonts, GTM)
+
+# 90004 - Insufficient Site Isolation Against Spectre Vulnerability
+# Requires Cross-Origin-Embedder-Policy header which GitHub Pages doesn't support
+90004	IGNORE	GitHub Pages does not support COEP headers - configured in _headers but not applied
+
+# Rules to still check:
+
+# 10015 - Re-examine Cache-control Directives
+# GitHub Pages sets cache headers automatically
+10015	WARN	GitHub Pages manages cache headers - verify they are appropriate
+
+# 10017 - Cross-Domain JavaScript Source File Inclusion
+# Using Google Fonts, GTM, Formspree - all trusted sources
+10017	WARN	Verify all cross-domain scripts are from trusted sources only
+
+# 10024 - Information Disclosure - Sensitive Information in URL
+# Check for any sensitive data in query parameters
+10024	WARN	Verify no sensitive information is exposed in URLs
+
+# 10027 - Information Disclosure - Suspicious Comments
+# Check for sensitive comments in production code
+10027	WARN	Review comments in production code for sensitive information
+
+# 10049 - Storable and Cacheable Content
+# GitHub Pages caching behavior
+10049	WARN	Review GitHub Pages cache settings
+
+# 10050 - Retrieved from Cache
+# Informational about caching behavior
+10050	WARN	Monitor cache behavior for performance
+
+# 10202 - Absence of Anti-CSRF Tokens
+# Formspree handles CSRF protection on their end
+10202	IGNORE	Forms use Formspree which handles CSRF protection server-side
