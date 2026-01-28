@@ -1,11 +1,9 @@
 name: OWASP ZAP Baseline Scan
 
 on:
-  push:
-    branches: [ main ]
   schedule:
-    - cron: '0 3 * * 1' # Weekly on Mondays
-  workflow_dispatch:
+    - cron: '0 3 * * 1' # Weekly on Mondays at 3 AM UTC
+  workflow_dispatch: # Manual trigger only
 
 permissions:
   contents: read
