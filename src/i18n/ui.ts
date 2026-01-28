@@ -19,13 +19,13 @@ export const ui = {
     'hero.title': 'Turn Your Vision',
     'hero.titleHighlight': 'Into Reality',
     'hero.subtitle': 'We partner with innovators to design, build, and scale breakthrough technologies. From embedded systems to AI — we make the complex simple.',
-    'hero.cta.primary': 'Start Your Project',
-    'hero.cta.secondary': 'See Our Work',
-    'hero.trusted': 'Trusted by industry leaders',
+    'hero.cta.primary': 'Talk to an Expert',
+    'hero.cta.secondary': 'See Our Services',
+    'hero.trusted': 'Industries we serve',
     
     // Value Propositions
     'value.speed': 'Faster Time-to-Market',
-    'value.speed.desc': 'Accelerate your product development by 40%',
+    'value.speed.desc': 'Accelerate your product development with clear milestones',
     'value.quality': 'Zero-Defect Engineering',
     'value.quality.desc': 'Rigorous quality standards at every stage',
     'value.innovation': 'Future-Ready Solutions',
@@ -41,7 +41,7 @@ export const ui = {
     'services.ai.title': 'AI & Intelligent Software',
     'services.ai.description': 'Harness the power of AI to automate, optimize, and innovate. Custom solutions that deliver measurable ROI.',
     'services.energy.title': 'Smart Energy Solutions',
-    'services.energy.description': 'Reduce costs by up to 30% with intelligent energy management systems designed for modern enterprises.',
+    'services.energy.description': 'Optimize energy performance with intelligent management systems designed for modern enterprises.',
     'services.rd.title': 'R&D Innovation Lab',
     'services.rd.description': 'Pushing boundaries in health tech, medical devices, and space systems. We turn research into market-ready products.',
     
@@ -60,7 +60,7 @@ export const ui = {
     'about.why.agile': 'Agile & Adaptive',
     'about.why.agile.desc': 'Flexible engagement models that fit your needs',
     'about.why.results': 'Results-Driven',
-    'about.why.results.desc': '98% client satisfaction rate with measurable outcomes',
+    'about.why.results.desc': 'Measurable outcomes with transparent follow-through',
     
     // Expertise Section
     'expertise.title': 'Industry Expertise',
@@ -85,7 +85,10 @@ export const ui = {
     'contact.send': 'Get Started',
     'contact.info.title': 'Ready to Innovate?',
     'contact.info.description': 'Book a free 30-minute consultation with our engineering experts. No commitment, just insights.',
-    'contact.response': 'We respond within 24 hours',
+    'contact.response': 'We respond within 24–48 business hours',
+    'contact.form.title': 'Request a Quote',
+    'contact.budget': 'Estimated Budget',
+    'contact.timeline': 'Timeline',
     
     // Footer
     'footer.description': 'Engineering consulting and innovative technological solutions for tomorrow\'s challenges.',
@@ -99,10 +102,10 @@ export const ui = {
     'footer.newsletter.button': 'Subscribe',
     
     // Stats
-    'stats.projects': 'Projects Delivered',
-    'stats.clients': 'Happy Clients',
-    'stats.experience': 'Years of Excellence',
-    'stats.expertise': 'Expert Engineers',
+    'stats.projects': 'Years of experience (founder)',
+    'stats.clients': 'Sectors served',
+    'stats.experience': 'Core engineering domains',
+    'stats.expertise': 'Dedicated partner',
     
     // CTA Section
     'cta.title': 'Ready to Transform Your Business?',
@@ -133,13 +136,13 @@ export const ui = {
     'hero.title': 'Transformez Votre Vision',
     'hero.titleHighlight': 'En Réalité',
     'hero.subtitle': 'Nous accompagnons les innovateurs pour concevoir, construire et déployer des technologies de rupture. Des systèmes embarqués à l\'IA — nous simplifions le complexe.',
-    'hero.cta.primary': 'Démarrer Votre Projet',
-    'hero.cta.secondary': 'Voir Nos Réalisations',
-    'hero.trusted': 'La confiance des leaders de l\'industrie',
+    'hero.cta.primary': 'Parler à un expert',
+    'hero.cta.secondary': 'Voir Nos Services',
+    'hero.trusted': 'Secteurs d\'expertise',
     
     // Value Propositions
     'value.speed': 'Mise en Marché Accélérée',
-    'value.speed.desc': 'Accélérez votre développement produit de 40%',
+    'value.speed.desc': 'Accélérez votre développement produit grâce à des jalons clairs',
     'value.quality': 'Ingénierie Zéro Défaut',
     'value.quality.desc': 'Standards de qualité rigoureux à chaque étape',
     'value.innovation': 'Solutions Évolutives',
@@ -155,7 +158,7 @@ export const ui = {
     'services.ai.title': 'IA & Logiciels Intelligents',
     'services.ai.description': 'Exploitez la puissance de l\'IA pour automatiser, optimiser et innover. Des solutions sur mesure avec un ROI mesurable.',
     'services.energy.title': 'Solutions Énergétiques Intelligentes',
-    'services.energy.description': 'Réduisez vos coûts jusqu\'à 30% avec des systèmes de gestion énergétique intelligents conçus pour les entreprises modernes.',
+    'services.energy.description': 'Optimisez la performance énergétique avec des systèmes de gestion intelligents conçus pour les entreprises modernes.',
     'services.rd.title': 'Laboratoire d\'Innovation R&D',
     'services.rd.description': 'Repousser les limites en santé, dispositifs médicaux et systèmes spatiaux. Nous transformons la recherche en produits commercialisables.',
     
@@ -174,7 +177,7 @@ export const ui = {
     'about.why.agile': 'Agile & Adaptable',
     'about.why.agile.desc': 'Modèles d\'engagement flexibles adaptés à vos besoins',
     'about.why.results': 'Orienté Résultats',
-    'about.why.results.desc': '98% de taux de satisfaction client avec des résultats mesurables',
+    'about.why.results.desc': 'Des résultats mesurables et un suivi transparent',
     
     // Expertise Section
     'expertise.title': 'Expertise Industrielle',
@@ -199,7 +202,10 @@ export const ui = {
     'contact.send': 'Commencer',
     'contact.info.title': 'Prêt à Innover?',
     'contact.info.description': 'Réservez une consultation gratuite de 30 minutes avec nos experts en ingénierie. Sans engagement, juste des insights.',
-    'contact.response': 'Nous répondons sous 24 heures',
+    'contact.response': 'Nous répondons sous 24–48 heures ouvrables',
+    'contact.form.title': 'Demander un devis',
+    'contact.budget': 'Budget estimé',
+    'contact.timeline': 'Échéance',
     
     // Footer
     'footer.description': 'Consultation en ingénierie et solutions technologiques innovantes pour les défis de demain.',
@@ -213,10 +219,10 @@ export const ui = {
     'footer.newsletter.button': 'S\'abonner',
     
     // Stats
-    'stats.projects': 'Projets Livrés',
-    'stats.clients': 'Clients Satisfaits',
-    'stats.experience': 'Années d\'Excellence',
-    'stats.expertise': 'Ingénieurs Experts',
+    'stats.projects': 'Années d\'expérience (fondateur)',
+    'stats.clients': 'Secteurs couverts',
+    'stats.experience': 'Domaines d\'expertise clés',
+    'stats.expertise': 'Partenaire dédié',
     
     // CTA Section
     'cta.title': 'Prêt à Transformer Votre Entreprise?',
