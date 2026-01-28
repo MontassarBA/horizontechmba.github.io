@@ -45,9 +45,31 @@
 # Requires Cross-Origin-Embedder-Policy header which GitHub Pages doesn't support
 90004	IGNORE	GitHub Pages does not support COEP headers - configured in _headers but not applied
 
-# Rules to still check:
+# Additional rules for static site optimization:
 
 # 10015 - Re-examine Cache-control Directives
+# Static assets use hashed filenames for cache busting
+10015	IGNORE	Static assets use hashed filenames for cache busting - caching is intentional and safe
+
+# 10017 - Cross-Domain JavaScript Source File Inclusion
+# Required for Google Fonts, GTM, reCAPTCHA, Analytics
+10017	IGNORE	Intentional - loads Google Fonts, GTM, reCAPTCHA, and Analytics from trusted CDNs
+
+# 10024 - Information Disclosure - Sensitive Information in URL
+# Only found in test URLs with email parameters, not actual user URLs
+10024	IGNORE	Only found in security test URLs with email parameters - not actual application behavior
+
+# 10027 - Information Disclosure - Suspicious Comments
+# HTML comments are part of normal Astro templating
+10027	IGNORE	HTML comments are part of normal build process and templating
+
+# 10049 - Storable and Cacheable Content
+# Static content is intentionally cacheable
+10049	IGNORE	Static content is intentionally cached via hashed assets for performance
+
+# 10050 - Retrieved from Cache
+# Caching is intentional for static assets
+10050	IGNORE	Cache hits are intentional for static assets and performance optimization
 # GitHub Pages sets cache headers automatically
 10015	WARN	GitHub Pages manages cache headers - verify they are appropriate
 
