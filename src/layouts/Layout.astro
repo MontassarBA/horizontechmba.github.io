@@ -247,12 +247,12 @@ const professionalServiceSchema = {
     <link rel="preload" as="image" href="/logo.png" />
     
     <!-- Google Analytics 4 & Google Tag Manager - Will be loaded after cookie consent -->
-    <script is:inline define:vars={{ contactApiUrl }}>
+    <script is:inline set:html={`
       // GA4 & GTM Configuration - HORIZONTECH MBA
       window.GA4_ID = 'G-6RR6F0GWKH';
       window.GTM_ID = 'GTM-MB2PFGKF';
       // Contact API URL exposed for client-side form submission
-      window.CONTACT_API_URL = contactApiUrl;
+      window.CONTACT_API_URL = '${contactApiUrl}';
       
       // Function to load GTM (called after consent)
       window.loadGTM = function() {
@@ -276,7 +276,7 @@ const professionalServiceSchema = {
         'page_path': window.location.pathname,
         'language': document.documentElement.lang
       });
-    </script>
+    `}></script>
   </head>
   <body class="bg-white text-gray-900 font-sans antialiased">
     <!-- Google Tag Manager (noscript) -->
