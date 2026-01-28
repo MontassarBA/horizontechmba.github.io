@@ -127,9 +127,9 @@ const indexRedirect = readFile(path.join(distDir, 'index.html'));
 test('Home page redirects to /fr/', indexRedirect && (indexRedirect.includes('http-equiv="refresh"') || indexRedirect.includes('window.location')) && indexRedirect.includes('/fr/'));
 
 // ========================================
-// 3. Contact Form Tests & Booking
+// 4. Contact Form Tests & Booking
 // ========================================
-log('\n📧 TEST 4: Contact Forms, reCAPTCHA & Booking\n', 'cyan');
+log('\n📧 TEST 4: Contact Forms, Formspree & Booking\n', 'cyan');
 
 const frContact = readFile(path.join(distDir, 'fr/contact/index.html'));
 const enContact = readFile(path.join(distDir, 'en/contact/index.html'));
@@ -138,10 +138,10 @@ test('FR Contact form exists', frContact && frContact.includes('<form'));
 test('EN Contact form exists', enContact && enContact.includes('<form'));
 test('FR Contact has email input', frContact && frContact.includes('type="email"'));
 test('EN Contact has email input', enContact && enContact.includes('type="email"'));
-test('FR Contact has reCAPTCHA script', frContact && frContact.includes('www.google.com/recaptcha/api.js'));
-test('EN Contact has reCAPTCHA script', enContact && enContact.includes('www.google.com/recaptcha/api.js'));
-test('FR Contact has grecaptcha.execute', frContact && frContact.includes('grecaptcha.execute'));
-test('EN Contact has grecaptcha.execute', enContact && enContact.includes('grecaptcha.execute'));
+test('FR Contact uses Formspree', frContact && frContact.includes('formspree.io'));
+test('EN Contact uses Formspree', enContact && enContact.includes('formspree.io'));
+test('FR Contact has form action', frContact && frContact.includes('action="https://formspree.io'));
+test('EN Contact has form action', enContact && enContact.includes('action="https://formspree.io'));
 test('FR Contact has BookingCalendly', frContact && frContact.includes('outlook.office.com/bookwithme'));
 test('EN Contact has BookingCalendly', enContact && enContact.includes('outlook.office.com/bookwithme'));
 
@@ -269,7 +269,7 @@ log('\n⚡ TEST 12: JavaScript & Interactivity\n', 'cyan');
 
 const jsFiles = fs.readdirSync(path.join(distDir, '_astro')).filter(f => f.endsWith('.js'));
 test('JavaScript files generated', jsFiles.length > 0, `Found ${jsFiles.length} JS files`);
-test('reCAPTCHA integration script', enContact && enContact.includes('grecaptcha.execute'));
+test('Formspree integration', enContact && enContact.includes('formspree.io'));
 
 // Check if CookieConsent component exists in source
 const cookieConsentComponent = readFile(path.join(projectRoot, 'src/components/CookieConsent.astro'));
