@@ -222,9 +222,21 @@ if (fs.existsSync(headersFile)) {
 }
 
 // ============================================================
-// PHASE 7: Exécuter les tests automatisés
+// PHASE 7: Vérifier l'intégrité des fichiers publics
 // ============================================================
-header('PHASE 7: Exécution des tests automatisés');
+header('PHASE 7: Vérification de l\'intégrité des fichiers publics');
+
+try {
+  log('🔍 Vérification des fichiers publics...', 'cyan');
+  execSync('node scripts/public-assets-check.js', { cwd: projectRoot, stdio: 'inherit' });
+} catch (e) {
+  error('Vérification des fichiers publics: ÉCHOUÉE');
+}
+
+// ============================================================
+// PHASE 8: Exécuter les tests automatisés
+// ============================================================
+header('PHASE 8: Exécution des tests automatisés');
 
 try {
   log('🧪 Tests de sécurité...', 'cyan');
@@ -243,7 +255,7 @@ try {
 }
 
 // ============================================================
-// PHASE 8: Résumé et décision
+// PHASE 9: Résumé et décision
 // ============================================================
 header('RÉSUMÉ PRÉ-DÉPLOIEMENT');
 

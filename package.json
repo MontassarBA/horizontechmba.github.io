@@ -17,6 +17,7 @@
     "test:pre-commit": "node scripts/pre-commit-tests.js",
     "deploy:check": "npm run build && npm run test && npm run test:functional",
     "precommit": "npm run test:pre-commit",
+    "check:public-assets": "node scripts/public-assets-check.js",
     "pre-deploy-check": "node scripts/pre-deploy-check.js"
   },
   "dependencies": {
