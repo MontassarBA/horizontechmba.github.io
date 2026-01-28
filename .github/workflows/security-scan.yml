@@ -18,10 +18,25 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         
-      - name: Baseline scan against production site
+      - name: Wait for deployment to complete
+        run: |
+          echo "Waiting for site to be available..."
+          for i in {1..30}; do
+            HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" https://MontassarBA.github.io/)
+            if [ "$HTTP_CODE" = "200" ]; then
+              echo "✅ Site is available (HTTP $HTTP_CODE)"
+              exit 0
+            else
+              echo "⏳ Attempt $i/30: HTTP $HTTP_CODE - waiting..."
+              sleep 5
+            fi
+          done
+          echo "⚠️ Site took longer to deploy, proceeding anyway..."
+        
+      - name: Baseline scan against GitHub Pages URL
         uses: zaproxy/action-baseline@v0.13.0
         with:
-          target: 'https://www.horizontechmba.com/'
+          target: 'https://MontassarBA.github.io/'
           rules_file_name: '.zap-rules.tsv'
           fail_action: 'false'
           allow_issue_writing: 'false'
