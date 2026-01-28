@@ -13,7 +13,10 @@
     "test:build": "npm run build && npm run test",
     "test:security": "npm run test",
     "test:all": "npm run build && npm run test && npm run test:functional",
-    "deploy:check": "npm run build && npm run test && npm run test:functional"
+    "test:pre-deploy": "node scripts/pre-commit-tests.js",
+    "test:pre-commit": "node scripts/pre-commit-tests.js",
+    "deploy:check": "npm run build && npm run test && npm run test:functional",
+    "precommit": "npm run test:pre-commit"
   },
   "dependencies": {
     "astro": "^4.5.0",

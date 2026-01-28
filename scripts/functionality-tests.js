@@ -87,12 +87,36 @@ pages.forEach(page => {
 });
 
 // ========================================
-// 2. i18n & Language Detection
+// 2. Build Quality & Syntax Verification
 // ========================================
-log('\n🌍 TEST 2: i18n Configuration & Language\n', 'cyan');
+log('\n🔧 TEST 2: Build Quality & Syntax\n', 'cyan');
 
+// Vérifier que les variables JavaScript sont correctement injectées
 const frHome = readFile(path.join(distDir, 'fr/index.html'));
 const enHome = readFile(path.join(distDir, 'en/index.html'));
+
+const contactApiUrlRegex = /window\.CONTACT_API_URL\s*=\s*['"][^'"]*['"]/;
+test('FR: CONTACT_API_URL properly injected', frHome && contactApiUrlRegex.test(frHome), 
+  'Variable not properly substituted');
+test('EN: CONTACT_API_URL properly injected', enHome && contactApiUrlRegex.test(enHome),
+  'Variable not properly substituted');
+
+// Vérifier qu'il n'y a pas de variables non substituées
+test('FR: No unsubstituted variables', frHome && !frHome.includes('contactApiUrl;'),
+  'Found literal variable name instead of value');
+test('EN: No unsubstituted variables', enHome && !enHome.includes('contactApiUrl;'),
+  'Found literal variable name instead of value');
+
+// Vérifier les configurations GA4/GTM
+test('FR: GA4_ID configured', frHome && frHome.includes('window.GA4_ID'));
+test('FR: GTM_ID configured', frHome && frHome.includes('window.GTM_ID'));
+test('EN: GA4_ID configured', enHome && enHome.includes('window.GA4_ID'));
+test('EN: GTM_ID configured', enHome && enHome.includes('window.GTM_ID'));
+
+// ========================================
+// 3. i18n & Language Detection
+// ========================================
+log('\n🌍 TEST 3: i18n Configuration & Language\n', 'cyan');
 
 test('FR Home has French content', frHome && frHome.includes('Notre Engagement'));
 test('EN Home has English content', enHome && enHome.includes('Our Commitment'));
@@ -105,7 +129,7 @@ test('Home page redirects to /fr/', indexRedirect && (indexRedirect.includes('ht
 // ========================================
 // 3. Contact Form Tests & Booking
 // ========================================
-log('\n📧 TEST 3: Contact Forms, reCAPTCHA & Booking\n', 'cyan');
+log('\n📧 TEST 4: Contact Forms, reCAPTCHA & Booking\n', 'cyan');
 
 const frContact = readFile(path.join(distDir, 'fr/contact/index.html'));
 const enContact = readFile(path.join(distDir, 'en/contact/index.html'));
@@ -122,9 +146,9 @@ test('FR Contact has BookingCalendly', frContact && frContact.includes('outlook.
 test('EN Contact has BookingCalendly', enContact && enContact.includes('outlook.office.com/bookwithme'));
 
 // ========================================
-// 4. Analytics Integration
+// 5. Analytics Integration
 // ========================================
-log('\n📊 TEST 4: Analytics (GA4 & GTM)\n', 'cyan');
+log('\n📊 TEST 5: Analytics (GA4 & GTM)\n', 'cyan');
 
 const layout = readFile(path.join(projectRoot, 'src/layouts/Layout.astro'));
 
@@ -136,9 +160,9 @@ const cookieConsent = readFile(path.join(projectRoot, 'src/components/CookieCons
 test('Cookie consent has GA4 ID', cookieConsent && cookieConsent.includes('G-6RR6F0GWKH'));
 
 // ========================================
-// 5. Security Headers
+// 6. Security Headers
 // ========================================
-log('\n🔒 TEST 5: Security Headers\n', 'cyan');
+log('\n🔒 TEST 6: Security Headers\n', 'cyan');
 
 const headers = readFile(path.join(distDir, '_headers'));
 
@@ -152,9 +176,9 @@ test('reCAPTCHA domains in CSP', headers && headers.includes('recaptcha'));
 test('GTM domain in CSP', headers && headers.includes('googletagmanager.com'));
 
 // ========================================
-// 6. Booking Integration (Microsoft Bookings)
+// 7. Booking Integration (Microsoft Bookings)
 // ========================================
-log('\n📅 TEST 6: Booking System Integration\n', 'cyan');
+log('\n📅 TEST 7: Booking System Integration\n', 'cyan');
 
 const bookingComponent = readFile(path.join(projectRoot, 'src/components/BookingCalendly.astro'));
 
@@ -164,9 +188,9 @@ test('No Calendly references', !bookingComponent || !bookingComponent.includes('
 test('Button has correct href', bookingComponent && bookingComponent.includes('href='));
 
 // ========================================
-// 7. Phone Number Configuration
+// 8. Phone Number Configuration
 // ========================================
-log('\n☎️ TEST 7: Phone Number Configuration\n', 'cyan');
+log('\n☎️ TEST 8: Phone Number Configuration\n', 'cyan');
 
 const layoutForPhone = readFile(path.join(projectRoot, 'src/layouts/Layout.astro'));
 const headerForPhone = readFile(path.join(projectRoot, 'src/components/Header.astro'));

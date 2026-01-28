@@ -35,6 +35,11 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Run pre-deployment tests
+        run: |
+          echo "🔍 Running pre-deployment verification tests..."
+          npm run test:pre-deploy
+          
       - name: Run security and functionality tests
         run: npm run test:all
 
@@ -44,6 +49,17 @@ jobs:
 
       - name: Build with Astro
         run: npm run build
+        
+      - name: Verify build output
+        run: |
+          echo "✅ Build completed successfully"
+          echo "📦 Verifying generated files..."
+          ls -la dist/
+          echo "🔍 Checking critical files..."
+          test -f dist/index.html && echo "✓ dist/index.html exists"
+          test -f dist/fr/index.html && echo "✓ dist/fr/index.html exists"
+          test -f dist/en/index.html && echo "✓ dist/en/index.html exists"
+          echo "✅ All critical files verified"
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
