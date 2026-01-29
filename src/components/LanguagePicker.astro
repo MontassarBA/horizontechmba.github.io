@@ -45,28 +45,48 @@ const route = getRouteFromUrl(Astro.url);
   const btn = document.getElementById('lang-picker-btn');
   const dropdown = document.getElementById('lang-picker-dropdown');
   
+  let isOpen = false;
+  
   // Function to toggle dropdown
   function toggleDropdown(e) {
     e.preventDefault();
     e.stopPropagation();
-    const isHidden = dropdown?.classList.contains('hidden');
-    dropdown?.classList.toggle('hidden');
-    btn?.setAttribute('aria-expanded', String(!isHidden));
+    
+    isOpen = !isOpen;
+    
+    if (isOpen) {
+      dropdown?.classList.remove('hidden');
+      btn?.setAttribute('aria-expanded', 'true');
+    } else {
+      dropdown?.classList.add('hidden');
+      btn?.setAttribute('aria-expanded', 'false');
+    }
   }
   
   // Function to close dropdown
-  function closeDropdown() {
+  function closeDropdown(e) {
+    // Don't close if clicking inside the language picker
+    if (e.target.closest('#lang-picker-btn') || e.target.closest('#lang-picker-dropdown')) {
+      return;
+    }
+    
+    isOpen = false;
     dropdown?.classList.add('hidden');
     btn?.setAttribute('aria-expanded', 'false');
   }
   
-  // Support both click and touch events for iOS compatibility
+  // Button click/touch handler
   if (btn) {
+    // Use click event which works on both desktop and mobile
     btn.addEventListener('click', toggleDropdown);
-    btn.addEventListener('touchstart', toggleDropdown, { passive: false });
+    
+    // Prevent touchstart from triggering the document-level close
+    btn.addEventListener('touchstart', (e) => {
+      e.stopPropagation();
+    }, { passive: true });
   }
   
   // Close dropdown when clicking/touching outside
   document.addEventListener('click', closeDropdown);
-  document.addEventListener('touchstart', closeDropdown);
+  document.addEventListener('touchstart', closeDropdown, { passive: true });
 </script>
