@@ -165,8 +165,8 @@ test('FR Contact uses Formspree', frContact && frContact.includes('formspree.io'
 test('EN Contact uses Formspree', enContact && enContact.includes('formspree.io'));
 test('FR Contact has form action', frContact && frContact.includes('action="https://formspree.io'));
 test('EN Contact has form action', enContact && enContact.includes('action="https://formspree.io'));
-test('FR Contact has BookingCalendly', frContact && frContact.includes('outlook.office.com/bookwithme'));
-test('EN Contact has BookingCalendly', enContact && enContact.includes('outlook.office.com/bookwithme'));
+test('FR Contact has BookingCalendly', frContact && frContact.includes('outlook.office.com/book'));
+test('EN Contact has BookingCalendly', enContact && enContact.includes('outlook.office.com/book'));
 
 // ========================================
 // 5. Analytics Integration
@@ -206,7 +206,7 @@ log('\n📅 TEST 7: Booking System Integration\n', 'cyan');
 const bookingComponent = readFile(path.join(projectRoot, 'src/components/BookingCalendly.astro'));
 
 test('BookingCalendly component exists', bookingComponent !== null);
-test('Microsoft Bookings URL configured', bookingComponent && bookingComponent.includes('outlook.office.com/bookwithme'));
+test('Microsoft Bookings URL configured', bookingComponent && bookingComponent.includes('outlook.office.com/book'));
 test('No Calendly references', !bookingComponent || !bookingComponent.includes('calendly.com'));
 test('Button has correct href', bookingComponent && bookingComponent.includes('href='));
 
