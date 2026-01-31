@@ -5,9 +5,9 @@ const lang = getLangFromUrl(Astro.url);
 const route = getRouteFromUrl(Astro.url);
 ---
 
-<div class="relative">
+<div class="relative" data-lang-picker>
   <button 
-    id="lang-picker-btn"
+    data-lang-picker-btn
     class="flex items-center space-x-1 px-3 py-2 rounded-lg border border-gray-200 hover:border-primary-300 hover:bg-primary-50 transition-all cursor-pointer touch-manipulation"
     type="button"
     aria-label="Select language"
@@ -24,8 +24,8 @@ const route = getRouteFromUrl(Astro.url);
   </button>
   
   <div 
-    id="lang-picker-dropdown"
-    class="hidden absolute right-0 mt-2 w-40 bg-white rounded-lg shadow-lg border border-gray-100 py-2 z-50"
+    data-lang-picker-dropdown
+    class="hidden mt-2 w-full sm:w-40 bg-white rounded-lg shadow-lg border border-gray-100 py-2 z-50 sm:absolute sm:right-0"
   >
     {Object.entries(languages).map(([langCode, langName]) => (
       <a 
@@ -42,51 +42,45 @@ const route = getRouteFromUrl(Astro.url);
 </div>
 
 <script>
-  const btn = document.getElementById('lang-picker-btn');
-  const dropdown = document.getElementById('lang-picker-dropdown');
-  
-  let isOpen = false;
-  
-  // Function to toggle dropdown
-  function toggleDropdown(e) {
-    e.preventDefault();
-    e.stopPropagation();
+  const pickers = document.querySelectorAll('[data-lang-picker]');
+
+  pickers.forEach((picker) => {
+    const btn = picker.querySelector('[data-lang-picker-btn]');
+    const dropdown = picker.querySelector('[data-lang-picker-dropdown]');
     
-    isOpen = !isOpen;
+    let isOpen = false;
     
-    if (isOpen) {
-      dropdown?.classList.remove('hidden');
-      btn?.setAttribute('aria-expanded', 'true');
-    } else {
+    function toggleDropdown(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      
+      isOpen = !isOpen;
+      
+      if (isOpen) {
+        dropdown?.classList.remove('hidden');
+        btn?.setAttribute('aria-expanded', 'true');
+      } else {
+        dropdown?.classList.add('hidden');
+        btn?.setAttribute('aria-expanded', 'false');
+      }
+    }
+    
+    function closeDropdown(e) {
+      if (picker.contains(e.target)) return;
+      
+      isOpen = false;
       dropdown?.classList.add('hidden');
       btn?.setAttribute('aria-expanded', 'false');
     }
-  }
-  
-  // Function to close dropdown
-  function closeDropdown(e) {
-    // Don't close if clicking inside the language picker
-    if (e.target.closest('#lang-picker-btn') || e.target.closest('#lang-picker-dropdown')) {
-      return;
+    
+    if (btn) {
+      btn.addEventListener('click', toggleDropdown);
+      btn.addEventListener('touchstart', (e) => {
+        e.stopPropagation();
+      }, { passive: true });
     }
     
-    isOpen = false;
-    dropdown?.classList.add('hidden');
-    btn?.setAttribute('aria-expanded', 'false');
-  }
-  
-  // Button click/touch handler
-  if (btn) {
-    // Use click event which works on both desktop and mobile
-    btn.addEventListener('click', toggleDropdown);
-    
-    // Prevent touchstart from triggering the document-level close
-    btn.addEventListener('touchstart', (e) => {
-      e.stopPropagation();
-    }, { passive: true });
-  }
-  
-  // Close dropdown when clicking/touching outside
-  document.addEventListener('click', closeDropdown);
-  document.addEventListener('touchstart', closeDropdown, { passive: true });
+    document.addEventListener('click', closeDropdown);
+    document.addEventListener('touchstart', closeDropdown, { passive: true });
+  });
 </script>

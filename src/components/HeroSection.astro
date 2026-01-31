@@ -58,7 +58,7 @@ const translatePath = useTranslatedPath(lang);
       <div class="relative">
         <!-- Mobile version - smaller and centered -->
         <div class="lg:hidden flex justify-center mt-8">
-          <div class="relative w-64 h-64 sm:w-80 sm:h-80">
+          <div class="relative w-64 h-64 sm:w-80 sm:h-80" style="pointer-events: none;">
             <svg viewBox="0 0 400 400" class="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
               <!-- Circuit board pattern -->
               <circle cx="200" cy="200" r="150" stroke="url(#gradient1m)" stroke-width="2" fill="none" class="animate-spin" style="animation-duration: 20s;"/>
@@ -104,7 +104,7 @@ const translatePath = useTranslatedPath(lang);
         </div>
         
         <!-- Desktop version -->
-        <div class="relative w-full aspect-square max-w-lg mx-auto hidden lg:block">
+        <div class="relative w-full aspect-square max-w-lg mx-auto hidden lg:block" style="pointer-events: none;">
           <!-- Abstract Tech Illustration -->
           <svg viewBox="0 0 400 400" class="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
             <!-- Circuit board pattern -->
@@ -152,45 +152,74 @@ const translatePath = useTranslatedPath(lang);
     </div>
   </div>
   
-  <!-- Scroll indicator -->
+  <!-- Scroll indicator with larger touch area -->
   <button 
     id="scroll-down-btn"
-    class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce cursor-pointer touch-manipulation focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 rounded-full p-2"
-    aria-label="Scroll down"
+    class="hidden sm:flex absolute bottom-4 sm:bottom-8 left-1/2 transform -translate-x-1/2 cursor-pointer focus:outline-none group z-50"
+    aria-label="Défiler vers le bas"
     type="button"
+    style="-webkit-tap-highlight-color: transparent; pointer-events: auto;"
   >
-    <svg class="w-6 h-6 text-gray-400 hover:text-primary-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
-    </svg>
+    <div class="animate-bounce p-3 sm:p-4 rounded-full hover:bg-primary-50/50 transition-colors">
+      <svg class="w-6 h-6 sm:w-8 sm:h-8 text-gray-400 group-hover:text-primary-500 group-active:text-primary-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+      </svg>
+    </div>
   </button>
 </section>
 
 <script>
-  // Smooth scroll functionality for the down arrow
-  const scrollBtn = document.getElementById('scroll-down-btn');
-  
-  if (scrollBtn) {
-    const scrollToContent = (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      
+  // Smooth scroll for down arrow - optimized for iOS
+  function initScrollButton() {
+    const scrollBtn = document.getElementById('scroll-down-btn');
+    
+    if (!scrollBtn) return;
+    
+    const performScroll = () => {
       const contentSection = document.getElementById('content');
       if (contentSection) {
-        contentSection.scrollIntoView({ 
-          behavior: 'smooth',
-          block: 'start'
+        const targetPosition = contentSection.offsetTop;
+        window.scrollTo({
+          top: targetPosition,
+          behavior: 'smooth'
         });
       } else {
-        // Fallback: scroll down one viewport height
         window.scrollBy({
-          top: window.innerHeight * 0.8,
+          top: window.innerHeight * 0.85,
           behavior: 'smooth'
         });
       }
     };
     
-    // Support both click and touch events
-    scrollBtn.addEventListener('click', scrollToContent);
-    scrollBtn.addEventListener('touchend', scrollToContent, { passive: false });
+    // Handle click events
+    scrollBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      performScroll();
+    });
+    
+    // Handle touch events for iOS
+    let touchStartY = 0;
+    
+    scrollBtn.addEventListener('touchstart', (e) => {
+      touchStartY = e.touches[0].clientY;
+    }, { passive: true });
+    
+    scrollBtn.addEventListener('touchend', (e) => {
+      const touchEndY = e.changedTouches[0].clientY;
+      const touchDiff = Math.abs(touchEndY - touchStartY);
+      
+      // Only scroll if it's a tap (not a swipe)
+      if (touchDiff < 10) {
+        e.preventDefault();
+        performScroll();
+      }
+    }, { passive: false });
+  }
+  
+  // Initialize on page load
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initScrollButton);
+  } else {
+    initScrollButton();
   }
 </script>
