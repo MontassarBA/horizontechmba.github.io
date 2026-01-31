@@ -133,8 +133,8 @@ const tests = {
     const contentFR = fs.readFileSync(contactFR, 'utf-8');
     
     // Vérifier que Formspree est utilisé (il a sa propre protection anti-spam)
-    const hasFormspreeEN = contentEN.includes('formspree.io/f/mzdgpgbq');
-    const hasFormspreeFR = contentFR.includes('formspree.io/f/mzdgpgbq');
+    const hasFormspreeEN = contentEN.includes('formspree.io/f/') && !contentEN.includes('YOUR_FORM_ID');
+    const hasFormspreeFR = contentFR.includes('formspree.io/f/') && !contentFR.includes('YOUR_FORM_ID');
     return { passed: hasFormspreeEN && hasFormspreeFR };
   },
 
