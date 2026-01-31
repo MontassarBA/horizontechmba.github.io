@@ -153,13 +153,44 @@ const translatePath = useTranslatedPath(lang);
   </div>
   
   <!-- Scroll indicator -->
-  <a 
-    href="#content" 
-    class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce cursor-pointer touch-manipulation"
+  <button 
+    id="scroll-down-btn"
+    class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce cursor-pointer touch-manipulation focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 rounded-full p-2"
     aria-label="Scroll down"
+    type="button"
   >
     <svg class="w-6 h-6 text-gray-400 hover:text-primary-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
     </svg>
-  </a>
+  </button>
 </section>
+
+<script>
+  // Smooth scroll functionality for the down arrow
+  const scrollBtn = document.getElementById('scroll-down-btn');
+  
+  if (scrollBtn) {
+    const scrollToContent = (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      
+      const contentSection = document.getElementById('content');
+      if (contentSection) {
+        contentSection.scrollIntoView({ 
+          behavior: 'smooth',
+          block: 'start'
+        });
+      } else {
+        // Fallback: scroll down one viewport height
+        window.scrollBy({
+          top: window.innerHeight * 0.8,
+          behavior: 'smooth'
+        });
+      }
+    };
+    
+    // Support both click and touch events
+    scrollBtn.addEventListener('click', scrollToContent);
+    scrollBtn.addEventListener('touchend', scrollToContent, { passive: false });
+  }
+</script>
