@@ -26,6 +26,7 @@ const lang = getLangFromUrl(Astro.url);
 const currentPath = Astro.url.pathname;
 const baseUrl = 'https://www.horizontechmba.com';
 const contactApiUrl = import.meta.env.PUBLIC_CONTACT_API_URL || '';
+const jsonStringify = JSON['stringify'];
 
 // Determine canonical URL
 const canonical = canonicalPath ? `${baseUrl}${canonicalPath}` : `${baseUrl}${currentPath}`;
@@ -268,7 +269,7 @@ const professionalServiceSchema = {
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     
     <!-- reCAPTCHA v3 Script -->
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script src="https://www.google.com/recaptcha/api.js?render=6Lep81ssAAAAAGD9zNfk0QhZuxA_KpRTvoXkBZVn" async defer></script>
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -276,9 +277,9 @@ const professionalServiceSchema = {
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
     
     <!-- Schema.org Structured Data -->
-    <script type="application/ld+json" set:html={JSON.stringify(organizationSchema)} />
-    <script type="application/ld+json" set:html={JSON.stringify(localBusinessSchema)} />
-    <script type="application/ld+json" set:html={JSON.stringify(professionalServiceSchema)} />
+    <script type="application/ld+json" set:html={jsonStringify(organizationSchema)} />
+    <script type="application/ld+json" set:html={jsonStringify(localBusinessSchema)} />
+    <script type="application/ld+json" set:html={jsonStringify(professionalServiceSchema)} />
     
     <!-- Preload critical resources -->
     <link rel="preload" as="image" href="/logo.png" />

@@ -158,6 +158,7 @@ const t = useTranslations(lang);
               ></textarea>
             </div>
             
+            <input type="hidden" name="g-recaptcha-response" id="g-recaptcha-response" />
             <div id="form-status" class="hidden text-sm"></div>
             
             <button 
@@ -173,6 +174,22 @@ const t = useTranslations(lang);
               const form = document.getElementById('contact-form');
               const submitBtn = document.getElementById('contact-submit');
               const statusEl = document.getElementById('form-status');
+              const recaptchaInput = document.getElementById('g-recaptcha-response');
+              const recaptchaKey = '6Lep81ssAAAAAGD9zNfk0QhZuxA_KpRTvoXkBZVn';
+              
+              function getRecaptchaToken() {
+                return new Promise((resolve, reject) => {
+                  if (!window.grecaptcha || !window.grecaptcha.execute) {
+                    reject(new Error('reCAPTCHA not loaded'));
+                    return;
+                  }
+                  window.grecaptcha.ready(() => {
+                    window.grecaptcha.execute(recaptchaKey, { action: 'submit' })
+                      .then(resolve)
+                      .catch(reject);
+                  });
+                });
+              }
               
               function setStatus(msg, type) {
                 statusEl.textContent = msg;
@@ -187,6 +204,15 @@ const t = useTranslations(lang);
                 submitBtn.disabled = true;
                 setStatus(document.documentElement.lang === 'fr' ? 'Envoi en cours…' : 'Sending…', '');
                 
+                try {
+                  const token = await getRecaptchaToken();
+                  if (recaptchaInput) recaptchaInput.value = token;
+                } catch (err) {
+                  setStatus(document.documentElement.lang === 'fr' ? 'Erreur CAPTCHA. Veuillez rÃ©essayer.' : 'CAPTCHA error. Please try again.', 'error');
+                  submitBtn.disabled = false;
+                  return;
+                }
+
                 const formData = new FormData(form);
                 
                 try {
