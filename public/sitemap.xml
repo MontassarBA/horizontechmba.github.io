@@ -50,9 +50,9 @@
   
   <!-- French Pages -->
   <url>
-    <loc>https://www.horizontechmba.com/fr/</loc>
+    <loc>https://www.horizontechmba.com/</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.horizontechmba.com/en/"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://www.horizontechmba.com/fr/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.horizontechmba.com/"/>
     <lastmod>2026-01-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>

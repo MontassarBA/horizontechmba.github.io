@@ -64,7 +64,7 @@ function test(name, condition, details = '') {
 log('\n📄 TEST 1: Page Structure & Routing\n', 'cyan');
 
 const pages = [
-  { path: 'index.html', name: 'Home Redirect' },
+  { path: 'index.html', name: 'Home Root' },
   { path: 'en/index.html', name: 'EN Home' },
   { path: 'fr/index.html', name: 'FR Home' },
   { path: 'en/about/index.html', name: 'EN About' },
@@ -87,27 +87,25 @@ pages.forEach(page => {
 });
 
 // ========================================
-// 1B. Root Redirect Page Verification (CRITICAL FIX)
+// 1B. Root Home Page Verification (No Redirect)
 // ========================================
-log('\n🌍 TEST 1B: Root Redirect Page (Prevents Infinite Loop)\n', 'cyan');
+log('\nTEST 1B: Root Home Page (No Redirect)\n', 'cyan');
 
-// Check index.html uses RELATIVE redirect not ABSOLUTE URL
 const indexHtml = readFile(path.join(distDir, 'index.html'));
-const hasRelativeRedirect = indexHtml && indexHtml.includes('href="/fr/"');
-const hasAbsoluteRedirect = indexHtml && /href="https:\/\/(www\.)?horizontechmba\.com\/fr\/"/.test(indexHtml);
+const hasMetaRefresh = indexHtml && indexHtml.includes('http-equiv="refresh"');
+const hasMetaRefreshToFr = indexHtml && /url=\/fr\//.test(indexHtml);
+const hasJsRedirectToFr = indexHtml && /window\.location(\.href)?\s*=\s*['"]\/fr\//.test(indexHtml);
+const hasNoindex = indexHtml && indexHtml.includes('noindex');
+const hasLangFr = indexHtml && indexHtml.includes('lang="fr"');
 
-test('Root index uses relative redirect (/fr/)', hasRelativeRedirect,
-  'CRITICAL: Using absolute URL causes redirect loop on domain propagation');
-test('Root index does NOT use absolute URL redirect', !hasAbsoluteRedirect,
-  'CRITICAL: Absolute URLs break when custom domain not yet propagated');
-
-// Verify the redirect meta refresh also uses proper reference
-const hasProperMetaRefresh = indexHtml && (
-  indexHtml.includes('url=/fr/') ||  // Catches both 0;url=/fr/ and 2;url=/fr/
-  indexHtml.includes('href="/fr/"')   // Also check href attribute
-);
-test('Root index meta refresh uses correct URL', hasProperMetaRefresh,
-  'Meta refresh should be relative or use GitHub Pages URL');
+test('Root index has no meta refresh redirect', !(hasMetaRefresh && hasMetaRefreshToFr),
+  'Root should be a real page, not a meta refresh redirect to /fr/');
+test('Root index has no JS redirect', !hasJsRedirectToFr,
+  'Root should be a real page, not a JS redirect to /fr/');
+test('Root index is indexable (no noindex)', !hasNoindex,
+  'Root should be indexable for SEO');
+test('Root index declares lang="fr"', hasLangFr,
+  'Root should render French content by default');
 
 // ========================================
 // 2. Build Quality & Syntax Verification
@@ -146,8 +144,8 @@ test('EN Home has English content', enHome && enHome.includes('Our Commitment'))
 test('FR Home has lang="fr"', frHome && frHome.includes('lang="fr"'));
 test('EN Home has lang="en"', enHome && enHome.includes('lang="en"'));
 
-const indexRedirect = readFile(path.join(distDir, 'index.html'));
-test('Home page redirects to /fr/', indexRedirect && (indexRedirect.includes('http-equiv="refresh"') || indexRedirect.includes('window.location')) && indexRedirect.includes('/fr/'));
+const indexRoot = readFile(path.join(distDir, 'index.html'));
+test('Home page is real content (no redirect)', indexRoot && !(indexRoot.includes('http-equiv="refresh"') && /url=\/fr\//.test(indexRoot)) && !/window\.location(\.href)?\s*=\s*['"]\/fr\//.test(indexRoot));
 
 // ========================================
 // 4. Contact Form Tests & Booking
@@ -323,3 +321,4 @@ log('═'.repeat(50), 'cyan');
 
 // Exit with appropriate code
 process.exit(failCount > 0 ? 1 : 0);
+
