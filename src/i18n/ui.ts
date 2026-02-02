@@ -89,6 +89,7 @@ export const ui = {
     'contact.form.title': 'Request a Quote',
     'contact.budget': 'Estimated Budget',
     'contact.timeline': 'Timeline',
+    'contact.engagement': 'Engagement Type',
     
     // Footer
     'footer.description': 'Engineering consulting and innovative technological solutions for tomorrow\'s challenges.',
@@ -206,6 +207,7 @@ export const ui = {
     'contact.form.title': 'Demander un devis',
     'contact.budget': 'Budget estimé',
     'contact.timeline': 'Échéance',
+    'contact.engagement': "Type d'engagement",
     
     // Footer
     'footer.description': 'Consultation en ingénierie et solutions technologiques innovantes pour les défis de demain.',
