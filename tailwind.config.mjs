@@ -29,16 +29,6 @@ export default {
           800: '#333333',
           900: '#1A1A1A',  // Noir Horizon
         },
-        dark: {
-          800: '#2a2a2a',
-          900: '#1A1A1A',  // Noir Horizon
-        },
-        horizon: {
-          black: '#1A1A1A',
-          teal: '#009999',
-          gray: '#6F6F6F',
-          white: '#FFFFFF',
-        }
       },
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif'],
