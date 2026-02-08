@@ -433,6 +433,66 @@ const cookieConsentComponent = readFile(path.join(projectRoot, 'src/components/C
 test('Cookie consent component exists', cookieConsentComponent !== null);
 
 // ========================================
+// 21. Tailwind Color Palette Integrity
+// ========================================
+log('\n🎨 TEST 21: Tailwind Color Palette Integrity\n', 'cyan');
+
+const tailwindConfig = readFile(path.join(projectRoot, 'tailwind.config.mjs'));
+const footerComponent = readFile(path.join(projectRoot, 'src/components/Footer.astro'));
+const headerComponent = readFile(path.join(projectRoot, 'src/components/Header.astro'));
+const heroComponent = readFile(path.join(projectRoot, 'src/components/HeroSection.astro'));
+
+// Vérifier que les couleurs dark existent pour le Footer
+test('Tailwind has dark color palette', tailwindConfig && tailwindConfig.includes('dark:'));
+test('Tailwind has dark-900 color', tailwindConfig && /dark:\s*\{[^}]*900:\s*['"]#1A1A1A['"]/.test(tailwindConfig));
+test('Footer uses dark-900 background', footerComponent && footerComponent.includes('bg-dark-900'));
+test('Dark colors match Footer requirements', tailwindConfig && tailwindConfig.includes('#1A1A1A'));
+
+// Vérifier cohérence entre secondary.900 et dark.900
+test('Dark-900 matches secondary-900', 
+  tailwindConfig && 
+  tailwindConfig.includes("900: '#1A1A1A'") && 
+  (tailwindConfig.match(/#1A1A1A/g) || []).length >= 2
+);
+
+// Vérifier présence palette primary complète (50-900)
+test('Primary palette has all shades', 
+  tailwindConfig && 
+  ['50', '100', '200', '300', '400', '500', '600', '700', '800', '900']
+    .every(shade => new RegExp(`primary:[^}]*${shade}:`).test(tailwindConfig))
+);
+
+// Vérifier présence palette secondary complète (50-900)
+test('Secondary palette has all shades', 
+  tailwindConfig && 
+  ['50', '100', '200', '300', '400', '500', '600', '700', '800', '900']
+    .every(shade => new RegExp(`secondary:[^}]*${shade}:`).test(tailwindConfig))
+);
+
+// Vérifier que les composants utilisent des couleurs définies
+test('Header uses valid primary colors', 
+  headerComponent && 
+  (headerComponent.includes('bg-primary-500') || headerComponent.includes('bg-primary-600'))
+);
+
+test('Hero uses valid primary colors', 
+  heroComponent && 
+  (heroComponent.includes('bg-primary-') || heroComponent.includes('text-primary-'))
+);
+
+// Vérifier couleur principale primary-500 (Teal #009999)
+test('Primary-500 is teal (#009999)', 
+  tailwindConfig && 
+  /500:\s*['"]#009999['"]\s*,?\s*\/\/\s*Teal/.test(tailwindConfig)
+);
+
+// Vérifier couleur secondaire secondary-500 (Gris #6F6F6F)
+test('Secondary-500 is gray (#6F6F6F)', 
+  tailwindConfig && 
+  /500:\s*['"]#6F6F6F['"]\s*,?\s*\/\/\s*Gris/.test(tailwindConfig)
+);
+
+// ========================================
 // Summary
 // ========================================
 log('\n' + '═'.repeat(50), 'cyan');
