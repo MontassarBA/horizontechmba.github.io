@@ -493,6 +493,36 @@ test('Secondary-500 is gray (#6F6F6F)',
 );
 
 // ========================================
+// TEST 22: GitHub Workflows Configuration Integrity
+// ========================================
+log('\n🔧 TEST 22: GitHub Workflows Configuration Integrity\n', 'magenta');
+
+const staticYml = fs.readFileSync('.github/workflows/static.yml', 'utf8');
+const deployYml = fs.readFileSync('.github/workflows/deploy.yml', 'utf8');
+
+// Check static.yml builds and deploys dist
+test('static.yml has npm install step', staticYml.includes('npm ci') || staticYml.includes('npm install'));
+test('static.yml has Astro build step', staticYml.includes('npm run build') || staticYml.includes('astro build'));
+test('static.yml deploys dist folder', staticYml.includes("path: './dist'") || staticYml.includes('path: ./dist'));
+test('static.yml does not deploy root folder', !staticYml.includes("path: '.'") || staticYml.split("path: '.'").length < 2);
+
+// Check deploy.yml configuration
+test('deploy.yml deploys dist folder', deployYml.includes('path: ./dist'));
+test('deploy.yml has pre-deploy tests', deployYml.includes('test:pre-deploy') || deployYml.includes('test:pre-commit'));
+test('deploy.yml has build step', deployYml.includes('npm run build'));
+
+// Check package.json scripts exist
+const packageJsonContent = JSON.parse(fs.readFileSync('package.json', 'utf8'));
+test('package.json has build script', packageJsonContent.scripts && packageJsonContent.scripts.build);
+test('package.json has test:pre-commit script', packageJsonContent.scripts && packageJsonContent.scripts['test:pre-commit']);
+test('package.json has test:all script', packageJsonContent.scripts && packageJsonContent.scripts['test:all']);
+
+// Verify critical scripts exist
+test('pre-deploy-check.js exists', fs.existsSync('scripts/pre-deploy-check.js'));
+test('post-deploy-verification.js exists', fs.existsSync('scripts/post-deploy-verification.js'));
+test('e2e-contact-test.js exists', fs.existsSync('scripts/e2e-contact-test.js'));
+
+// ========================================
 // Summary
 // ========================================
 log('\n' + '═'.repeat(50), 'cyan');
