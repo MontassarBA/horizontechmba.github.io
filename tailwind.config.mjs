@@ -29,6 +29,10 @@ export default {
           800: '#333333',
           900: '#1A1A1A',  // Noir Horizon
         },
+        dark: {
+          800: '#2a2a2a',
+          900: '#1A1A1A',  // Noir Horizon (pour Footer)
+        },
       },
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif'],
