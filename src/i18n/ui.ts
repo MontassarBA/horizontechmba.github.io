@@ -55,9 +55,9 @@ export const ui = {
     'services.other.card3.desc': 'Inspection, guidance, and quality control with industrial cameras.',
     
     // About Section
-    'about.title': 'About HORIZONTECH MBA inc.',
+    'about.title': 'About HORIZONTECH MBA Inc.',
     'about.subtitle': 'Engineering Excellence Since Day One',
-    'about.description1': 'HORIZONTECH MBA inc. is an engineering consulting firm focused on embedded systems, electronics design, and standards-driven product development. We deliver reliable solutions in medical, energy, and industrial environments.',
+    'about.description1': 'HORIZONTECH MBA Inc. is an engineering consulting firm focused on embedded systems, electronics design, and standards-driven product development. We deliver reliable solutions in medical, energy, and industrial environments.',
     'about.description2': 'Experience includes IEC 60601/62304 medical devices, DLMS/COSEM smart metering, and functional safety (IEC 61508, ISO 13849) for off-highway and mining equipment.',
     'about.mission.title': 'Our Mission',
     'about.mission.description': 'To empower organizations with technology that creates lasting competitive advantage.',
