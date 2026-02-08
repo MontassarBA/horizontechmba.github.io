@@ -523,6 +523,141 @@ test('post-deploy-verification.js exists', fs.existsSync('scripts/post-deploy-ve
 test('e2e-contact-test.js exists', fs.existsSync('scripts/e2e-contact-test.js'));
 
 // ========================================
+// TEST 23: UTF-8 Encoding & Text Display Integrity
+// ========================================
+log('\n📝 TEST 23: UTF-8 Encoding & Text Display Integrity', 'cyan');
+
+// Common malformed encoding patterns (UTF-8 viewed as ISO-8859-1 or similar)
+const encodingIssues = [
+  // French accents
+  { pattern: /Ã©/g, correct: '\u00E9', name: 'e accent aigu' },
+  { pattern: /Ã¨/g, correct: '\u00E8', name: 'e accent grave' },
+  { pattern: /Ãª/g, correct: '\u00EA', name: 'e accent circonflexe' },
+  { pattern: /Ã /g, correct: '\u00E0', name: 'a accent grave' },
+  { pattern: /Ã´/g, correct: '\u00F4', name: 'o accent circonflexe' },
+  { pattern: /Ã®/g, correct: '\u00EE', name: 'i accent circonflexe' },
+  { pattern: /Ã¹/g, correct: '\u00F9', name: 'u accent grave' },
+  { pattern: /Ã§/g, correct: '\u00E7', name: 'c cedille' },
+  { pattern: /Ã‰/g, correct: '\u00C9', name: 'E accent aigu' },
+  { pattern: /Ã€/g, correct: '\u00C0', name: 'A accent grave' },
+  { pattern: /Ã‡/g, correct: '\u00C7', name: 'C cedille' },
+  // Smart quotes and dashes (using hex codes)
+  { pattern: /â€™/g, correct: '\u2019', name: 'apostrophe courbe' },
+  { pattern: /â€œ/g, correct: '\u201C', name: 'guillemet ouvrant' },
+  { pattern: /â€/g, correct: '\u201D', name: 'guillemet fermant' },
+  { pattern: /â€"mlong/g, correct: '\u2014', name: 'tiret long' },
+  { pattern: /â€"moyen/g, correct: '\u2013', name: 'tiret moyen' },
+  // Other common issues
+  { pattern: /Ã¢/g, correct: '\u00E2', name: 'a accent circonflexe' },
+  { pattern: /Ã»/g, correct: '\u00FB', name: 'u accent circonflexe' },
+  { pattern: /Å"/g, correct: '\u0153', name: 'o-e ligature' },
+];
+
+// Files to check for encoding issues
+const filesToCheckEncoding = [
+  'src/i18n/ui.ts',
+  'src/pages/index.astro',
+  'src/pages/fr/index.astro',
+  'src/pages/en/index.astro',
+  'src/pages/fr/about.astro',
+  'src/pages/en/about.astro',
+  'src/pages/fr/services.astro',
+  'src/pages/en/services.astro',
+  'src/pages/fr/contact.astro',
+  'src/pages/en/contact.astro',
+  'src/pages/fr/cookies.astro',
+  'src/pages/en/cookies.astro',
+  'src/components/Footer.astro',
+  'src/components/Header.astro',
+  'src/components/FAQ.astro',
+  'src/components/Testimonials.astro',
+];
+
+filesToCheckEncoding.forEach(filePath => {
+  const fullPath = path.join(projectRoot, filePath);
+  if (fs.existsSync(fullPath)) {
+    const content = fs.readFileSync(fullPath, 'utf8');
+    
+    // Check for each encoding issue pattern
+    encodingIssues.forEach(issue => {
+      const matches = content.match(issue.pattern);
+      test(
+        `${path.basename(filePath)} has no malformed ${issue.name}`,
+        !matches,
+        matches ? `Found ${matches.length} occurrence(s) of malformed "${issue.name}": ${matches.slice(0, 3).join(', ')}${matches.length > 3 ? '...' : ''}` : ''
+      );
+    });
+  }
+});
+
+// Verify critical French text has proper accents (positive check)
+const frenchTextChecks = [
+  { file: 'src/i18n/ui.ts', text: 'Syst\u00E8me', description: 'French word Systeme with accent' },
+  { file: 'src/i18n/ui.ts', text: '\u00E9lectronique', description: 'French word electronique with accent' },
+  { file: 'src/i18n/ui.ts', text: '\u00C9nergie', description: 'French word Energie with accent' },
+  { file: 'src/i18n/ui.ts', text: 'm\u00E9dicaux', description: 'French word medicaux with accent' },
+  { file: 'src/i18n/ui.ts', text: 'r\u00E9pondons', description: 'French word repondons with accent' },
+  { file: 'src/pages/fr/contact.astro', text: 'r\u00E9essayer', description: 'CAPTCHA error message reessayer' },
+  { file: 'src/pages/fr/contact.astro', text: 'envoy\u00E9', description: 'Success message envoye with accent' },
+  { file: 'src/pages/fr/contact.astro', text: 'D\u00E9crivez', description: 'Placeholder Decrivez with accent' },
+  { file: 'src/pages/fr/contact.astro', text: 'S\u00E9lectionner', description: 'Select option Selectionner with accent' },
+  { file: 'src/pages/fr/contact.astro', text: 'Imm\u00E9diate', description: 'Timeline option Immediate with accent' },
+];
+
+frenchTextChecks.forEach(check => {
+  const fullPath = path.join(projectRoot, check.file);
+  if (fs.existsSync(fullPath)) {
+    const content = fs.readFileSync(fullPath, 'utf8');
+    test(
+      `${path.basename(check.file)} contains properly encoded "${check.description}"`,
+      content.includes(check.text),
+      `Missing or malformed: ${check.text}`
+    );
+  }
+});
+
+// Check HTML meta charset declarations
+const htmlFiles = [
+  'dist/index.html',
+  'dist/fr/index.html',
+  'dist/en/index.html',
+  'dist/fr/contact.html',
+  'dist/en/contact.html',
+];
+
+htmlFiles.forEach(filePath => {
+  const fullPath = path.join(projectRoot, filePath);
+  if (fs.existsSync(fullPath)) {
+    const content = fs.readFileSync(fullPath, 'utf8');
+    test(
+      `${filePath} declares UTF-8 charset`,
+      content.includes('charset="utf-8"') || content.includes('charset=utf-8') || content.includes('charset="UTF-8"'),
+      'Missing or incorrect charset declaration'
+    );
+  }
+});
+
+// Verify source files are UTF-8 encoded (BOM check - UTF-8 files should NOT have BOM)
+const sourceFilesToCheck = [
+  'src/i18n/ui.ts',
+  'src/pages/fr/contact.astro',
+  'src/pages/en/contact.astro',
+];
+
+sourceFilesToCheck.forEach(filePath => {
+  const fullPath = path.join(projectRoot, filePath);
+  if (fs.existsSync(fullPath)) {
+    const buffer = fs.readFileSync(fullPath);
+    const hasBOM = buffer[0] === 0xEF && buffer[1] === 0xBB && buffer[2] === 0xBF;
+    test(
+      `${path.basename(filePath)} is UTF-8 without BOM`,
+      !hasBOM,
+      'File has UTF-8 BOM which can cause issues'
+    );
+  }
+});
+
+// ========================================
 // Summary
 // ========================================
 log('\n' + '═'.repeat(50), 'cyan');
