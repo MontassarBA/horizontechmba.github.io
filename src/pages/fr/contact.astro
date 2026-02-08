@@ -256,7 +256,7 @@ const t = useTranslations(lang);
                   const token = await getRecaptchaToken();
                   if (recaptchaInput) recaptchaInput.value = token;
                 } catch (err) {
-                  setStatus(document.documentElement.lang === 'fr' ? 'Erreur CAPTCHA. Veuillez rÃ©essayer.' : 'CAPTCHA error. Please try again.', 'error');
+                  setStatus(document.documentElement.lang === 'fr' ? 'Erreur CAPTCHA. Veuillez réessayer.' : 'CAPTCHA error. Please try again.', 'error');
                   submitBtn.disabled = false;
                   return;
                 }
