@@ -8,61 +8,61 @@ const translatePath = useTranslatedPath(lang);
 // These represent the type of projects our founder has delivered during 15+ years of consulting experience
 const caseStudies = [
   {
-    id: 'aerospace-iot',
-    title: lang === 'fr' ? 'Système IoT pour l\'Aérospatiale' : 'Aerospace IoT System',
-    context: lang === 'fr' ? 'Secteur Aérospatiale' : 'Aerospace Sector',
-    industry: lang === 'fr' ? 'Aérospatiale' : 'Aerospace',
+    id: 'smart-metering',
+    title: lang === 'fr' ? 'Compteur Intelligent DLMS/COSEM' : 'DLMS/COSEM Smart Meter',
+    context: lang === 'fr' ? 'Énergie & comptage' : 'Energy & metering',
+    industry: lang === 'fr' ? 'Énergie' : 'Energy',
     challenge: lang === 'fr' 
-      ? 'Moderniser le système de monitoring en temps réel des équipements de test'
-      : 'Modernize real-time monitoring system for test equipment',
+      ? 'Concevoir un compteur fiable et conforme pour la domotique et la gestion énergétique'
+      : 'Design a reliable, compliance-ready meter for smart home and energy management',
     solution: lang === 'fr'
-      ? 'Architecture IoT avec edge computing et tableau de bord temps réel'
-      : 'IoT architecture with edge computing and real-time dashboard',
+      ? 'Conception électronique complète + firmware temps réel, implémentation protocoles DLMS/COSEM Blue Book et modules de mesure/décision embarqués'
+      : 'Complete electronics design + real-time firmware, DLMS/COSEM Blue Book protocol implementation and embedded measurement/decision modules',
     results: [
-      { metric: '40%', label: lang === 'fr' ? 'Réduction temps développement' : 'Development time reduction' },
-      { metric: '99.9%', label: lang === 'fr' ? 'Disponibilité système' : 'System uptime' },
-      { metric: '3x', label: lang === 'fr' ? 'Vitesse de diagnostic' : 'Diagnostic speed' }
+      { metric: '10K+', label: lang === 'fr' ? 'Unités déployées' : 'Units deployed' },
+      { metric: '99.8%', label: lang === 'fr' ? 'Fiabilité terrain' : 'Field reliability' },
+      { metric: '< 6 mois', label: lang === 'fr' ? 'Mise en marché' : 'Time to market' }
     ],
-    tags: ['IoT', 'Edge Computing', 'Real-time', 'Dashboard'],
-    gradient: 'from-blue-500 to-primary-600'
+    tags: ['Embedded', 'DLMS/COSEM', 'Metering', 'Energy'],
+    gradient: 'from-green-500 to-emerald-600'
   },
   {
     id: 'medical-embedded',
     title: lang === 'fr' ? 'Dispositif Médical Embarqué' : 'Medical Embedded Device',
-    context: lang === 'fr' ? 'Secteur Santé' : 'Healthcare Sector',
-    industry: lang === 'fr' ? 'Santé' : 'Healthcare',
+    context: lang === 'fr' ? 'Dispositifs médicaux' : 'Medical devices',
+    industry: lang === 'fr' ? 'Médical' : 'Medical',
     challenge: lang === 'fr'
-      ? 'Développer un système embarqué certifié pour équipement de diagnostic'
-      : 'Develop certified embedded system for diagnostic equipment',
+      ? 'Développer un système embarqué conforme pour un équipement de diagnostic'
+      : 'Develop a compliant embedded system for diagnostic equipment',
     solution: lang === 'fr'
-      ? 'Firmware temps réel avec architecture safety-critical et documentation FDA'
-      : 'Real-time firmware with safety-critical architecture and FDA documentation',
+      ? 'Architecture hardware sécurisée, firmware temps réel avec traçabilité complète et plan de validation selon IEC 60601 / IEC 62304'
+      : 'Secure hardware architecture, real-time firmware with full traceability and validation plan aligned with IEC 60601 / IEC 62304',
     results: [
-      { metric: '100%', label: lang === 'fr' ? 'Conformité FDA' : 'FDA Compliance' },
-      { metric: '6', label: lang === 'fr' ? 'Mois de développement' : 'Months development' },
-      { metric: '0', label: lang === 'fr' ? 'Défauts critiques' : 'Critical defects' }
+      { metric: '100%', label: lang === 'fr' ? 'Certification 1er coup' : 'First-time cert' },
+      { metric: '-30%', label: lang === 'fr' ? 'Coûts tests vs budget' : 'Test costs vs budget' },
+      { metric: '8 mois', label: lang === 'fr' ? 'Durée projet' : 'Project duration' }
     ],
-    tags: ['Embedded', 'Medical', 'FDA', 'Safety-Critical'],
+    tags: ['Embedded', 'Medical', 'IEC 60601', 'IEC 62304'],
     gradient: 'from-red-500 to-pink-600'
   },
   {
-    id: 'energy-ai',
-    title: lang === 'fr' ? 'IA Prédictive pour l\'Énergie' : 'Predictive AI for Energy',
-    context: lang === 'fr' ? 'Secteur Énergie' : 'Energy Sector',
-    industry: lang === 'fr' ? 'Énergie' : 'Energy',
+    id: 'off-highway-safety',
+    title: lang === 'fr' ? 'Sécurité Fonctionnelle Hors-route' : 'Off-Highway Functional Safety',
+    context: lang === 'fr' ? 'Mines & équipements lourds' : 'Mining & heavy equipment',
+    industry: lang === 'fr' ? 'Hors-route' : 'Off-highway',
     challenge: lang === 'fr'
-      ? 'Optimiser la maintenance prédictive des infrastructures énergétiques'
-      : 'Optimize predictive maintenance for energy infrastructure',
+      ? 'Sécuriser des fonctions critiques pour machines mobiles en environnement sévère'
+      : 'Secure critical functions for mobile machines in harsh environments',
     solution: lang === 'fr'
-      ? 'Modèles ML pour prédiction de pannes avec intégration SCADA'
-      : 'ML models for failure prediction with SCADA integration',
+      ? 'Analyse FMEA/FMEDA complète, architecture redondante SIL2, plan de validation HIL/SIL selon IEC 61508 / ISO 13849'
+      : 'Complete FMEA/FMEDA analysis, SIL2 redundant architecture, HIL/SIL validation plan aligned with IEC 61508 / ISO 13849',
     results: [
-      { metric: '35%', label: lang === 'fr' ? 'Réduction des pannes' : 'Failure reduction' },
-      { metric: '$2M', label: lang === 'fr' ? 'Économies annuelles' : 'Annual savings' },
-      { metric: '85%', label: lang === 'fr' ? 'Précision prédiction' : 'Prediction accuracy' }
+      { metric: 'SIL 2', label: lang === 'fr' ? 'Niveau sécurité atteint' : 'Safety level achieved' },
+      { metric: '500+', label: lang === 'fr' ? 'Heures tests HIL/SIL' : 'HIL/SIL test hours' },
+      { metric: 'Cat. 3', label: lang === 'fr' ? 'ISO 13849 certification' : 'ISO 13849 rating' }
     ],
-    tags: ['AI/ML', 'Predictive', 'SCADA', 'Energy'],
-    gradient: 'from-green-500 to-emerald-600'
+    tags: ['Safety', 'Off-highway', 'IEC 61508', 'ISO 13849'],
+    gradient: 'from-blue-500 to-primary-600'
   }
 ];
 
@@ -160,10 +160,10 @@ const viewAll = lang === 'fr' ? 'Voir tous les projets' : 'View all projects';
     <!-- CTA -->
     <div class="text-center mt-12">
       <a 
-        href={translatePath('/contact')}
+        href={`${translatePath('/contact')}#booking`}
         class="inline-flex items-center gap-2 px-8 py-4 bg-primary-500 hover:bg-primary-600 text-white font-semibold rounded-xl shadow-lg shadow-primary-500/25 hover:shadow-xl transition-all duration-300 group"
       >
-        {lang === 'fr' ? 'Discuter de votre projet' : 'Discuss Your Project'}
+        {lang === 'fr' ? 'Planifier un appel technique' : 'Schedule a Technical Call'}
         <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
         </svg>

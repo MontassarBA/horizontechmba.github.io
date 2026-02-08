@@ -13,7 +13,7 @@ const content = {
     experience: {
       number: '15+',
       label: 'Années d\'expérience',
-      description: 'Notre fondateur cumule plus de 15 ans d\'expertise en ingénierie logicielle embarquée, IoT et IA auprès d\'entreprises de renom dans l\'aérospatiale, le médical et l\'énergie.'
+      description: 'Notre fondateur cumule plus de 15 ans d\'expertise en systèmes embarqués, conception électronique et conformité dans le médical, l\'énergie/metering et l\'industriel.'
     },
     values: [
       {
@@ -32,7 +32,7 @@ const content = {
         description: 'Les dernières technologies et méthodologies au service de vos projets critiques.'
       }
     ],
-    cta: 'Discuter de votre projet'
+    cta: 'Planifier un appel technique'
   },
   en: {
     badge: 'Our Commitment',
@@ -41,7 +41,7 @@ const content = {
     experience: {
       number: '15+',
       label: 'Years of experience',
-      description: 'Our founder has accumulated over 15 years of expertise in embedded software engineering, IoT and AI with renowned companies in aerospace, medical and energy sectors.'
+      description: 'Our founder has accumulated over 15 years of expertise in embedded systems, electronics design, and compliance across medical, energy metering, and industrial sectors.'
     },
     values: [
       {
@@ -60,7 +60,7 @@ const content = {
         description: 'The latest technologies and methodologies serving your critical projects.'
       }
     ],
-    cta: 'Discuss your project'
+    cta: 'Schedule a Technical Call'
   }
 };
 
@@ -129,7 +129,7 @@ const icons = {
     <!-- CTA -->
     <div class="text-center">
       <a 
-        href={translatePath('/contact')}
+        href={`${translatePath('/contact')}#booking`}
         class="inline-flex items-center gap-2 px-8 py-4 bg-primary-500 hover:bg-primary-600 text-white font-semibold rounded-xl shadow-lg shadow-primary-500/25 hover:shadow-xl transition-all duration-300 group"
       >
         {c.cta}

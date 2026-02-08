@@ -1,0 +1,163 @@
+﻿---
+import Layout from '../../layouts/Layout.astro';
+import { getLangFromUrl, useTranslations } from '../../i18n/utils';
+import CTASection from '../../components/CTASection.astro';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const standards = [
+  {
+    code: 'IEC 60601',
+    title: 'Medical electrical equipment safety',
+    desc: 'Safety and essential performance requirements for medical devices.'
+  },
+  {
+    code: 'IEC 62304',
+    title: 'Medical software lifecycle',
+    desc: 'Software processes, risk management, and verification for medical devices.'
+  },
+  {
+    code: 'IEC 61508',
+    title: 'Functional safety',
+    desc: 'Safety lifecycle for electrical, electronic, and programmable systems.'
+  },
+  {
+    code: 'ISO 13849',
+    title: 'Safety of machinery',
+    desc: 'Safety-related parts of control systems for machinery.'
+  },
+  {
+    code: 'ISO 26262',
+    title: 'Automotive functional safety',
+    desc: 'Functional safety for road vehicles and automotive electronics.'
+  },
+  {
+    code: 'DLMS/COSEM',
+    title: 'Smart metering standard',
+    desc: 'Data model and communication for smart energy meters.'
+  },
+  {
+    code: 'EMI/EMC',
+    title: 'EMI/EMC design support',
+    desc: 'Mitigation, pre-compliance testing, and documentation for EMC readiness.'
+  }
+];
+
+const deliverables = [
+  'Compliance roadmap and gap analysis',
+  'Requirements definition and safety planning',
+  'Risk analysis (FMEA/FMEDA) and mitigation',
+  'Verification and validation strategy',
+  'Test plans, reports, and traceability',
+  'EMI/EMC design reviews and recommendations'
+];
+
+const protocolsTitle = lang === 'fr' ? 'Protocoles & bus de communication' : 'Communication protocols & buses';
+const protocolsSubtitle = lang === 'fr'
+  ? 'Normes de communication courantes dans l\'automobile, l\'industriel et l\'IoT.'
+  : 'Communication standards commonly used in automotive, industrial, and IoT systems.';
+const protocols = ['J1939', 'CAN', 'Ethernet', 'Wi-Fi 802.11', 'Modbus TCP/RTU', 'BACnet'];
+
+const sectors = [
+  'Medical devices',
+  'Energy & metering',
+  'Automotive',
+  'Off-highway & mining',
+  'Industrial automation & vision',
+  'IoT & AI'
+];
+---
+
+<Layout
+  title={lang === 'fr' ? 'Normes & conformité' : 'Standards & Compliance'}
+  description="Standards and compliance support for embedded systems, medical devices, smart metering, and safety-critical equipment. IEC 60601/62304, IEC 61508, ISO 13849, DLMS/COSEM."
+  keywords="standards compliance, IEC 60601, IEC 62304, IEC 61508, ISO 13849, DLMS COSEM, EMC, embedded systems"
+>
+  <!-- Hero Section -->
+  <section class="pt-32 pb-20 bg-gradient-to-br from-primary-50 via-white to-secondary-50">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h1 class="text-4xl md:text-5xl font-bold text-gray-900">
+        Standards & Compliance
+      </h1>
+      <p class="mt-6 text-xl text-gray-600 max-w-3xl mx-auto">
+        We help teams design embedded electronics and software that align with safety and regulatory expectations
+        from the start of the development lifecycle.
+      </p>
+    </div>
+  </section>
+
+  <!-- Standards Grid -->
+  <section class="py-20 bg-white">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-900">Standards we work with</h2>
+        <p class="mt-4 text-lg text-gray-600">
+          Practical expertise with the standards that drive compliance in medical, energy, and industrial systems.
+        </p>
+      </div>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {standards.map((standard) => (
+          <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+            <div class="text-primary-600 font-semibold text-sm">{standard.code}</div>
+            <h3 class="text-xl font-bold text-gray-900 mt-2 mb-2">{standard.title}</h3>
+            <p class="text-gray-600 text-sm">{standard.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Communication Protocols -->
+  <section class="py-16 bg-gray-50">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h2 class="text-2xl md:text-3xl font-bold text-gray-900">{protocolsTitle}</h2>
+      <p class="mt-3 text-gray-600 max-w-3xl mx-auto">{protocolsSubtitle}</p>
+      <div class="mt-6 flex flex-wrap justify-center gap-3">
+        {protocols.map((protocol) => (
+          <span class="px-4 py-2 rounded-full bg-white border border-gray-200 text-sm font-semibold text-gray-700">
+            {protocol}
+          </span>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Deliverables -->
+  <section class="py-20 bg-gray-50">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid lg:grid-cols-2 gap-12 items-start">
+        <div>
+          <h2 class="text-3xl md:text-4xl font-bold text-gray-900">What we deliver</h2>
+          <p class="mt-4 text-lg text-gray-600">
+            A clear, documented path to compliance, tailored to your product and sector.
+          </p>
+          <ul class="mt-6 space-y-3 text-gray-700">
+            {deliverables.map((item) => (
+              <li class="flex items-start gap-3">
+                <span class="mt-1 w-2.5 h-2.5 rounded-full bg-primary-500"></span>
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div class="bg-white rounded-2xl border border-gray-100 p-8 shadow-sm">
+          <h3 class="text-xl font-bold text-gray-900 mb-4">Typical sectors</h3>
+          <div class="flex flex-wrap gap-3">
+            {sectors.map((sector) => (
+              <span class="px-4 py-2 rounded-full bg-gray-50 border border-gray-200 text-sm text-gray-700">
+                {sector}
+              </span>
+            ))}
+          </div>
+          <div class="mt-6 p-4 rounded-xl bg-primary-50 border border-primary-100 text-sm text-primary-900">
+            We support compliance activities and documentation. Certification decisions remain with your notified body
+            or certification authority.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <CTASection />
+</Layout>

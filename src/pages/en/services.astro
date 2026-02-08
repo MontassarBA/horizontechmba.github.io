@@ -8,8 +8,17 @@ const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 const translatePath = useTranslatedPath(lang);
 
-const pageDescription = "Engineering consulting services: Embedded Systems & IoT, AI & Software Development, Energy Solutions, R&D for Healthcare and Aerospace, EMI/EMC, HIL/SIL Matlab, quality, risk analysis, and development project management.";
-const pageKeywords = "embedded systems consulting, IoT development services, AI solutions, software engineering, energy technology consulting, aerospace R&D, healthcare technology, firmware development, FPGA design, EMI EMC consulting, HIL SIL Matlab, quality engineering, risk analysis, development project management";
+const pageDescription = "Engineering consulting services: embedded systems and electronics design, AI & software, smart energy metering (DLMS/COSEM), medical devices (IEC 60601/62304), functional safety (IEC 61508, ISO 13849), EMI/EMC, HIL/SIL Matlab, and industrial automation.";
+const pageKeywords = "embedded systems consulting, electronics design, pcb design, IoT development services, AI solutions, software engineering, smart metering DLMS COSEM, medical devices IEC 60601 IEC 62304, functional safety IEC 61508 ISO 13849, EMI EMC consulting, HIL SIL Matlab, industrial automation, Siemens PLC, Cognex vision";
+
+const standards = ['IEC 60601', 'IEC 62304', 'IEC 61508', 'ISO 13849', 'ISO 26262', 'DLMS/COSEM', 'EMI/EMC'];
+const standardsTitle = lang === 'fr' ? 'Certifications & Normes' : 'Certifications & Standards';
+const standardsSubtitle = lang === 'fr'
+  ? 'Expérience pratique des standards clés pour le médical, l\'énergie et l\'industriel.'
+  : 'Hands-on experience with the key standards for medical, energy, and industrial systems.';
+const standardsLink = lang === 'fr' ? 'Voir la page Normes & conformité' : 'View Standards & Compliance';
+const protocolsTitle = lang === 'fr' ? 'Protocoles & bus de communication' : 'Communication protocols & buses';
+const protocols = ['J1939', 'CAN', 'Ethernet', 'Wi-Fi 802.11', 'Modbus TCP/RTU', 'BACnet'];
 
 const services = [
   {
@@ -18,8 +27,8 @@ const services = [
     titleKey: 'services.consulting.title',
     descKey: 'services.consulting.description',
     features: lang === 'fr' 
-      ? ['Stratégie technologique', 'Architecture système', 'Audit technique', 'Accompagnement projet']
-      : ['Technology strategy', 'System architecture', 'Technical audit', 'Project support'],
+      ? ['Rédaction des exigences', 'Architecture système', 'Audit technique', 'Gestion d\'équipe (Traditionnelle/Agile/Scrum)', 'Accompagnement projet']
+      : ['Requirements engineering', 'System architecture', 'Technical audit', 'Team leadership (Traditional/Agile/Scrum)', 'Project delivery'],
     color: 'primary'
   },
   {
@@ -28,8 +37,8 @@ const services = [
     titleKey: 'services.embedded.title',
     descKey: 'services.embedded.description',
     features: lang === 'fr'
-      ? ['Microcontrôleurs & FPGA', 'Protocoles de communication', 'Firmware développement', 'Certification & conformité']
-      : ['Microcontrollers & FPGA', 'Communication protocols', 'Firmware development', 'Certification & compliance'],
+      ? ['Conception de cartes électroniques', 'Microcontrôleurs & FPGA', 'Firmware & bootloaders', 'Sécurité fonctionnelle & conformité']
+      : ['PCB design & schematics', 'Microcontrollers & FPGA', 'Firmware & bootloaders', 'Functional safety & compliance'],
     color: 'secondary'
   },
   {
@@ -48,8 +57,8 @@ const services = [
     titleKey: 'services.energy.title',
     descKey: 'services.energy.description',
     features: lang === 'fr'
-      ? ['Monitoring énergétique', 'Optimisation consommation', 'Smart grid integration', 'Analyse prédictive']
-      : ['Energy monitoring', 'Consumption optimization', 'Smart grid integration', 'Predictive analysis'],
+      ? ['Comptage intelligent (DLMS/COSEM)', 'Monitoring énergétique', 'Modules de décision', 'Intégration système']
+      : ['Smart metering (DLMS/COSEM)', 'Energy monitoring', 'Decision modules', 'System integration'],
     color: 'secondary'
   },
   {
@@ -58,8 +67,8 @@ const services = [
     titleKey: 'services.rd.title',
     descKey: 'services.rd.description',
     features: lang === 'fr'
-      ? ['Dispositifs médicaux', 'Santé connectée', 'Nanosatellites', 'Innovation technologique']
-      : ['Medical devices', 'Connected health', 'Nanosatellites', 'Technological innovation'],
+      ? ['Dispositifs médicaux (IEC 60601/62304)', 'Santé connectée', 'Validation sécurité critique', 'Vérification & tests']
+      : ['Medical devices (IEC 60601/62304)', 'Connected health', 'Safety-critical validation', 'Verification & testing'],
     color: 'primary'
   }
 ];
@@ -82,17 +91,57 @@ const services = [
     </div>
   </section>
   
+  <!-- Certifications & Standards -->
+  <section class="py-12 bg-white border-b border-gray-100">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center">
+        <h2 class="text-2xl md:text-3xl font-bold text-gray-900">{standardsTitle}</h2>
+        <p class="mt-3 text-gray-600 max-w-3xl mx-auto">{standardsSubtitle}</p>
+      </div>
+      <div class="mt-6 flex flex-wrap justify-center gap-3">
+        {standards.map((standard) => (
+          <span class="px-4 py-2 rounded-full bg-gray-50 border border-gray-200 text-sm font-semibold text-gray-700">
+            {standard}
+          </span>
+        ))}
+      </div>
+      <div class="mt-8 text-center">
+        <p class="text-xs font-semibold text-gray-500 uppercase tracking-widest">{protocolsTitle}</p>
+        <div class="mt-3 flex flex-wrap justify-center gap-2">
+          {protocols.map((protocol) => (
+            <span class="px-3 py-1.5 rounded-full bg-white border border-gray-200 text-xs font-semibold text-gray-700">
+              {protocol}
+            </span>
+          ))}
+        </div>
+      </div>
+      <div class="mt-6 text-center">
+        <a
+          href={translatePath('/standards')}
+          class="inline-flex items-center text-primary-600 hover:text-primary-700 font-semibold"
+        >
+          {standardsLink}
+          <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
   <!-- Services List -->
   <section class="py-20 bg-white">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8">
       <div class="max-w-5xl mx-auto mb-16">
         <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
-          Specialized services: embedded systems, EMI/EMC, HIL/SIL, Matlab
+          Specialized services: embedded systems, electronics design, compliance, and testing
         </h2>
         <p class="text-gray-600">
-          We support development programs with hands-on expertise in embedded systems, EMI/EMC, HIL/SIL,
-          Matlab/Simulink, quality engineering, and risk analysis. Based in Lévis, we serve Quebec, Canada,
-          and US clients.
+          We support development programs with hands-on expertise in embedded systems, electronics design, EMI/EMC,
+          HIL/SIL, Matlab/Simulink, quality engineering, and risk analysis. Our work spans medical (IEC 60601/62304),
+          energy metering (DLMS/COSEM), and functional safety (IEC 61508, ISO 13849, ISO 26262). We also support
+          requirements writing and team leadership across traditional, Agile, and Scrum methods. Based in Lévis, we
+          serve Quebec, Canada, and US clients.
         </p>
       </div>
       <div class="space-y-16">
@@ -135,6 +184,46 @@ const services = [
     </div>
   </section>
   
+  <!-- Other Expertise Section -->
+  <section class="py-20 bg-white border-t border-gray-100">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-900">
+          {t('services.other.title')}
+        </h2>
+        <p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">
+          {t('services.other.subtitle')}
+        </p>
+      </div>
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="bg-gray-50 rounded-2xl p-8 border border-gray-100">
+          <h3 class="text-xl font-semibold text-gray-900 mb-3">
+            {t('services.other.card1.title')}
+          </h3>
+          <p class="text-gray-600">
+            {t('services.other.card1.desc')}
+          </p>
+        </div>
+        <div class="bg-gray-50 rounded-2xl p-8 border border-gray-100">
+          <h3 class="text-xl font-semibold text-gray-900 mb-3">
+            {t('services.other.card2.title')}
+          </h3>
+          <p class="text-gray-600">
+            {t('services.other.card2.desc')}
+          </p>
+        </div>
+        <div class="bg-gray-50 rounded-2xl p-8 border border-gray-100">
+          <h3 class="text-xl font-semibold text-gray-900 mb-3">
+            {t('services.other.card3.title')}
+          </h3>
+          <p class="text-gray-600">
+            {t('services.other.card3.desc')}
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- Process Section -->
   <section class="py-20 bg-gray-50">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8">

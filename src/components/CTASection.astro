@@ -33,21 +33,15 @@ const translatePath = useTranslatedPath(lang);
         {t('cta.subtitle')}
       </p>
       
-      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+      <div class="flex justify-center">
         <a 
-          href={translatePath('/contact')}
+          href={`${translatePath('/contact')}#booking`}
           class="inline-flex items-center justify-center px-8 py-4 bg-white text-primary-600 font-bold rounded-xl shadow-2xl hover:shadow-white/20 transform hover:-translate-y-1 transition-all duration-300 group"
         >
           {t('cta.button')}
           <svg class="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
           </svg>
-        </a>
-        <a 
-          href={translatePath('/services')}
-          class="inline-flex items-center justify-center px-8 py-4 bg-transparent text-white font-semibold rounded-xl border-2 border-white/30 hover:border-white hover:bg-white/10 transition-all duration-300"
-        >
-          {t('hero.cta.secondary')}
         </a>
       </div>
       

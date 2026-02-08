@@ -10,8 +10,8 @@ const faqs = [
       en: 'What types of projects do you handle?'
     },
     answer: {
-      fr: 'Nous intervenons sur des projets d\'ingénierie logicielle embarqués, systèmes IoT, développement firmware, intégration hardware-software, et solutions IA/ML. Nos domaines d\'expertise couvrent l\'aérospatiale, le médical, l\'énergie et les télécommunications.',
-      en: 'We handle embedded software engineering projects, IoT systems, firmware development, hardware-software integration, and AI/ML solutions. Our expertise covers aerospace, medical, energy, and telecommunications sectors.'
+      fr: 'Nous intervenons sur des projets d\'ingénierie embarquée, systèmes IoT, développement firmware, intégration hardware-software et solutions IA. Nos domaines d\'expertise couvrent le médical, l\'énergie/metering, l\'industrie et les équipements hors-route.',
+      en: 'We handle embedded engineering projects, IoT systems, firmware development, hardware-software integration, and AI solutions. Our expertise covers medical, energy metering, industrial automation, and off-highway sectors.'
     }
   },
   {
@@ -148,7 +148,7 @@ const faqSchema = {
     <div class="text-center mt-12">
       <p class="text-gray-600 mb-4">{t.contact}</p>
       <a 
-        href={lang === 'fr' ? '/fr/contact' : '/en/contact'}
+        href={lang === 'fr' ? '/fr/contact#booking' : '/en/contact#booking'}
         class="inline-flex items-center gap-2 px-6 py-3 bg-primary-500 hover:bg-primary-600 text-white font-semibold rounded-xl shadow-lg shadow-primary-500/25 hover:shadow-xl transition-all duration-300"
       >
         {t.contactLink}
