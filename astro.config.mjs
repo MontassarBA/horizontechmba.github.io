@@ -5,7 +5,7 @@ export default defineConfig({
   site: 'https://www.horizontechmba.com',
   integrations: [tailwind()],
   i18n: {
-    defaultLocale: 'fr',
+    defaultLocale: 'en',
     locales: ['en', 'fr'],
     routing: {
       prefixDefaultLocale: false

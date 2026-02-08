@@ -96,7 +96,7 @@ const hasMetaRefresh = indexHtml && indexHtml.includes('http-equiv="refresh"');
 const hasMetaRefreshToFr = indexHtml && /url=\/fr\//.test(indexHtml);
 const hasJsRedirectToFr = indexHtml && /window\.location(\.href)?\s*=\s*['"]\/fr\//.test(indexHtml);
 const hasNoindex = indexHtml && indexHtml.includes('noindex');
-const hasLangFr = indexHtml && indexHtml.includes('lang="fr"');
+const hasLangEn = indexHtml && indexHtml.includes('lang="en"');
 
 test('Root index has no meta refresh redirect', !(hasMetaRefresh && hasMetaRefreshToFr),
   'Root should be a real page, not a meta refresh redirect to /fr/');
@@ -104,8 +104,8 @@ test('Root index has no JS redirect', !hasJsRedirectToFr,
   'Root should be a real page, not a JS redirect to /fr/');
 test('Root index is indexable (no noindex)', !hasNoindex,
   'Root should be indexable for SEO');
-test('Root index declares lang="fr"', hasLangFr,
-  'Root should render French content by default');
+test('Root index declares lang="en"', hasLangEn,
+  'Root should render English content by default');
 
 // ========================================
 // 2. Build Quality & Syntax Verification
@@ -236,7 +236,7 @@ const hasValidSiteUrl = astroConfig && (
 );
 test('Astro site URL configured', hasValidSiteUrl);
 test('CNAME file has www domain', cname && cname.includes('www.horizontechmba.com'));
-test('i18n default locale is French', astroConfig && astroConfig.includes("defaultLocale: 'fr'"));
+test('i18n default locale is English', astroConfig && astroConfig.includes("defaultLocale: 'en'"));
 test('prefixDefaultLocale is false', astroConfig && astroConfig.includes('prefixDefaultLocale: false'));
 
 // ========================================
