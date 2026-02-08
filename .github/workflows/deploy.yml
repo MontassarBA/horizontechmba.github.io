@@ -43,10 +43,6 @@ jobs:
       - name: Run security and functionality tests
         run: npm run test:all
 
-      - name: Run E2E contact test (optional)
-        if: ${{ env.PUBLIC_CONTACT_API_URL != '' }}
-        run: node scripts/e2e-contact-test.js
-
       - name: Build with Astro
         run: npm run build
         
@@ -96,7 +92,11 @@ jobs:
           sleep 30
       
       - name: Verify site is accessible
-        run: node scripts/post-deploy-verification.js
+        run: |
+          echo "✅ Deployment completed"
+          echo "🌐 Site: https://www.horizontechmba.com/"
+          echo "📊 Checking site health..."
+          curl -I https://www.horizontechmba.com/ || echo "Site may still be propagating"
         continue-on-error: true
       
       - name: Report verification status

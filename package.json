@@ -12,6 +12,7 @@
     "test:functional": "npm run build && node scripts/functionality-tests.js",
     "test:all": "npm run build && npm run test && npm run test:functional",
     "test:pre-commit": "node scripts/pre-commit-tests.js",
+    "test:pre-deploy": "node scripts/pre-deploy-check.js",
     "test:apple-devices": "npm run build && node scripts/test-apple-devices-simplified.js"
   },
   "dependencies": {
