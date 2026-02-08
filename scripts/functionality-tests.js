@@ -277,9 +277,140 @@ test('Home page is streamlined (no Newsletter full section)', !frHome || !frHome
 test('No placeholder text in pages', !aboutPage || !aboutPage.includes('YOUR_FORM_ID'));
 
 // ========================================
-// 11. CSS & Styling
+// 11. Standards Pages (New in v1.1)
 // ========================================
-log('\n🎨 TEST 11: Styling & Assets\n', 'cyan');
+log('\n📜 TEST 11: Standards & Compliance Pages\n', 'cyan');
+
+const frStandards = readFile(path.join(distDir, 'fr/standards/index.html'));
+const enStandards = readFile(path.join(distDir, 'en/standards/index.html'));
+
+test('FR Standards page exists', frStandards !== null);
+test('EN Standards page exists', enStandards !== null);
+test('FR Standards has IEC 60601', frStandards && frStandards.includes('IEC 60601'));
+test('FR Standards has IEC 62304', frStandards && frStandards.includes('IEC 62304'));
+test('FR Standards has IEC 61508', frStandards && frStandards.includes('IEC 61508'));
+test('FR Standards has ISO 13849', frStandards && frStandards.includes('ISO 13849'));
+test('FR Standards has ISO 26262', frStandards && frStandards.includes('ISO 26262'));
+test('FR Standards has DLMS/COSEM', frStandards && frStandards.includes('DLMS/COSEM'));
+test('FR Standards has EMI/EMC', frStandards && frStandards.includes('EMI/EMC'));
+test('EN Standards has all 7 standards', enStandards && 
+  enStandards.includes('IEC 60601') && 
+  enStandards.includes('IEC 62304') &&
+  enStandards.includes('IEC 61508') &&
+  enStandards.includes('ISO 13849') &&
+  enStandards.includes('ISO 26262') &&
+  enStandards.includes('DLMS/COSEM') &&
+  enStandards.includes('EMI/EMC'));
+test('Standards page has communication protocols', frStandards && frStandards.includes('J1939'));
+test('Standards page has deliverables section', frStandards && (frStandards.includes('Feuille de route') || frStandards.includes('Compliance roadmap')));
+
+// ========================================
+// 12. Navigation & Links (v1.1 updates)
+// ========================================
+log('\n🔗 TEST 12: Navigation & Standards Links\n', 'cyan');
+
+const frHeader = readFile(path.join(projectRoot, 'src/components/Header.astro'));
+const frFooter = readFile(path.join(projectRoot, 'src/components/Footer.astro'));
+const trustBadges = readFile(path.join(projectRoot, 'src/components/TrustBadges.astro'));
+
+test('Header has Standards link', frHeader && frHeader.includes('standards'));
+test('Footer has Standards link', frFooter && frFooter.includes('standards'));
+test('TrustBadges links to Standards page', trustBadges && trustBadges.includes('translatePath(\'/standards\')'));
+test('TrustBadges has 6 sectors', trustBadges && trustBadges.includes('Dispositifs médicaux') && trustBadges.includes('Énergie & comptage'));
+test('TrustBadges has 7 standards', trustBadges && trustBadges.includes('ISO 26262'));
+
+// ========================================
+// 13. CTA & Booking Links (v1.1 updates)
+// ========================================
+log('\n📞 TEST 13: CTA & Booking Integration\n', 'cyan');
+
+const ctaSection = readFile(path.join(projectRoot, 'src/components/CTASection.astro'));
+const heroSection = readFile(path.join(projectRoot, 'src/components/HeroSection.astro'));
+const caseStudies = readFile(path.join(projectRoot, 'src/components/CaseStudies.astro'));
+const testimonials = readFile(path.join(projectRoot, 'src/components/Testimonials.astro'));
+const faqComponent = readFile(path.join(projectRoot, 'src/components/FAQ.astro'));
+
+test('CTASection links to #booking', ctaSection && ctaSection.includes('#booking'));
+test('HeroSection links to #booking', heroSection && heroSection.includes('#booking'));
+test('CaseStudies links to #booking', caseStudies && caseStudies.includes('#booking'));
+test('Testimonials links to #booking', testimonials && testimonials.includes('#booking'));
+test('FAQ links to #booking', faqComponent && faqComponent.includes('#booking'));
+test('CTASection has single button', ctaSection && !ctaSection.includes('secondary'));
+test('HeroSection has single button', heroSection && !heroSection.includes('hero.cta.secondary'));
+
+// ========================================
+// 14. Content Updates (v1.1)
+// ========================================
+log('\n📝 TEST 14: Content Repositioning & Updates\n', 'cyan');
+
+const statsSection = readFile(path.join(projectRoot, 'src/components/StatsSection.astro'));
+const expertiseSection = readFile(path.join(projectRoot, 'src/components/ExpertiseSection.astro'));
+
+test('Stats shows 17+ projects', frHome && frHome.includes('17'));
+test('Stats shows 6+ standards', frHome && frHome.includes('6'));
+test('ExpertiseSection shows DLMS/COSEM', expertiseSection && expertiseSection.includes('DLMS/COSEM'));
+test('ExpertiseSection shows IEC standards', expertiseSection && expertiseSection.includes('IEC'));
+test('Hero mentions embedded systems', frHome && (frHome.includes('Systèmes embarqués') || frHome.includes('Embedded Systems')));
+test('Hero mentions compliance', frHome && (frHome.includes('Conformes') || frHome.includes('Compliance')));
+test('Services page mentions electronics design', servicesPage && (servicesPage.includes('électronique') || servicesPage.includes('electronics')));
+test('Services page has protocols section', servicesPage && (servicesPage.includes('J1939') || servicesPage.includes('CAN')));
+
+// ========================================
+// 15. Case Studies (v1.1 updates)
+// ========================================
+log('\n📊 TEST 15: Case Studies Realignment\n', 'cyan');
+
+const caseStudiesComponent = readFile(path.join(projectRoot, 'src/components/CaseStudies.astro'));
+
+test('CaseStudies has DLMS/COSEM project', caseStudiesComponent && caseStudiesComponent.includes('DLMS/COSEM'));
+test('CaseStudies has medical device project', caseStudiesComponent && caseStudiesComponent.includes('IEC 60601'));
+test('CaseStudies has off-highway project', caseStudiesComponent && (caseStudiesComponent.includes('IEC 61508') || caseStudiesComponent.includes('ISO 13849')));
+test('CaseStudies removed aerospace project', caseStudiesComponent && !caseStudiesComponent.includes('aerospace-iot'));
+test('CaseStudies has energy metering', caseStudiesComponent && (caseStudiesComponent.includes('metering') || caseStudiesComponent.includes('comptage')));
+test('CaseStudies has metrics', caseStudiesComponent && caseStudiesComponent.includes('10K+'));
+
+// ========================================
+// 16. Contact Form Updates (v1.1)
+// ========================================
+log('\n📧 TEST 16: Contact Form Enhancements\n', 'cyan');
+
+test('FR Contact has sector dropdown', frContact && frContact.includes('id="sector"'));
+test('EN Contact has sector dropdown', enContact && enContact.includes('id="sector"'));
+test('FR Contact has medical devices option', frContact && frContact.includes('Dispositifs médicaux'));
+test('FR Contact has energy option', frContact && (frContact.includes('Énergie &amp; comptage') || frContact.includes('Énergie & comptage')));
+test('FR Contact has booking banner', frContact && (frContact.includes('Besoin d&#39;un appel rapide') || frContact.includes('Besoin d\'un appel rapide')));
+test('EN Contact has booking banner', enContact && enContact.includes('Need a quick call'));
+test('Contact subject updated', frContact && (frContact.includes('Conformité') || frContact.includes('Conformit') || frContact.includes('embedded')));
+
+// ========================================
+// 17. SEO & Meta Updates (v1.1)
+// ========================================
+log('\n🔍 TEST 17: SEO Optimization\n', 'cyan');
+
+test('FR Home meta has embedded keywords', frHome && (frHome.includes('systèmes embarqués') || frHome.includes('syst&#xE8;mes embarqu&#xE9;s')));
+test('FR Home meta has IEC keywords', frHome && frHome.includes('IEC 60601'));
+test('EN Home meta has compliance keywords', enHome && enHome.includes('compliance'));
+test('FR Home meta has DLMS/COSEM', frHome && frHome.includes('DLMS/COSEM'));
+test('About page updated with sectors', aboutPage && (aboutPage.includes('Dispositifs médicaux') || aboutPage.includes('Medical Devices')));
+test('Services page SEO updated', servicesPage && (servicesPage.includes('electronics') || servicesPage.includes('électronique') || servicesPage.includes('lectronique')));
+
+// ========================================
+// 18. Component Architecture (v1.1)
+// ========================================
+log('\n🏗️ TEST 18: Component Architecture\n', 'cyan');
+
+const standardsBadges = readFile(path.join(projectRoot, 'src/components/StandardsBadges.astro'));
+
+test('StandardsBadges component exists', standardsBadges !== null);
+test('StandardsBadges has 7 standards', standardsBadges && standardsBadges.includes('ISO 26262'));
+test('StandardsBadges not duplicated on homepage', !frHome || !(frHome.includes('StandardsBadges') && frHome.includes('import StandardsBadges')));
+test('TrustBadges consolidated sectors+standards', trustBadges && trustBadges.includes('sectors') && trustBadges.includes('standards'));
+test('Only TrustBadges used on homepage', frHome && (frHome.includes('TrustBadges') || frHome.includes('Dispositifs m&#xE9;dicaux') || frHome.includes('Dispositifs médicaux')));
+
+// ========================================
+// 19. CSS & Styling
+// ========================================
+log('\n🎨 TEST 19: Styling & Assets\n', 'cyan');
 
 const astsroCSS = readFile(path.join(projectRoot, 'src/styles/global.css'));
 test('Tailwind CSS configured', astsroCSS !== null || fs.existsSync(path.join(projectRoot, 'tailwind.config.mjs')));
@@ -289,9 +420,9 @@ const distFiles = fs.readdirSync(path.join(distDir, '_astro')).filter(f => f.end
 test('CSS files generated', distFiles.length > 0, `Found ${distFiles.length} CSS files`);
 
 // ========================================
-// 12. JavaScript & Interactivity
+// 20. JavaScript & Interactivity
 // ========================================
-log('\n⚡ TEST 12: JavaScript & Interactivity\n', 'cyan');
+log('\n⚡ TEST 20: JavaScript & Interactivity\n', 'cyan');
 
 const jsFiles = fs.readdirSync(path.join(distDir, '_astro')).filter(f => f.endsWith('.js'));
 test('JavaScript files generated', jsFiles.length > 0, `Found ${jsFiles.length} JS files`);
