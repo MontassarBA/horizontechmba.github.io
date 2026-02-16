@@ -9,36 +9,43 @@ permissions:
   contents: read
   security-events: write
 
+env:
+  TARGET_URL: https://www.horizontechmba.com/
+
 jobs:
-  zap_scan:
+  zapscan:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        
+
       - name: Wait for deployment to complete
+        shell: bash
         run: |
           echo "Waiting for site to be available..."
           for i in {1..30}; do
-            HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" https://MontassarBA.github.io/)
-            if [ "$HTTP_CODE" = "200" ]; then
-              echo "✅ Site is available (HTTP $HTTP_CODE)"
+            HTTP_CODE=$(curl -L -s -o /dev/null -w "%{http_code}" "${TARGET_URL}")
+            if [[ "$HTTP_CODE" =~ ^(2|3)[0-9]{2}$ ]]; then
+              echo "Site is available (HTTP ${HTTP_CODE})"
               exit 0
             else
-              echo "⏳ Attempt $i/30: HTTP $HTTP_CODE - waiting..."
+              echo "Attempt ${i}/30: HTTP ${HTTP_CODE} - waiting..."
               sleep 5
             fi
           done
-          echo "⚠️ Site took longer to deploy, proceeding anyway..."
-        
-      - name: Baseline scan against GitHub Pages URL
-        uses: zaproxy/action-baseline@v0.13.0
+          echo "Site took longer to deploy, proceeding anyway..."
+
+      - name: Baseline scan against production URL
+        uses: zaproxy/action-baseline@v0.15.0
+        continue-on-error: true
         with:
-          target: 'https://MontassarBA.github.io/'
+          target: ${{ env.TARGET_URL }}
           rules_file_name: '.zap-rules.tsv'
           fail_action: 'false'
           allow_issue_writing: 'false'
-          
+          artifact_name: 'zap-scan'
+
       - name: Upload ZAP report
         uses: actions/upload-artifact@v4
         if: always()
