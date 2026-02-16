@@ -1,0 +1,14 @@
+name = "horizontech-ai"
+main = "src/worker.js"
+compatibility_date = "2024-10-01"
+
+[ai]
+binding = "AI"
+
+[vars]
+ALLOWED_ORIGINS = "https://www.horizontechmba.com,https://horizontechmba.com,https://horizontechmba.github.io,http://localhost:4321,http://localhost:4322"
+MAX_MESSAGES_PER_HOUR = "20"
+MAX_MESSAGE_LENGTH = "500"
+
+[observability]
+enabled = true

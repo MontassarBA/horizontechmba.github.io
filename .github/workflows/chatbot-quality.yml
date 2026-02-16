@@ -1,0 +1,80 @@
+name: Chatbot Quality
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      run_static:
+        description: "Run static chatbot checks"
+        required: true
+        type: boolean
+        default: true
+      run_live:
+        description: "Run live chatbot checks against deployed worker"
+        required: true
+        type: boolean
+        default: true
+      endpoint:
+        description: "Worker base URL (without /chat)"
+        required: false
+        type: string
+        default: "https://horizontech-ai.montassar-benabdallah.workers.dev"
+      origin:
+        description: "Origin header used for live checks"
+        required: false
+        type: string
+        default: "https://www.horizontechmba.com"
+
+permissions:
+  contents: read
+
+jobs:
+  chatbot-static:
+    name: Chatbot Static Checks
+    if: github.event_name != 'workflow_dispatch' || github.event.inputs.run_static == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run chatbot static tests
+        run: npm run test:chatbot
+
+  chatbot-live:
+    name: Chatbot Live Checks
+    if: github.event_name == 'workflow_dispatch' && github.event.inputs.run_live == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run chatbot live tests
+        run: |
+          node scripts/chatbot-tests.js \
+            --live \
+            --live-only \
+            --endpoint "${{ inputs.endpoint }}" \
+            --origin "${{ inputs.origin }}"
