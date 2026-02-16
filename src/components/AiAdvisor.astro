@@ -9,18 +9,18 @@ const content = {
     greeting: "Welcome! I'm your HORIZONTECH MBA advisor. What engineering challenge can we solve together?",
     placeholder: 'Type your question...',
     send: 'Send',
-    bookCta: 'Book a Free Consultation 📅',
-    contactCta: 'Contact Us ✉️',
+    bookCta: 'Book a Free Consultation',
+    contactCta: 'Contact Us',
     disclaimer: 'AI-powered answers. For precise quotes, contact us directly.',
     close: 'Close',
     thinking: 'Thinking...',
     error: 'Something went wrong. Please try again.',
     rateLimit: 'Too many messages. Please wait a moment.',
-    teaserTooltip: 'Need help? Ask me anything! 💬',
+    teaserTooltip: 'Need quick help? Ask one question.',
     suggestions: [
-      'Our embedded project is delayed. Can you help recover? 🚀',
-      'Can you support IEC 62304 / ISO 14971 compliance? ✅',
-      'How do you scope a firmware + cloud MVP budget? 💡',
+      'Our embedded project is delayed. Can you help recover?',
+      'Can you support IEC 62304 / ISO 14971 compliance?',
+      'How do you scope a firmware + cloud MVP budget?',
     ],
   },
   fr: {
@@ -28,18 +28,18 @@ const content = {
     greeting: "Bienvenue ! Je suis votre conseiller HORIZONTECH MBA. Quel défi d'ingénierie pouvons-nous résoudre ensemble ?",
     placeholder: 'Tapez votre question...',
     send: 'Envoyer',
-    bookCta: 'Réserver une consultation gratuite 📅',
-    contactCta: 'Nous contacter ✉️',
+    bookCta: 'Réserver une consultation gratuite',
+    contactCta: 'Nous contacter',
     disclaimer: 'Réponses générées par IA. Pour un devis précis, contactez-nous.',
     close: 'Fermer',
     thinking: 'Réflexion...',
     error: 'Une erreur est survenue. Veuillez réessayer.',
     rateLimit: 'Trop de messages. Veuillez patienter.',
-    teaserTooltip: 'Besoin d\'aide ? Posez-moi vos questions ! 💬',
+    teaserTooltip: 'Besoin d\'aide rapide ? Posez une question.',
     suggestions: [
-      'Notre projet embarque est en retard. Pouvez-vous aider ? 🚀',
-      'Pouvez-vous couvrir IEC 62304 / ISO 14971 ? ✅',
-      "Comment cadrez-vous le budget d'un MVP firmware + cloud ? 💡",
+      'Notre projet embarque est en retard. Pouvez-vous aider ?',
+      'Pouvez-vous couvrir IEC 62304 / ISO 14971 ?',
+      "Comment cadrez-vous le budget d'un MVP firmware + cloud ?",
     ],
   },
 };
@@ -74,10 +74,10 @@ const aiAdvisorApiUrl = import.meta.env.PUBLIC_AI_ADVISOR_API_URL || 'https://ho
 <div
   id="ai-tooltip-teaser"
   role="tooltip"
-  class="fixed bottom-[5.5rem] right-6 z-[44] hidden opacity-0 transition-opacity duration-300 pointer-events-none"
+  class="fixed bottom-[9.25rem] right-6 z-[44] hidden opacity-0 translate-y-1 scale-[0.98] transition-all duration-300 pointer-events-none"
 >
-  <div class="bg-white/95 backdrop-blur-lg rounded-2xl px-4 py-2.5 shadow-xl border border-primary-200/50 max-w-[240px]">
-    <p class="text-sm text-gray-800 font-medium">{t.teaserTooltip}</p>
+  <div class="bg-white/90 backdrop-blur-lg rounded-xl px-3 py-2 shadow-lg border border-primary-200/45 max-w-[220px]">
+    <p class="text-xs text-gray-800 font-medium">{t.teaserTooltip}</p>
     <div class="absolute -bottom-1.5 right-8 w-3 h-3 bg-white/95 border-r border-b border-primary-200/50 transform rotate-45"></div>
   </div>
 </div>
@@ -237,6 +237,32 @@ const aiAdvisorApiUrl = import.meta.env.PUBLIC_AI_ADVISOR_API_URL || 'https://ho
   let isLoading = false;
   let history = [];
 
+  function updateRecaptchaOffset() {
+    const isMobile = window.matchMedia('(max-width: 640px)').matches;
+    if (!isMobile) {
+      document.documentElement.style.setProperty('--ai-recaptcha-offset', '0px');
+      return;
+    }
+
+    const badge = document.querySelector('.grecaptcha-badge');
+    if (!badge) {
+      document.documentElement.style.setProperty('--ai-recaptcha-offset', '0px');
+      return;
+    }
+
+    const style = window.getComputedStyle(badge);
+    const hidden = style.display === 'none' || style.visibility === 'hidden' || Number.parseFloat(style.opacity || '1') === 0;
+    if (hidden) {
+      document.documentElement.style.setProperty('--ai-recaptcha-offset', '0px');
+      return;
+    }
+
+    const rect = badge.getBoundingClientRect();
+    const marginBottom = Number.parseFloat(style.marginBottom || '0') || 0;
+    const offset = Math.max(0, Math.round(rect.height + marginBottom + 10));
+    document.documentElement.style.setProperty('--ai-recaptcha-offset', `${offset}px`);
+  }
+
   function track(eventName, payload) {
     window.dataLayer = window.dataLayer || [];
     window.dataLayer.push({
@@ -280,6 +306,7 @@ const aiAdvisorApiUrl = import.meta.env.PUBLIC_AI_ADVISOR_API_URL || 'https://ho
   function togglePanel() {
     isOpen = !isOpen;
     if (isOpen) {
+      hideTooltipTeaser(true);
       panel.classList.remove('hidden');
       panel.classList.add('flex');
       requestAnimationFrame(() => {
@@ -444,15 +471,26 @@ const aiAdvisorApiUrl = import.meta.env.PUBLIC_AI_ADVISOR_API_URL || 'https://ho
     if (e.key === 'Escape' && isOpen) togglePanel();
   });
 
+  // Keep chatbot clear of reCAPTCHA badge on iPhone/small screens.
+  updateRecaptchaOffset();
+  setTimeout(updateRecaptchaOffset, 1200);
+  setTimeout(updateRecaptchaOffset, 3000);
+  window.addEventListener('resize', updateRecaptchaOffset);
+  window.addEventListener('orientationchange', updateRecaptchaOffset);
+
+  const recaptchaObserver = new MutationObserver(updateRecaptchaOffset);
+  recaptchaObserver.observe(document.body, { childList: true, subtree: true });
+
   window.addEventListener('cookieConsentUpdated', function () {
     track('ai_chat_consent_updated', { enabled: hasAiConsent() });
   });
 
-  // Tooltip Teaser Logic: Show after 25s, max 1 time per session, on key pages only
+  // Tooltip Teaser Logic: show once per page load on key pages
   const tooltipTeaser = document.getElementById('ai-tooltip-teaser');
-  const TEASER_STORAGE_KEY = 'horizontech_ai_teaser_shown';
-  const TEASER_DELAY = 25000; // 25 seconds
-  const TEASER_DURATION = 8000; // Show for 8 seconds
+  const TEASER_DELAY = 5000; // 5 seconds
+  let teaserShowTimer = null;
+  let teaserHideTimer = null;
+  let teaserShown = false;
   
   function isKeyPage() {
     const path = window.location.pathname;
@@ -466,40 +504,68 @@ const aiAdvisorApiUrl = import.meta.env.PUBLIC_AI_ADVISOR_API_URL || 'https://ho
   }
 
   function shouldShowTeaser() {
-    // Check if already shown in this session
-    if (sessionStorage.getItem(TEASER_STORAGE_KEY)) return false;
+    // Show only once per page load
+    if (teaserShown) return false;
     // Check if on key page
     if (!isKeyPage()) return false;
     // Check if chatbot not already opened
     if (isOpen) return false;
+    // Only show when tab is visible
+    if (document.visibilityState !== 'visible') return false;
     return true;
+  }
+
+  function hideTooltipTeaser(immediate = false) {
+    if (!tooltipTeaser) return;
+    if (teaserHideTimer) {
+      clearTimeout(teaserHideTimer);
+      teaserHideTimer = null;
+    }
+
+    tooltipTeaser.classList.remove('opacity-100', 'translate-y-0', 'scale-100');
+    tooltipTeaser.classList.add('opacity-0', 'translate-y-1', 'scale-[0.98]');
+
+    if (immediate) {
+      tooltipTeaser.classList.add('hidden');
+      return;
+    }
+
+    teaserHideTimer = setTimeout(() => {
+      tooltipTeaser.classList.add('hidden');
+    }, 260);
   }
 
   function showTooltipTeaser() {
     if (!tooltipTeaser || !shouldShowTeaser()) return;
-    
-    sessionStorage.setItem(TEASER_STORAGE_KEY, 'true');
-    
+    teaserShown = true;
+
     tooltipTeaser.classList.remove('hidden');
     requestAnimationFrame(() => {
-      tooltipTeaser.classList.remove('opacity-0');
-      tooltipTeaser.classList.add('opacity-100');
+      tooltipTeaser.classList.remove('opacity-0', 'translate-y-1', 'scale-[0.98]');
+      tooltipTeaser.classList.add('opacity-100', 'translate-y-0', 'scale-100');
     });
     
     track('ai_chat_teaser_shown', { page: window.location.pathname });
-    
-    // Hide after duration
-    setTimeout(() => {
-      tooltipTeaser.classList.remove('opacity-100');
-      tooltipTeaser.classList.add('opacity-0');
-      setTimeout(() => {
-        tooltipTeaser.classList.add('hidden');
-      }, 300);
-    }, TEASER_DURATION);
   }
 
+  function scheduleTooltipTeaser(delayMs = TEASER_DELAY) {
+    if (teaserShowTimer) clearTimeout(teaserShowTimer);
+    teaserShowTimer = setTimeout(() => {
+      if (!shouldShowTeaser()) return;
+      showTooltipTeaser();
+    }, delayMs);
+  }
+
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState !== 'visible') {
+      hideTooltipTeaser(true);
+      return;
+    }
+    scheduleTooltipTeaser(2500);
+  });
+
   // Show teaser after delay
-  setTimeout(showTooltipTeaser, TEASER_DELAY);
+  scheduleTooltipTeaser();
 
   // Hide pulse animation after 10s
   setTimeout(() => {
@@ -509,6 +575,10 @@ const aiAdvisorApiUrl = import.meta.env.PUBLIC_AI_ADVISOR_API_URL || 'https://ho
 </script>
 
 <style>
+  :root {
+    --ai-recaptcha-offset: 0px;
+  }
+
   /* === True Apple Liquid Glass === */
 
   .liquid-glass-btn {
@@ -655,7 +725,7 @@ const aiAdvisorApiUrl = import.meta.env.PUBLIC_AI_ADVISOR_API_URL || 'https://ho
   @media (max-width: 640px) {
     #ai-advisor-btn {
       right: 1rem;
-      bottom: calc(1rem + env(safe-area-inset-bottom));
+      bottom: calc(1rem + env(safe-area-inset-bottom) + var(--ai-recaptcha-offset));
     }
 
     #ai-advisor-panel {
@@ -663,9 +733,14 @@ const aiAdvisorApiUrl = import.meta.env.PUBLIC_AI_ADVISOR_API_URL || 'https://ho
       right: 0.75rem;
       width: auto;
       max-width: none;
-      bottom: calc(5.25rem + env(safe-area-inset-bottom));
+      bottom: calc(5.25rem + env(safe-area-inset-bottom) + var(--ai-recaptcha-offset));
       height: min(72dvh, calc(100dvh - 7rem - env(safe-area-inset-bottom)));
       border-radius: 1.25rem;
+    }
+
+    #ai-tooltip-teaser {
+      bottom: calc(5.5rem + env(safe-area-inset-bottom) + var(--ai-recaptcha-offset));
+      right: 1rem;
     }
 
     #ai-messages {
