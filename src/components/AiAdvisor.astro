@@ -90,7 +90,7 @@ const aiAdvisorApiUrl = import.meta.env.PUBLIC_AI_ADVISOR_API_URL || 'https://ho
   aria-labelledby="ai-advisor-title"
   aria-hidden="true"
   tabindex="-1"
-  class="fixed bottom-36 right-6 z-[45] w-[360px] hidden flex-col rounded-3xl overflow-hidden transition-all duration-500 opacity-0 translate-y-4 liquid-glass-panel"
+  class="fixed bottom-36 right-6 z-[45] w-[360px] hidden flex-col rounded-3xl overflow-hidden transition-all duration-500 opacity-0 translate-y-4 pointer-events-none liquid-glass-panel"
   style="max-width: calc(100vw - 2rem); max-height: calc(100dvh - 6rem); height: min(560px, calc(100vh - 6rem));"
 >
   <!-- Header -->
@@ -307,21 +307,21 @@ const aiAdvisorApiUrl = import.meta.env.PUBLIC_AI_ADVISOR_API_URL || 'https://ho
     isOpen = !isOpen;
     if (isOpen) {
       hideTooltipTeaser(true);
-      panel.classList.remove('hidden');
+      panel.classList.remove('hidden', 'pointer-events-none');
       panel.classList.add('flex');
       requestAnimationFrame(() => {
         panel.classList.remove('opacity-0', 'translate-y-4');
         panel.classList.add('opacity-100', 'translate-y-0');
       });
+      button.setAttribute('aria-expanded', 'true');
       panel.setAttribute('aria-hidden', 'false');
-      btn.setAttribute('aria-expanded', 'true');
       iconChat.classList.add('hidden');
       iconClose.classList.remove('hidden');
       pulse.classList.add('hidden');
       input.focus();
       track('ai_chat_opened', {});
     } else {
-      panel.classList.add('opacity-0', 'translate-y-4');
+      panel.classList.add('opacity-0', 'translate-y-4', 'pointer-events-none');
       panel.classList.remove('opacity-100', 'translate-y-0');
       setTimeout(() => {
         panel.classList.add('hidden');
