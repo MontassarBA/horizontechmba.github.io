@@ -129,9 +129,17 @@ function sanitize(input, maxLen = 500) {
 }
 
 function getClientKey(request) {
-  const ip = request.headers.get('CF-Connecting-IP') || 'unknown';
+  const forwardedFor = request.headers.get('X-Forwarded-For') || '';
+  const firstForwardedIp = forwardedFor.split(',')[0]?.trim();
+  const ip =
+    request.headers.get('CF-Connecting-IP') ||
+    request.headers.get('True-Client-IP') ||
+    firstForwardedIp ||
+    request.headers.get('CF-Ray') ||
+    'unknown';
   const userAgent = request.headers.get('User-Agent') || 'unknown';
-  return `${ip}:${userAgent.slice(0, 120)}`;
+  const acceptLanguage = request.headers.get('Accept-Language') || 'unknown';
+  return `${ip}:${userAgent.slice(0, 120)}:${acceptLanguage.slice(0, 32)}`;
 }
 
 function pruneRateLimitStore(now) {
@@ -346,7 +354,7 @@ export default {
       .filter(Boolean);
 
     const headers = corsHeaders(origin, allowed);
-    const maxPerHour = parseInt(env.MAX_MESSAGES_PER_HOUR || '20', 10);
+    const maxPerHour = parseInt(env.MAX_MESSAGES_PER_HOUR || '60', 10);
     const maxMsgLen = parseInt(env.MAX_MESSAGE_LENGTH || '500', 10);
 
     if (request.method === 'OPTIONS') {

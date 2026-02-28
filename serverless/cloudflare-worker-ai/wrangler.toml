@@ -6,8 +6,8 @@ compatibility_date = "2024-10-01"
 binding = "AI"
 
 [vars]
-ALLOWED_ORIGINS = "https://www.horizontechmba.com,https://horizontechmba.com,https://horizontechmba.github.io,http://localhost:4321,http://localhost:4322"
-MAX_MESSAGES_PER_HOUR = "20"
+ALLOWED_ORIGINS = "https://www.horizontechmba.com,https://horizontechmba.com,https://horizontechmba.github.io,https://www.horizontechmba.github.io,https://horizontechmba.pages.dev,https://www.horizontechmba.pages.dev,http://localhost:4321,http://localhost:4322"
+MAX_MESSAGES_PER_HOUR = "60"
 MAX_MESSAGE_LENGTH = "500"
 
 [observability]

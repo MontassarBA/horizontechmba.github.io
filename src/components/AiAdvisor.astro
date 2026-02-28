@@ -219,7 +219,7 @@ const aiAdvisorApiUrl = import.meta.env.PUBLIC_AI_ADVISOR_API_URL || 'https://ho
       unavailable: 'AI service is temporarily unavailable. Please retry in a moment.',
       forbidden: 'AI chat is not enabled for this domain yet.',
       rateLimit: 'Too many messages. Please wait a moment.',
-      consentRequired: 'Please enable performance or analytics cookies to use the AI advisor.',
+      consentRequired: 'Please set your cookie preferences to use the AI advisor.',
     },
     fr: {
       thinking: 'R\u00e9flexion...',
@@ -228,7 +228,7 @@ const aiAdvisorApiUrl = import.meta.env.PUBLIC_AI_ADVISOR_API_URL || 'https://ho
       unavailable: 'Le service IA est temporairement indisponible. Reessayez dans un instant.',
       forbidden: 'Le chat IA n est pas encore active pour ce domaine.',
       rateLimit: 'Trop de messages. Veuillez patienter.',
-      consentRequired: 'Veuillez activer les cookies de performance ou analytiques pour utiliser le conseiller IA.',
+      consentRequired: 'Veuillez definir vos preferences de cookies pour utiliser le conseiller IA.',
     },
   };
   const t = strings[lang] || strings.en;
@@ -293,7 +293,7 @@ const aiAdvisorApiUrl = import.meta.env.PUBLIC_AI_ADVISOR_API_URL || 'https://ho
   function hasAiConsent() {
     const consent = getCookie(COOKIE_NAME);
     if (!consent || typeof consent !== 'object') return false;
-    return Boolean(consent.performance || consent.analytics);
+    return consent.essential !== false;
   }
 
   function openCookiePreferences() {
@@ -313,7 +313,7 @@ const aiAdvisorApiUrl = import.meta.env.PUBLIC_AI_ADVISOR_API_URL || 'https://ho
         panel.classList.remove('opacity-0', 'translate-y-4');
         panel.classList.add('opacity-100', 'translate-y-0');
       });
-      button.setAttribute('aria-expanded', 'true');
+      btn.setAttribute('aria-expanded', 'true');
       panel.setAttribute('aria-hidden', 'false');
       iconChat.classList.add('hidden');
       iconClose.classList.remove('hidden');
