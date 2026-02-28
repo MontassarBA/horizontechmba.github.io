@@ -156,7 +156,7 @@ const aiAdvisorApiUrls = import.meta.env.PUBLIC_AI_ADVISOR_API_URLS || '';
     <a
       id="ai-contact-cta"
       href={contactUrl}
-      class="flex-1 text-center text-xs px-3 py-2.5 bg-white/80 backdrop-blur-md text-gray-800 rounded-xl hover:bg-white/95 transition-all duration-300 font-semibold border border-gray-200/50 shadow-md hover:shadow-lg hover:-translate-y-0.5"
+      class="flex flex-1 items-center justify-center text-center text-xs leading-tight px-3 py-2.5 bg-white/80 backdrop-blur-md text-gray-800 rounded-xl hover:bg-white/95 transition-all duration-300 font-semibold border border-gray-200/50 shadow-md hover:shadow-lg hover:-translate-y-0.5"
     >
       {t.contactCta}
     </a>
@@ -184,7 +184,7 @@ const aiAdvisorApiUrls = import.meta.env.PUBLIC_AI_ADVISOR_API_URLS || '';
         </svg>
       </button>
     </form>
-    <p class="text-[10px] text-gray-600 mt-1.5 text-center relative z-[2]">{t.disclaimer}</p>
+    <p class="text-[10px] text-gray-800 mt-1.5 text-center relative z-[2]">{t.disclaimer}</p>
     <button id="ai-manage-consent" type="button" class="mt-1 text-[10px] text-primary-800 underline underline-offset-2 hover:text-primary-900 transition-colors w-full text-center font-medium">
       {lang === 'fr' ? 'G\u00e9rer les cookies' : 'Manage Cookies'}
     </button>
