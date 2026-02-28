@@ -48,6 +48,7 @@ const t = content[lang] || content.en;
 const bookingUrl = 'https://outlook.office.com/book/HORIZONTECHMBAInc1@horizontechmba.com/?ismsaljsauthenabled';
 const contactUrl = lang === 'fr' ? '/fr/contact' : '/en/contact';
 const aiAdvisorApiUrl = import.meta.env.PUBLIC_AI_ADVISOR_API_URL || 'https://horizontech-ai.montassar-benabdallah.workers.dev';
+const aiAdvisorApiUrls = import.meta.env.PUBLIC_AI_ADVISOR_API_URLS || '';
 ---
 
 <!-- Floating AI Advisor Button -->
@@ -190,11 +191,30 @@ const aiAdvisorApiUrl = import.meta.env.PUBLIC_AI_ADVISOR_API_URL || 'https://ho
   </div>
 </div>
 
-<script is:inline define:vars={{ lang, AI_ENDPOINT: aiAdvisorApiUrl }}>
+<script is:inline define:vars={{ lang, AI_ENDPOINT: aiAdvisorApiUrl, AI_ENDPOINTS: aiAdvisorApiUrls }}>
 (function () {
   const COOKIE_NAME = 'horizontech_cookie_consent';
-  const cleanEndpoint = String(AI_ENDPOINT || '').replace(/\/+$/, '');
-  const ENDPOINT = /\/chat$/i.test(cleanEndpoint) ? cleanEndpoint : (cleanEndpoint + '/chat');
+  const DEFAULT_ENDPOINT = 'https://horizontech-ai.montassar-benabdallah.workers.dev/chat';
+  const REQUEST_TIMEOUT_MS = 12000;
+  const MAX_RETRIES_PER_ENDPOINT = 1;
+  const retryableStatusCodes = new Set([408, 425, 429, 500, 502, 503, 504]);
+
+  function normalizeEndpoint(value) {
+    const clean = String(value || '').trim().replace(/\/+$/, '');
+    if (!clean) return '';
+    return /\/chat$/i.test(clean) ? clean : `${clean}/chat`;
+  }
+
+  const parsedFromList = String(AI_ENDPOINTS || '')
+    .split(',')
+    .map((item) => normalizeEndpoint(item))
+    .filter(Boolean);
+
+  const primaryEndpoint = normalizeEndpoint(AI_ENDPOINT);
+  if (primaryEndpoint) parsedFromList.unshift(primaryEndpoint);
+  if (!parsedFromList.length) parsedFromList.push(DEFAULT_ENDPOINT);
+
+  const CHAT_ENDPOINTS = Array.from(new Set(parsedFromList));
   const btn = document.getElementById('ai-advisor-btn');
   const panel = document.getElementById('ai-advisor-panel');
   const closeBtn = document.getElementById('ai-close-btn');
@@ -215,7 +235,7 @@ const aiAdvisorApiUrl = import.meta.env.PUBLIC_AI_ADVISOR_API_URL || 'https://ho
     en: {
       thinking: 'Thinking...',
       error: 'Something went wrong. Please try again.',
-      networkError: 'Network error. Please check your connection and try again.',
+      networkError: 'Network issue reaching AI service. Disable VPN/ad blocker or try another network, then retry.',
       unavailable: 'AI service is temporarily unavailable. Please retry in a moment.',
       forbidden: 'AI chat is not enabled for this domain yet.',
       rateLimit: 'Too many messages. Please wait a moment.',
@@ -224,7 +244,7 @@ const aiAdvisorApiUrl = import.meta.env.PUBLIC_AI_ADVISOR_API_URL || 'https://ho
     fr: {
       thinking: 'R\u00e9flexion...',
       error: 'Une erreur est survenue. Veuillez r\u00e9essayer.',
-      networkError: 'Erreur reseau. Verifiez votre connexion puis reessayez.',
+      networkError: 'Probleme reseau vers le service IA. Desactivez VPN/adblock ou essayez un autre reseau, puis reessayez.',
       unavailable: 'Le service IA est temporairement indisponible. Reessayez dans un instant.',
       forbidden: 'Le chat IA n est pas encore active pour ce domaine.',
       rateLimit: 'Trop de messages. Veuillez patienter.',
@@ -385,6 +405,87 @@ const aiAdvisorApiUrl = import.meta.env.PUBLIC_AI_ADVISOR_API_URL || 'https://ho
     return div.innerHTML;
   }
 
+  function sleep(ms) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  }
+
+  function getEndpointHost(endpoint) {
+    try {
+      return new URL(endpoint).host;
+    } catch (error) {
+      return endpoint;
+    }
+  }
+
+  async function fetchWithTimeout(endpoint, payload, timeoutMs) {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
+
+    try {
+      return await fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+        signal: controller.signal,
+      });
+    } finally {
+      clearTimeout(timeoutId);
+    }
+  }
+
+  async function requestAi(payload) {
+    let lastNetworkError = null;
+
+    for (let endpointIndex = 0; endpointIndex < CHAT_ENDPOINTS.length; endpointIndex++) {
+      const endpoint = CHAT_ENDPOINTS[endpointIndex];
+      const endpointHost = getEndpointHost(endpoint);
+
+      for (let attempt = 0; attempt <= MAX_RETRIES_PER_ENDPOINT; attempt++) {
+        try {
+          const res = await fetchWithTimeout(endpoint, payload, REQUEST_TIMEOUT_MS);
+
+          if (res.ok) {
+            if (endpointIndex > 0 || attempt > 0) {
+              track('ai_chat_endpoint_recovered', { endpoint: endpointHost, endpointIndex, attempt });
+            }
+            return { res, endpoint };
+          }
+
+          if (res.status === 403 && endpointIndex < CHAT_ENDPOINTS.length - 1) {
+            track('ai_chat_endpoint_fallback', { from: endpointHost, reason: 'forbidden', status: res.status });
+            break;
+          }
+
+          const shouldRetry = retryableStatusCodes.has(res.status) && attempt < MAX_RETRIES_PER_ENDPOINT;
+          if (shouldRetry) {
+            await sleep(250 * (attempt + 1));
+            continue;
+          }
+
+          return { res, endpoint };
+        } catch (error) {
+          lastNetworkError = error;
+
+          const isAbort = error && error.name === 'AbortError';
+          const canRetry = attempt < MAX_RETRIES_PER_ENDPOINT;
+
+          if (canRetry) {
+            track('ai_chat_network_retry', { endpoint: endpointHost, attempt, reason: isAbort ? 'timeout' : 'network' });
+            await sleep(250 * (attempt + 1));
+            continue;
+          }
+
+          if (endpointIndex < CHAT_ENDPOINTS.length - 1) {
+            track('ai_chat_endpoint_fallback', { from: endpointHost, reason: isAbort ? 'timeout' : 'network' });
+            break;
+          }
+        }
+      }
+    }
+
+    throw lastNetworkError || new Error('AI request failed');
+  }
+
   async function sendMessage(text) {
     const trimmed = text.trim();
     if (isLoading || !trimmed) return;
@@ -407,15 +508,12 @@ const aiAdvisorApiUrl = import.meta.env.PUBLIC_AI_ADVISOR_API_URL || 'https://ho
     addThinking();
 
     try {
-      const res = await fetch(ENDPOINT, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          message: trimmed,
-          lang: lang,
-          history: history.slice(-6),
-        }),
-      });
+      const payload = {
+        message: trimmed,
+        lang: lang,
+        history: history.slice(-6),
+      };
+      const { res, endpoint } = await requestAi(payload);
 
       removeThinking();
 
@@ -424,19 +522,19 @@ const aiAdvisorApiUrl = import.meta.env.PUBLIC_AI_ADVISOR_API_URL || 'https://ho
         track('ai_chat_rate_limited', {});
       } else if (res.status === 403) {
         addMessage(t.forbidden, 'assistant');
-        track('ai_chat_response_error', { status: 403 });
+        track('ai_chat_response_error', { status: 403, endpoint: getEndpointHost(endpoint) });
       } else if (res.status >= 500) {
         addMessage(t.unavailable, 'assistant');
-        track('ai_chat_response_error', { status: res.status });
+        track('ai_chat_response_error', { status: res.status, endpoint: getEndpointHost(endpoint) });
       } else if (!res.ok) {
         addMessage(t.error, 'assistant');
-        track('ai_chat_response_error', { status: res.status });
+        track('ai_chat_response_error', { status: res.status, endpoint: getEndpointHost(endpoint) });
       } else {
         const data = await res.json();
         const reply = data.response || t.error;
         addMessage(reply, 'assistant');
         history.push({ role: 'assistant', content: reply });
-        track('ai_chat_response_received', { chars: reply.length });
+        track('ai_chat_response_received', { chars: reply.length, endpoint: getEndpointHost(endpoint) });
       }
     } catch (err) {
       removeThinking();
