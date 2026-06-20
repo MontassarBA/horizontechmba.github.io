@@ -497,17 +497,13 @@ test('Secondary-500 is gray (#6F6F6F)',
 // ========================================
 log('\n🔧 TEST 22: GitHub Workflows Configuration Integrity\n', 'magenta');
 
-const staticYml = fs.readFileSync('.github/workflows/static.yml', 'utf8');
 const deployYml = fs.readFileSync('.github/workflows/deploy.yml', 'utf8');
 
-// Check static.yml builds and deploys dist
-test('static.yml has npm install step', staticYml.includes('npm ci') || staticYml.includes('npm install'));
-test('static.yml has Astro build step', staticYml.includes('npm run build') || staticYml.includes('astro build'));
-test('static.yml deploys dist folder', staticYml.includes("path: './dist'") || staticYml.includes('path: ./dist'));
-test('static.yml does not deploy root folder', !staticYml.includes("path: '.'") || staticYml.split("path: '.'").length < 2);
-
 // Check deploy.yml configuration
+test('legacy static.yml workflow removed', !fs.existsSync('.github/workflows/static.yml'));
+test('deploy.yml has npm install step', deployYml.includes('npm ci') || deployYml.includes('npm install'));
 test('deploy.yml deploys dist folder', deployYml.includes('path: ./dist'));
+test('deploy.yml can enable GitHub Pages', deployYml.includes('enablement: true'));
 test('deploy.yml has pre-deploy tests', deployYml.includes('test:pre-deploy') || deployYml.includes('test:pre-commit'));
 test('deploy.yml has build step', deployYml.includes('npm run build'));
 
