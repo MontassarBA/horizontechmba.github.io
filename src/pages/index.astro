@@ -1,56 +1,26 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import { useTranslations } from '../i18n/utils';
-import HeroSection from '../components/HeroSection.astro';
-import TrustBadges from '../components/TrustBadges.astro';
-import ValueProps from '../components/ValueProps.astro';
-import ServicesPreview from '../components/ServicesPreview.astro';
-import StatsSection from '../components/StatsSection.astro';
-import Testimonials from '../components/Testimonials.astro';
-import CTASection from '../components/CTASection.astro';
-
-// Root page uses English
-const lang = 'en';
-const t = useTranslations(lang);
+// Root URL redirects to the language-prefixed home page.
+// Canonical content lives at /en/ and /fr/ — avoids duplicate content.
+const baseUrl = 'https://www.horizontechmba.com';
 ---
 
-<Layout 
-  title={t('nav.home')}
-  description="Embedded systems consulting and electronics design for medical devices, smart metering, and off-highway equipment. IEC 60601/62304, IEC 61508, ISO 13849, DLMS/COSEM. Lévis, Québec, Canada."
-  keywords="embedded systems consultant, electronics design, PCB design, medical devices IEC 60601 IEC 62304, smart metering DLMS COSEM, functional safety IEC 61508 ISO 13849, EMI EMC, HIL SIL, industrial automation, Lévis Québec"
->
-  <HeroSection />
-  <TrustBadges />
-  <ValueProps />
-  <section class="py-16 bg-white">
-    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="max-w-5xl mx-auto">
-        <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
-          Embedded Systems, Electronics Design & Compliance
-        </h2>
-        <p class="text-gray-600 mb-6">
-          We deliver reliable embedded electronics and firmware for medical devices, smart metering,
-          and off-highway equipment. We work according to IEC 60601/62304, IEC 61508, ISO 13849, ISO 26262,
-          and DLMS/COSEM standards.
-        </p>
-        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 text-sm text-gray-700">
-          <div class="px-4 py-3 rounded-lg bg-gray-50 border border-gray-100">Embedded Systems</div>
-          <div class="px-4 py-3 rounded-lg bg-gray-50 border border-gray-100">Electronics Design</div>
-          <div class="px-4 py-3 rounded-lg bg-gray-50 border border-gray-100">IEC 60601 / 62304</div>
-          <div class="px-4 py-3 rounded-lg bg-gray-50 border border-gray-100">IEC 61508</div>
-          <div class="px-4 py-3 rounded-lg bg-gray-50 border border-gray-100">ISO 13849</div>
-          <div class="px-4 py-3 rounded-lg bg-gray-50 border border-gray-100">ISO 26262</div>
-          <div class="px-4 py-3 rounded-lg bg-gray-50 border border-gray-100">DLMS/COSEM</div>
-          <div class="px-4 py-3 rounded-lg bg-gray-50 border border-gray-100">EMI / EMC</div>
-          <div class="px-4 py-3 rounded-lg bg-gray-50 border border-gray-100">HIL / SIL</div>
-          <div class="px-4 py-3 rounded-lg bg-gray-50 border border-gray-100">Automation & Vision</div>
-          <div class="px-4 py-3 rounded-lg bg-gray-50 border border-gray-100">Automotive</div>
-        </div>
-      </div>
-    </div>
-  </section>
-  <StatsSection />
-  <ServicesPreview />
-  <Testimonials />
-  <CTASection />
-</Layout>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HORIZONTECH MBA Inc. — Embedded Systems Engineering</title>
+    <link rel="canonical" href={`${baseUrl}/en/`} />
+    <link rel="alternate" hreflang="en" href={`${baseUrl}/en/`} />
+    <link rel="alternate" hreflang="fr" href={`${baseUrl}/fr/`} />
+    <link rel="alternate" hreflang="x-default" href={`${baseUrl}/en/`} />
+    <meta http-equiv="refresh" content="0; url=/en/" />
+    <script is:inline>
+      var target = (navigator.language || '').toLowerCase().indexOf('fr') === 0 ? '/fr/' : '/en/';
+      window.location.replace(target);
+    </script>
+  </head>
+  <body>
+    <p>Redirecting… <a href="/en/">English</a> · <a href="/fr/">Français</a></p>
+  </body>
+</html>

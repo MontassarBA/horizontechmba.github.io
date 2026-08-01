@@ -17,7 +17,7 @@ interface Props {
 const { 
   title, 
   description,
-  keywords = 'engineering consulting, embedded systems, EMI/EMC, HIL/SIL, Matlab, Simulink, quality engineering, risk analysis, development project management, IoT, artificial intelligence, AI solutions, software development, aerospace engineering, healthcare technology, energy solutions, R&D consulting, Lévis Quebec, Canada, systèmes embarqués, intelligence artificielle, consultation ingénierie',
+  keywords = 'embedded systems consulting, electronics design, PCB design, firmware development, medical devices IEC 60601 IEC 62304, smart metering DLMS COSEM, functional safety IEC 61508 ISO 13849 ISO 26262, EMI EMC, HIL SIL, industrial automation, off-highway equipment, Lévis Quebec Canada, consultant systèmes embarqués, conception électronique, dispositifs médicaux, comptage intelligent',
   ogImage = '/og-image.png',
   ogType = 'website',
   canonicalPath
@@ -25,7 +25,9 @@ const {
 
 const lang = getLangFromUrl(Astro.url);
 const companyLegalName = lang === 'fr' ? 'HORIZONTECH MBA inc.' : 'HORIZONTECH MBA Inc.';
-const defaultDescription = `${companyLegalName} - Engineering Consulting, Embedded Systems, IoT, AI & Software Solutions. Expert technology partner in Aerospace, Healthcare, Energy & Industrial sectors.`;
+const defaultDescription = lang === 'fr'
+  ? `${companyLegalName} - Consultation en systèmes embarqués et conception électronique pour dispositifs médicaux, comptage intelligent et équipements hors-route. IEC 60601/62304, IEC 61508, ISO 13849, DLMS/COSEM. Lévis, Québec.`
+  : `${companyLegalName} - Embedded systems consulting and electronics design for medical devices, smart metering, and off-highway equipment. IEC 60601/62304, IEC 61508, ISO 13849, DLMS/COSEM. Lévis, Québec, Canada.`;
 const finalDescription = description ?? defaultDescription;
 const currentPath = Astro.url.pathname;
 const baseUrl = 'https://www.horizontechmba.com';
@@ -53,8 +55,8 @@ const organizationSchema = {
   "logo": `${baseUrl}/logo.png`,
   "image": `${baseUrl}/og-image.png`,
   "description": lang === 'fr' 
-    ? "Cabinet de consultation en ingénierie spécialisé dans les systèmes embarqués, IoT, IA et solutions logicielles pour l'aérospatiale, la santé, l'énergie et l'industrie."
-    : "Engineering consulting firm specialized in embedded systems, IoT, AI and software solutions for aerospace, healthcare, energy and industrial sectors.",
+    ? "Cabinet de consultation en ingénierie spécialisé en systèmes embarqués, conception électronique et conformité pour les dispositifs médicaux, le comptage intelligent d'énergie et les équipements hors-route."
+    : "Engineering consulting firm specialized in embedded systems, electronics design, and compliance for medical devices, smart energy metering, and off-highway equipment.",
   "address": {
     "@type": "PostalAddress",
     "streetAddress": "7139 Rue Henri-Julien",
@@ -79,32 +81,32 @@ const organizationSchema = {
   ],
   "areaServed": ["CA", "US", "FR"],
   "serviceType": [
-    "Engineering Consulting",
-    "Embedded Systems Development",
+    "Embedded Systems Consulting",
+    "Electronics & PCB Design",
+    "Firmware Development",
+    "Medical Device Engineering (IEC 60601/62304)",
+    "Smart Metering (DLMS/COSEM)",
+    "Functional Safety (IEC 61508, ISO 13849, ISO 26262)",
     "EMI/EMC Consulting",
     "HIL/SIL Testing",
-    "Matlab/Simulink",
-    "Quality Engineering",
-    "Risk Analysis",
-    "Development Project Management",
-    "IoT Solutions",
-    "Artificial Intelligence",
-    "Software Development",
-    "R&D Services"
+    "Industrial Automation & Vision",
+    "AI & Software Solutions"
   ],
   "knowsAbout": [
-    "Aerospace Engineering",
     "Embedded Systems",
+    "Electronics Design",
+    "Medical Devices",
+    "IEC 60601",
+    "IEC 62304",
+    "IEC 61508",
+    "ISO 13849",
+    "ISO 26262",
+    "DLMS/COSEM",
+    "Smart Metering",
     "EMI/EMC",
     "HIL/SIL",
-    "Matlab/Simulink",
-    "Quality Engineering",
-    "Risk Analysis",
-    "Project Management",
-    "Healthcare Technology",
-    "Energy Solutions",
-    "Industrial Automation",
-    "Telecommunications"
+    "Off-Highway Equipment",
+    "Industrial Automation"
   ]
 };
 
@@ -134,7 +136,7 @@ const professionalServiceSchema = {
   "@type": "ProfessionalService",
   "name": companyLegalName,
   "url": baseUrl,
-  "serviceType": "Engineering Consulting",
+  "serviceType": "Embedded Systems & Electronics Engineering Consulting",
   "areaServed": [
     { "@type": "Country", "name": "Canada" },
     { "@type": "Country", "name": "United States" }
@@ -147,8 +149,32 @@ const professionalServiceSchema = {
         "@type": "Offer",
         "itemOffered": {
           "@type": "Service",
-          "name": "Embedded Systems & IoT",
-          "description": "Custom embedded systems development and IoT solutions"
+          "name": "Embedded Systems & Electronics Design",
+          "description": "PCB design, microcontrollers, FPGA, firmware and bootloaders for reliable embedded products"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Medical Device Engineering",
+          "description": "Design and compliance support for medical devices under IEC 60601 and IEC 62304"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Smart Energy Metering",
+          "description": "Smart metering solutions with DLMS/COSEM, energy monitoring and system integration"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Functional Safety",
+          "description": "Safety-critical engineering under IEC 61508, ISO 13849 and ISO 26262"
         }
       },
       {
@@ -171,32 +197,8 @@ const professionalServiceSchema = {
         "@type": "Offer",
         "itemOffered": {
           "@type": "Service",
-          "name": "Quality & Risk Analysis",
-          "description": "Quality engineering and risk analysis for critical systems"
-        }
-      },
-      {
-        "@type": "Offer",
-        "itemOffered": {
-          "@type": "Service",
           "name": "AI & Software Solutions",
-          "description": "Artificial intelligence and custom software development"
-        }
-      },
-      {
-        "@type": "Offer",
-        "itemOffered": {
-          "@type": "Service",
-          "name": "Energy Solutions",
-          "description": "Sustainable energy technology consulting"
-        }
-      },
-      {
-        "@type": "Offer",
-        "itemOffered": {
-          "@type": "Service",
-          "name": "R&D Consulting",
-          "description": "Research and development for healthcare and aerospace"
+          "description": "Machine learning, computer vision and custom software for industrial applications"
         }
       }
     ]

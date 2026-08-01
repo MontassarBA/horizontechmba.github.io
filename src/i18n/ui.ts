@@ -113,9 +113,9 @@ export const ui = {
     'footer.newsletter.button': 'Subscribe',
     
     // Stats
-    'stats.projects': 'Years of experience (founder)',
-    'stats.clients': 'Critical projects delivered',
-    'stats.experience': 'Standards mastered',
+    'stats.years': 'Years of experience (founder)',
+    'stats.projects': 'Critical projects delivered',
+    'stats.standards': 'Standards mastered',
     'stats.expertise': 'Dedicated partner',
     
     // CTA Section
@@ -241,9 +241,9 @@ export const ui = {
     'footer.newsletter.button': 'S\'abonner',
     
     // Stats
-    'stats.projects': 'Années d\'expérience (fondateur)',
-    'stats.clients': 'Projets critiques livrés',
-    'stats.experience': 'Normes maîtrisées',
+    'stats.years': 'Années d\'expérience (fondateur)',
+    'stats.projects': 'Projets critiques livrés',
+    'stats.standards': 'Normes maîtrisées',
     'stats.expertise': 'Partenaire dédié',
     
     // CTA Section
